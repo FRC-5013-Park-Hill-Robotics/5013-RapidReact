@@ -20,6 +20,7 @@ import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
 public final class Constants {
     public static final int FALCON_500_MAX_RPM = 6380;
     public static final int PDP_ID = 0;
+    public static final int BLINKEN_PWM_PORT = 0;
 
     public static final class ControllerConstants {
         public static final int DRIVER_CONTROLLER_PORT = 0;
