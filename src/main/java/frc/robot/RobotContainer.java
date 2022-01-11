@@ -27,7 +27,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
-    private PowerDistribution m_pdp = new PowerDistribution(PDP_ID, ModuleType.kCTRE);
+    private PowerDistribution m_PowerDistribution = new PowerDistribution(PDP_ID, ModuleType.kRev);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
