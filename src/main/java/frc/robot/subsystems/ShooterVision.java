@@ -19,7 +19,7 @@ public class ShooterVision extends SubsystemBase {
   private NetworkTableEntry tx = table.getEntry("tx");
   private NetworkTableEntry ty = table.getEntry("ty");
   private NetworkTableEntry ta = table.getEntry("ta");
-  private NetworkTableEntry tv = table.getEntry("ta");
+  private NetworkTableEntry tv = table.getEntry("tv");
   private NetworkTableEntry ledMode = table.getEntry("ledMode");
   private int loop;
   private boolean m_targeting = false;
@@ -36,7 +36,7 @@ public class ShooterVision extends SubsystemBase {
     this.tx = table.getEntry("tx");
     this.ty = table.getEntry("ty");
     this.ta = table.getEntry("ta");
-    this.ta = table.getEntry("tv");
+    this.tv = table.getEntry("tv");
     this.ledMode = table.getEntry("ledMode");
     this.loop = 0; 
     setPipeline(LimelightConstants.DRIVE_PIPELINE);
