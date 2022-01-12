@@ -4,8 +4,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -115,6 +120,46 @@ public final class Constants {
             public static final double kV = 2.3014;
             public static final double kS = 0.55493;
         }
-
+        //
+        public static final class IntakeConstants {
+        public static final int INTAKE_MOTOR = 0;
+        public static final int DROP_INTAKE_SOLENOID_CHANNEL = 0;
+        public static final int RAISE_INTAKE_SOLENOID_CHANNEL = 0;
+        public static final int ROLLER_SERVO = 0;
     }
+    
+    public class Conveyor extends SubsystemBase {
+        private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(ConveyorConstants.LEFT_CONVEYOR_MOTOR);
+        private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(ConveyorConstants.RIGHT_CONVEYOR_MOTOR);
+        private DigitalInput lowerEye = new DigitalInput(ConveyorConstants.LOWER_EYE);
+        private DigitalInput upperEye = new DigitalInput(ConveyorConstants.UPPER_EYE);
+        private DigitalInput middleEye; 
+        private long startTime=0;
+        private double percentOutput;
+        public static final double kSpeed = 0.4;//percent output
+        public static final double kSpeedForShooter = 0.6;//percent output
+        private boolean override = false;
+        private boolean autoIndexing = true;
+        
+      
+        /**
+         * Creates a new Conveyor.
+         */
+        public Conveyor() {
+          leftMotor1.configFactoryDefault();
+          rightMotor1.configFactoryDefault();
+          leftMotor1.setInverted(true);
+          rightMotor1.setInverted(false);
+          leftMotor1.setNeutralMode(NeutralMode.Brake);
+          rightMotor1.setNeutralMode(NeutralMode.Brake);
+        }
+    }
+ public static final class ConveyorConstants {
+        public static final int LEFT_CONVEYOR_MOTOR = 9;
+        public static final int RIGHT_CONVEYOR_MOTOR = 10;
+        public static final int LOWER_EYE = 1;
+        public static final int UPPER_EYE = 0;
+        public static final int NUDGE = 19;
+    }
+}
 }
