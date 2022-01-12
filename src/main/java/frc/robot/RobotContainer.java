@@ -14,7 +14,7 @@ import frc.robot.commands.GamepadDrive;
 import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -53,10 +53,10 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Back button zeros the gyroscope
-        new JoystickButton(m_controller, LogitechController.Button.kBack.value)
+        new Button(m_controller::getBackButton)
                 // No requirements because we don't need to interrupt anything
                 .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
-        new JoystickButton(m_controller, LogitechController.Button.kA.value)
+        new Button(m_controller::getAButton)
                 .whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI));
     }
 
