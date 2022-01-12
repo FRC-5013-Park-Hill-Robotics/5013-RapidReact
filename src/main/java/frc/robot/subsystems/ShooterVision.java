@@ -4,14 +4,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LimelightConstants;
+import frc.robot.ShooterVisionConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-package frc.robot.subsystems;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterVision extends SubsystemBase {
   /** Creates a new ShooterVision. */
@@ -21,7 +18,6 @@ public class ShooterVision extends SubsystemBase {
   private NetworkTableEntry ta = table.getEntry("ta");
   private NetworkTableEntry tv = table.getEntry("tv");
   private NetworkTableEntry ledMode = table.getEntry("ledMode");
-  private int loop;
   private boolean m_targeting = false;
 
   public ShooterVision() {
@@ -38,8 +34,7 @@ public class ShooterVision extends SubsystemBase {
     this.ta = table.getEntry("ta");
     this.tv = table.getEntry("tv");
     this.ledMode = table.getEntry("ledMode");
-    this.loop = 0; 
-    setPipeline(LimelightConstants.DRIVE_PIPELINE);
+    setPipeline(ShooterVisionConstants.DRIVE_PIPELINE);
     setLedOn(false);
   }
 
@@ -62,10 +57,10 @@ public class ShooterVision extends SubsystemBase {
 
     /**Returns distance to target in inches */
   public double distanceToTargetInInches(){
-    double cameraAngle = LimelightConstants.CAMERA_ANGLE; 
+    double cameraAngle = ShooterVisionConstants.CAMERA_ANGLE; 
     double angleToTarget = this.tx.getDouble(0.0);
-    double camHeight = LimelightConstants.CAMERA_HEIGHT;
-    double targetHeight = LimelightConstants.TARGET_HEIGHT;
+    double camHeight = ShooterVisionConstants.CAMERA_HEIGHT;
+    double targetHeight = ShooterVisionConstants.TARGET_HEIGHT;
     double distance =  ((targetHeight-camHeight) / Math.tan(cameraAngle+angleToTarget));
     
     return distance;
@@ -100,9 +95,9 @@ public class ShooterVision extends SubsystemBase {
 
   public void setLedOn(boolean isOn) {
     if (isOn){
-      ledMode.setNumber(LimelightConstants.LED_ON);
+      ledMode.setNumber(ShooterVisionConstants.LED_ON);
     } else {
-      ledMode.setNumber(LimelightConstants.LED_OFF);
+      ledMode.setNumber(ShooterVisionConstants.LED_OFF);
     }
   }
   
@@ -116,9 +111,9 @@ public class ShooterVision extends SubsystemBase {
 
   public void switchPipeline(boolean targeting){
     if(targeting == true){
-      setPipeline(LimelightConstants.TARGET_PIPELINE);
+      setPipeline(ShooterVisionConstants.TARGET_PIPELINE);
     } else {
-      setPipeline(LimelightConstants.DRIVE_PIPELINE);
+      setPipeline(ShooterVisionConstants.DRIVE_PIPELINE);
     }
   }
   
@@ -127,10 +122,10 @@ public class ShooterVision extends SubsystemBase {
   }
 
   public boolean isOutOfRange(){
-    return (getTy().getDouble(0) > LimelightConstants.RANGE_TOO_CLOSE || getTy().getDouble(0) < LimelightConstants.RANGE_TOO_FAR);
+    return (getTy().getDouble(0) > ShooterVisionConstants.RANGE_TOO_CLOSE || getTy().getDouble(0) < ShooterVisionConstants.RANGE_TOO_FAR);
   }
 
   public boolean isPrimeRange(){
-    return (getTy().getDouble(0) > LimelightConstants.RANGE_PRIME_END && getTy().getDouble(0) < LimelightConstants.RANGE_PRIME_START);
+    return (getTy().getDouble(0) > ShooterVisionConstants.RANGE_PRIME_END && getTy().getDouble(0) < ShooterVisionConstants.RANGE_PRIME_START);
   }
 }
