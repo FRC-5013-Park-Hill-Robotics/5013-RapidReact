@@ -4,14 +4,44 @@
 
 package frc.robot.subsystems;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
 public class IntakeVision extends SubsystemBase {
+  //change to match camera name//
+  private PhotonCamera camera = new PhotonCamera("photonvision");
+
   /** Creates a new IntakeVision. */
   public IntakeVision() {}
+
+  public PhotonPipelineResult getResult(){
+    PhotonPipelineResult result = camera.getLatestResult();
+    return result;
+  }
+
+  public void setPipeline(int pipeline){
+    camera.setPipelineIndex(pipeline);
+  }
+  
+
+  public boolean hasTarget(){
+    boolean hasTarget = this.getResult().hasTargets();
+    return hasTarget;
+  }
+
+  public PhotonTrackedTarget getTarget(){
+    PhotonTrackedTarget target = this.getResult().getBestTarget();
+    return target;
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 }
+
+
