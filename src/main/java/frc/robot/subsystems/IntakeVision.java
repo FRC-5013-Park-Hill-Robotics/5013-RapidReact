@@ -20,13 +20,12 @@ public class IntakeVision extends SubsystemBase {
 
   public PhotonPipelineResult getResult(){
     PhotonPipelineResult result = camera.getLatestResult();
+
     return result;
   }
-
   public void setPipeline(int pipeline){
     camera.setPipelineIndex(pipeline);
   }
-  
 
   public boolean hasTarget(){
     boolean hasTarget = this.getResult().hasTargets();
@@ -42,6 +41,8 @@ public class IntakeVision extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+
 }
 
 
