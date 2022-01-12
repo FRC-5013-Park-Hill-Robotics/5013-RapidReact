@@ -22,11 +22,9 @@ public class IntakeVision extends SubsystemBase {
     PhotonPipelineResult result = camera.getLatestResult();
     return result;
   }
-
   public void setPipeline(int pipeline){
     camera.setPipelineIndex(pipeline);
   }
-  
 
   public boolean hasTarget(){
     boolean hasTarget = this.getResult().hasTargets();
