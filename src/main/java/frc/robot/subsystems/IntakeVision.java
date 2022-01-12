@@ -6,12 +6,23 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
+
+
 public class IntakeVision extends SubsystemBase {
+  //change to match camera name//
+   PhotonCamera camera = new PhotonCamera("photonvision");
   /** Creates a new IntakeVision. */
   public IntakeVision() {}
 
+  public var getIntakeVisionResult(){
+    var result = camera.getLatestResult();
+    return result;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+
 }
