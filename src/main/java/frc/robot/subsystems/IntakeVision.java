@@ -11,28 +11,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeVision extends SubsystemBase {
   //change to match camera name//
-  private PhotonCamera camera = new PhotonCamera("photonvision");
+   PhotonCamera camera = new PhotonCamera("photonvision");
   /** Creates a new IntakeVision. */
   public IntakeVision() {}
 
-  public var getResult(){
+  public var getIntakeVisionResult(){
     var result = camera.getLatestResult();
     return result;
   }
-
-  public void setPipeline(int pipeline){
-    camera.setPipelineIndex(pipeline);
-  }
-
-  public boolean hasTarget(){
-    boolean hasTarget = this.getResult.hasTargets();
-    return hasTarget;
-  }
-
-  public PhotonTrackedTarget getTarget(){
-    PhotonTrackedTarget target = this.getResult.getBestTarget();
-  }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
