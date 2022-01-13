@@ -14,13 +14,18 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 
 public class GamepadDrive extends CommandBase {
+    
     private DrivetrainSubsystem m_drivetrain;
     private LogitechController m_gamepad;
     private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
     private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
     private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3);
 
-    /** Creates a new GamepadDrive. */
+
+    /** 
+     *  Constructor method for the GamepadDrive class
+     *  - Creates a new GamepadDrive object. 
+     */
     public GamepadDrive(DrivetrainSubsystem drivetrain, LogitechController gamepad) {
         super();
         addRequirements(drivetrain);
