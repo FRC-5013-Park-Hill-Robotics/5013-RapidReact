@@ -40,6 +40,10 @@ public class IntakeVision extends SubsystemBase {
   public void getDistanceFromTarget(){
     PhotonUtils.calculateDistanceToTargetMeters(IntakeVisionConstants.CAMERA_HEIGHT, IntakeVisionConstants.TARGET_HEIGHT, Math.toRadians(this.getTarget().getYaw()), Math.toRadians(this.getTarget().getPitch()));
   }
+  public double getAngleOfError(){
+    return this.getResult().getBestTarget().getYaw();
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
