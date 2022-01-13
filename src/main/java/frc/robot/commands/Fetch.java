@@ -6,27 +6,28 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.LogitechController;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeVision;
 import static frc.robot.Constants.DrivetrainConstants.ThetaGains.*;
 
+import java.util.function.DoubleSupplier;
+
 public class Fetch extends CommandBase {
   private DrivetrainSubsystem m_drivetrain;
   private IntakeVision m_vision;
   private Intake m_intake;
-  private LogitechController m_controller;
+  private DoubleSupplier m_throttle;
   private PIDController m_thetaController;
 
   /** Creates a new Fetch. */
-  public Fetch(DrivetrainSubsystem drivetrain, IntakeVision vision, Intake intake, LogitechController controller) {
+  public Fetch(DrivetrainSubsystem drivetrain, IntakeVision vision, Intake intake, DoubleSupplier throttle) {
     super();
     addRequirements(drivetrain, intake);
     m_drivetrain = drivetrain;
     m_intake = intake;
     m_vision = vision;
-    m_controller = controller;
+    m_throttle = throttle;
     m_thetaController =  new PIDController(kP, kI, kD);
     m_thetaController.setTolerance(kTurnToleranceRad,kTurnRateToleranceRadPerS);
   }
@@ -39,7 +40,11 @@ public class Fetch extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
+   // make sure intake is down.
+   // Call pid controller calculate passing in the x offset from vision and 0 for the setpoint
+   // use the output from calculate to make a new ChassisSpeed object to pass to the drivetrain
+   // with a yVelocity of 0, an xVelocity based on the throttle, and an angular velocity of the 
+   // pid calculate
   }
 
   // Called once the command ends or is interrupted.
