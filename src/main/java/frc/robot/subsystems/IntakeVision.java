@@ -37,8 +37,8 @@ public class IntakeVision extends SubsystemBase {
     PhotonTrackedTarget target = this.getResult().getBestTarget();
     return target;
   }
-  public void getDistanceFromTarget(){
-    PhotonUtils.calculateDistanceToTargetMeters(IntakeVisionConstants.CAMERA_HEIGHT, IntakeVisionConstants.TARGET_HEIGHT, Math.toRadians(this.getTarget().getYaw()), Math.toRadians(this.getTarget().getPitch()));
+  public double getDistanceFromTarget(){
+    return PhotonUtils.calculateDistanceToTargetMeters(IntakeVisionConstants.CAMERA_HEIGHT, IntakeVisionConstants.TARGET_HEIGHT, Math.toRadians(this.getTarget().getYaw()), Math.toRadians(this.getTarget().getPitch()));
   }
   public double getAngleOfError(){
     return this.getResult().getBestTarget().getYaw();
