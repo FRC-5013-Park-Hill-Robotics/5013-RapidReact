@@ -42,6 +42,7 @@ public class Fetch extends CommandBase {
   public void execute() {
    // make sure intake is down.
    // Call pid controller calculate passing in the x offset from vision and 0 for the setpoint
+   double namepls = m_thetaController.calculate(m_vision.getAngleOfError(), 0);
    // use the output from calculate to make a new ChassisSpeed object to pass to the drivetrain
    // with a yVelocity of 0, an xVelocity based on the throttle, and an angular velocity of the 
    // pid calculate
