@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
@@ -41,11 +42,20 @@ public class Fetch extends CommandBase {
   @Override
   public void execute() {
    // make sure intake is down.
-   // Call pid controller calculate passing in the x offset from vision and 0 for the setpoint
-   double namepls = m_thetaController.calculate(m_vision.getAngleOfError(), 0);
+  if (!m_intake.isDown()){
+    m_intake.dropIntake();;
+  }
+    // Call pid controller calculate passing in the x offset from vision and 0 for the setpoint
+   double PIDOutput = m_thetaController.calculate(m_vision.getAngleOfError(), 0);
+   ChassisSpeeds chassisSpeeds = new ChassisSpeeds(DrivetrainSubsystem.percentOutputToMetersPerSecond(m_throttle.getAsDouble()),0, PIDOutput);
    // use the output from calculate to make a new ChassisSpeed object to pass to the drivetrain
    // with a yVelocity of 0, an xVelocity based on the throttle, and an angular velocity of the 
    // pid calculate
+   m_drivetrain.drive(chassisSpeeds);
+  
+
+   
+   
   }
 
   // Called once the command ends or is interrupted.
