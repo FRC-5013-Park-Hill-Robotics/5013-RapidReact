@@ -26,6 +26,7 @@ public final class Constants {
     public static final int PCM_ID = 0;
     public static final int FALCON_500_MAX_RPM = 6380;
     public static final int PDP_ID = 0;
+    public static final int BLINKEN_PWM_PORT = 0;
 
     public static final class ControllerConstants {
         public static final int DRIVER_CONTROLLER_PORT = 0;
@@ -76,14 +77,14 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 2;
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ENCODER_ID = 4;
-            public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(176); 
+            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(176); 
             public static final int STATES_INDEX = 0;        }
 
         public static final class FrontRightSwerveConstants {
             public static final int STEER_MOTOR_ID = 5;
             public static final int DRIVE_MOTOR_ID = 6;
             public static final int ENCODER_ID = 7;
-            public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(177.2);
+            public static final double ENCODER_OFFSET_RADIANS =0;//  -Math.toRadians(177.2);
             public static final int STATES_INDEX = 1;
         }
 
@@ -91,7 +92,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 8;
             public static final int DRIVE_MOTOR_ID = 9;
             public static final int ENCODER_ID = 10;
-            public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(275.8); 
+            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(275.8); 
             public static final int STATES_INDEX = 2;
         }
 
@@ -99,7 +100,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 11;
             public static final int DRIVE_MOTOR_ID = 12;
             public static final int ENCODER_ID = 13;
-            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(315.6);
+            public static final double ENCODER_OFFSET_RADIANS = 0;//  -Math.toRadians(315.6);
             public static final int STATES_INDEX = 3;
         }
 

@@ -8,12 +8,13 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.commands.GamepadDrive;
 import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -26,7 +27,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
-    private PowerDistribution  m_pdp = new PowerDistribution(PDP_ID,ModuleType.kCTRE);
+    private PowerDistribution m_PowerDistribution = new PowerDistribution(PDP_ID, ModuleType.kRev);
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -41,7 +43,6 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
 
-
     }
 
     /**
@@ -52,10 +53,11 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Back button zeros the gyroscope
-        new JoystickButton(m_controller, LogitechController.Button.kBack.value)
+        new Button(m_controller::getBackButton)
                 // No requirements because we don't need to interrupt anything
                 .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
-        new JoystickButton(m_controller, LogitechController.Button.kA.value).whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI) );
+        new Button(m_controller::getAButton)
+                .whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI));
     }
 
     /**
@@ -68,4 +70,7 @@ public class RobotContainer {
         return AutonomousCommandFactory.createAutonomous(m_drivetrainSubsystem);
     }
 
+    public boolean isRedAlliance() {
+        return DriverStation.getAlliance() == Alliance.Red;
+    }
 }
