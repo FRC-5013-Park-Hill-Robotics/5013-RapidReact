@@ -28,6 +28,7 @@ public class Fetch extends CommandBase {
     m_vision = vision;
     m_controller = controller;
     m_thetaController =  new PIDController(kP, kI, kD);
+    m_thetaController.setTolerance(kTurnToleranceRad,kTurnRateToleranceRadPerS);
   }
 
   // Called when the command is initially scheduled.
