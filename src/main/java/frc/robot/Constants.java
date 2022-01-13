@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final int PCM_ID = 0;
     public static final int FALCON_500_MAX_RPM = 6380;
     public static final int PDP_ID = 0;
 
@@ -131,15 +132,9 @@ public final class Constants {
     public class Conveyor extends SubsystemBase {
         private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(ConveyorConstants.LEFT_CONVEYOR_MOTOR);
         private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(ConveyorConstants.RIGHT_CONVEYOR_MOTOR);
-        private DigitalInput lowerEye = new DigitalInput(ConveyorConstants.LOWER_EYE);
-        private DigitalInput upperEye = new DigitalInput(ConveyorConstants.UPPER_EYE);
-        private DigitalInput middleEye; 
-        private long startTime=0;
-        private double percentOutput;
         public static final double kSpeed = 0.4;//percent output
         public static final double kSpeedForShooter = 0.6;//percent output
-        private boolean override = false;
-        private boolean autoIndexing = true;
+        
         
       
         /**
