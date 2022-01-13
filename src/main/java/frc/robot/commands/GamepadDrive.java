@@ -46,28 +46,22 @@ public class GamepadDrive extends CommandBase {
 
     private double getXTranslationMetersPerSecond() {
         // on the controller y is up, on the field x is away from the driver
-        return -percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
+        return -DrivetrainSubsystem.percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
         //return -percentOutputToMetersPerSecond(modifyAxis(m_gamepad.getLeftY()));
     }
 
     private double getYTranslationMetersPerSecond() {
         // on the controller y is up, on the field x is away from the driver
-        return -percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
+        return -DrivetrainSubsystem.percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
         //return -percentOutputToMetersPerSecond(modifyAxis(m_gamepad.getLeftX()));
     }
 
     private double getRotationRadiansPerSecond() {
-        return -percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX())));
+        return -DrivetrainSubsystem.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX())));
 
     }
 
-    private double percentOutputToMetersPerSecond(double percentOutput){
-        return DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND * percentOutput;
-    }
 
-    private double percentOutputToRadiansPerSecond(double percentOutput){
-        return DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND * percentOutput;
-    }
 
     private static double modifyAxis(double value) {
         // Deadband

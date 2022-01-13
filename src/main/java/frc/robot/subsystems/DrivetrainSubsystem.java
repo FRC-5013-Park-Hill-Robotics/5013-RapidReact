@@ -173,4 +173,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public SwerveDriveKinematics getKinematics() {
         return m_kinematics;
     }
+    
+    public static double percentOutputToMetersPerSecond(double percentOutput){
+        return DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND * percentOutput;
+    }
+
+    public static double percentOutputToRadiansPerSecond(double percentOutput){
+        return DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND * percentOutput;
+    }
 }
