@@ -11,30 +11,30 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class StatusLED extends SubsystemBase {
-  private PWM m_pwm = new PWM(Constants.STATUS_LED_PWM_PORT);
-  private RobotContainer m_RobotContainer;
+	private PWM m_pwm = new PWM(Constants.STATUS_LED_PWM_PORT);
+	private RobotContainer m_RobotContainer;
 
-  /** Creates a new StatusLED. */
-  public StatusLED(RobotContainer robotContainer) {
-    super();
-    m_RobotContainer = robotContainer;
-  }
+	/** Creates a new StatusLED. */
+	public StatusLED(RobotContainer robotContainer) {
+		super();
+		m_RobotContainer = robotContainer;
+	}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    // Set color based off of robot status. Use m_RobotContainer to access robot
-    // subsystems
+	@Override
+	public void periodic() {
+		// This method will be called once per scheduler run
+		// Set color based off of robot status. Use m_RobotContainer to access robot
+		// subsystems
 
-    // Until we have interesting statuses to code set color to alliance
-    if (m_RobotContainer.isRedAlliance()) {
-      setColorPattern(BlinkenConstants.RED_BRIGHT);
-    } else {
-      setColorPattern(BlinkenConstants.BLUE);
-    }
-  }
+		// Until we have interesting statuses to code set color to alliance
+		if (m_RobotContainer.isRedAlliance()) {
+			setColorPattern(BlinkenConstants.RED_BRIGHT);
+		} else {
+			setColorPattern(BlinkenConstants.BLUE);
+		}
+	}
 
-  public void setColorPattern(double color) {
-    m_pwm.setSpeed(color);
-  }
+	public void setColorPattern(double color) {
+		m_pwm.setSpeed(color);
+	}
 }
