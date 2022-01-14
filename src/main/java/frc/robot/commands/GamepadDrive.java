@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.LogitechController;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 
 public class GamepadDrive extends CommandBase {
     

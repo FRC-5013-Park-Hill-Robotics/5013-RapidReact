@@ -4,13 +4,8 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
-
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -26,14 +21,15 @@ public final class Constants {
     public static final int PCM_ID = 0;
     public static final int FALCON_500_MAX_RPM = 6380;
     public static final int PDP_ID = 0;
-    public static final int BLINKEN_PWM_PORT = 0;
+    public static final int STATUS_LED_PWM_PORT = 0;
 
     public static final class ControllerConstants {
         public static final int DRIVER_CONTROLLER_PORT = 0;
         public static final double DEADBAND = 0.05;
     }
+
     public static final class DrivetrainConstants {
-        public static final int PIGEON_ID = 1; 
+        public static final int PIGEON_ID = 1;
         public static final GearRatio SWERVE_GEAR_RATIO = GearRatio.L2;
         /**
          * The maximum voltage that will be delivered to the drive motors.
@@ -42,17 +38,18 @@ public final class Constants {
          * useful during initial testing of the robot.
          */
         public static final double MAX_VOLTAGE = 12.0;
-        public static final class DrivetrainGeometry{
+
+        public static final class DrivetrainGeometry {
             /**
              * The left-to-right distance between the drivetrain wheels Should be measured
              * from center to center.
              */
-            public static final double TRACKWIDTH_METERS = .590; 
+            public static final double TRACKWIDTH_METERS = .590;
             /**
              * The front-to-back distance between the drivetrain wheels. Should be measured
              * from center to center.
              */
-            public static final double WHEELBASE_METERS = .590; 
+            public static final double WHEELBASE_METERS = .590;
 
             /**
              * The maximum velocity of the robot in meters per second.
@@ -61,7 +58,8 @@ public final class Constants {
              * line.
              */
             public static final double MAX_VELOCITY_METERS_PER_SECOND = FALCON_500_MAX_RPM / 60.0
-                    * SdsModuleConfigurations.MK4_L2.getDriveReduction() * SdsModuleConfigurations.MK4_L2.getWheelDiameter()
+                    * SdsModuleConfigurations.MK4_L2.getDriveReduction()
+                    * SdsModuleConfigurations.MK4_L2.getWheelDiameter()
                     * Math.PI;
             /**
              * The maximum angular velocity of the robot in radians per second.
@@ -72,19 +70,19 @@ public final class Constants {
                     / Math.hypot(TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0);
         }
 
-
         public static final class FrontLeftSwerveConstants {
             public static final int STEER_MOTOR_ID = 2;
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ENCODER_ID = 4;
-            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(176); 
-            public static final int STATES_INDEX = 0;        }
+            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(176);
+            public static final int STATES_INDEX = 0;
+        }
 
         public static final class FrontRightSwerveConstants {
             public static final int STEER_MOTOR_ID = 5;
             public static final int DRIVE_MOTOR_ID = 6;
             public static final int ENCODER_ID = 7;
-            public static final double ENCODER_OFFSET_RADIANS =0;//  -Math.toRadians(177.2);
+            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(177.2);
             public static final int STATES_INDEX = 1;
         }
 
@@ -92,7 +90,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 8;
             public static final int DRIVE_MOTOR_ID = 9;
             public static final int ENCODER_ID = 10;
-            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(275.8); 
+            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(275.8);
             public static final int STATES_INDEX = 2;
         }
 
@@ -100,20 +98,20 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 11;
             public static final int DRIVE_MOTOR_ID = 12;
             public static final int ENCODER_ID = 13;
-            public static final double ENCODER_OFFSET_RADIANS = 0;//  -Math.toRadians(315.6);
+            public static final double ENCODER_OFFSET_RADIANS = 0;// -Math.toRadians(315.6);
             public static final int STATES_INDEX = 3;
         }
 
-        //Turning the bot gains used by PIDControllers
+        // Turning the bot gains used by PIDControllers
         public static final class ThetaGains {
             public static final double kP = 4;
             public static final double kI = 0;
             public static final double kD = 0;
-            public static final double kTurnToleranceRad = 0.025; 
+            public static final double kTurnToleranceRad = 0.025;
             public static final double kTurnRateToleranceRadPerS = .17;
         }
 
-        //Driving the bot gains used by PIDControllers
+        // Driving the bot gains used by PIDControllers
         public static final class TranslationGains {
             public static final double kP = 2.2956;
             public static final double kI = 0;
@@ -123,39 +121,21 @@ public final class Constants {
             public static final double kS = 0.55493;
         }
         //
-        public static final class IntakeConstants {
+
+    }
+
+    public static final class IntakeConstants {
         public static final int INTAKE_MOTOR = 0;
         public static final int DROP_INTAKE_SOLENOID_CHANNEL = 0;
         public static final int RAISE_INTAKE_SOLENOID_CHANNEL = 0;
         public static final int ROLLER_SERVO = 0;
     }
-    
-    public class Conveyor extends SubsystemBase {
-        private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(ConveyorConstants.LEFT_CONVEYOR_MOTOR);
-        private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(ConveyorConstants.RIGHT_CONVEYOR_MOTOR);
-        public static final double kSpeed = 0.4;//percent output
-        public static final double kSpeedForShooter = 0.6;//percent output
-        
-        
-      
-        /**
-         * Creates a new Conveyor.
-         */
-        public Conveyor() {
-          leftMotor1.configFactoryDefault();
-          rightMotor1.configFactoryDefault();
-          leftMotor1.setInverted(true);
-          rightMotor1.setInverted(false);
-          leftMotor1.setNeutralMode(NeutralMode.Brake);
-          rightMotor1.setNeutralMode(NeutralMode.Brake);
-        }
-    }
- public static final class ConveyorConstants {
+
+    public static final class ConveyorConstants {
         public static final int LEFT_CONVEYOR_MOTOR = 9;
         public static final int RIGHT_CONVEYOR_MOTOR = 10;
         public static final int LOWER_EYE = 1;
         public static final int UPPER_EYE = 0;
         public static final int NUDGE = 19;
     }
-}
 }
