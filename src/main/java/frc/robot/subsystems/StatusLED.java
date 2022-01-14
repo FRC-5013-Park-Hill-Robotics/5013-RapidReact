@@ -11,7 +11,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class StatusLED extends SubsystemBase {
-  private PWM m_pwm = new PWM(Constants.BLINKEN_PWM_PORT);
+  private PWM m_pwm = new PWM(Constants.STATUS_LED_PWM_PORT);
   private RobotContainer m_RobotContainer;
 
   /** Creates a new StatusLED. */
