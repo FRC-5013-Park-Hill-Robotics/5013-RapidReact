@@ -6,6 +6,50 @@ package frc.robot;
 
 /** Add your docs here. */
 public class BlinkenConstants {
+    public final static double RAINBOW_RAINBOW = -0.99 ; //1 1005 -0.99 Fixed Palette Pattern Rainbow, Rainbow Palette Pattern Density Speed Brightness
+    public final static double PARTY_PALETTE = -0.97 ;// =2 1015 -0.97 Fixed Palette Pattern Rainbow, Party Palette Pattern Density Speed Brightness
+    public final static double OCEAN_RAINBOW = -0.95; //3 1025 -0.95 Fixed Palette Pattern Rainbow, Ocean Palette Pattern Density Speed Brightness
+    public final static double LAVA_RAINBOW  = -0.93; //4 1035 -0.93 Fixed Palette Pattern Rainbow, Lave Palette Pattern Density Speed Brightness
+    public final static double FOREST_RAINBOW  = -0.91; //5 1045 -0.91 Fixed Palette Pattern Rainbow, Forest Palette Pattern Density Speed Brightness
+    public final static double GLITTER_RAINBOW= -0.89; //6 1055 -0.89 Fixed Palette Pattern Rainbow with Glitter Pattern Density Speed Brightness
+    public final static double CONFETTI =  -0.87; //7 1065 -0.87 Fixed Palette Pattern Confetti Pattern Density Speed Brightness
+    public final static double RED_SHOT = -0.85; //8 1075 -0.85 Fixed Palette Pattern Shot, Red - - Brightness
+    public final static double BLUE_SHOT =  -0.83; //9 1085 -0.83 Fixed Palette Pattern Shot, Blue - - Brightness
+    public final static double WHITE_SHOT = -0.81; //10 1095 -0.81 Fixed Palette Pattern Shot, White - - Brightness
+    public final static double RAINBOW_SINGLETON = -0.79; //11 1105 -0.79 Fixed Palette Pattern Sinelon, Rainbow Palette Pattern Density Speed Brightness
+    public final static double PARTY_SINGLETON =  -0.77; //12 1115 -0.77 Fixed Palette Pattern Sinelon, Party Palette Pattern Density Speed Brightness
+    public final static double OCEAN_SINGLETON = -0.75; //13 1125 -0.75 Fixed Palette Pattern Sinelon, Ocean Palette Pattern Density Speed Brightness
+    public final static double LAVA_SINGLETON = -0.73 ; //14 1135 -0.73 Fixed Palette Pattern Sinelon, Lava Palette Pattern Density Speed Brightness
+    public final static double FOREST_SINGLETON = -0.71; //15 1145 -0.71 Fixed Palette Pattern Sinelon, Forest Palette Pattern Density Speed Brightness
+    public final static double RAINBOW_BEATS = -0.69; //16 1155 -0.69 Fixed Palette Pattern Beats per Minute, Rainbow Palette Pattern Density Speed Brightness
+    public final static double PARTY_BEATS=  -0.67 ; //17 1165 -0.67 Fixed Palette Pattern Beats per Minute, Party Palette Pattern Density Speed Brightness
+    public final static double OCEAN_BEATS= -0.65; //18 1175 -0.65 Fixed Palette Pattern Beats per Minute, Ocean Palette Pattern Density Speed Brightness
+    public final static double LAVA_BEATS=  -0.63; //19 1185 -0.63 Fixed Palette Pattern Beats per Minute, Lava Palette Pattern Density Speed Brightness
+    public final static double FOREST_BEATS= -0.61; //20 1195 -0.61 Fixed Palette Pattern Beats per Minute, Forest Palette Pattern Density Speed Brightness
+    public final static double FIRE_MEDIUM = -0.59; //21 1205 -0.59 Fixed Palette Pattern Fire, Medium - - Brightness
+    public final static double FIRE_LARGE = -0.57; //22 1215 -0.57 Fixed Palette Pattern Fire, Large - - Brightness
+    public final static double RAINBOW_TWINKLES =  -0.55; //23 1225 -0.55 Fixed Palette Pattern Twinkles, Rainbow Palette - - Brightness
+    public final static double PARTY_TWINKLES = -0.53; //24 1235 -0.53 Fixed Palette Pattern Twinkles, Party Palette - - Brightness
+    public final static double OCEAN_TWINKLES = -0.51; //25 1245 -0.51 Fixed Palette Pattern Twinkles, Ocean Palette - - Brightness
+    public final static double LAVA_TWINKLES = -0.49; //26 1255 -0.49 Fixed Palette Pattern Twinkles, Lava Palette - - Brightness
+    public final static double FOREST_TWINKLES = -0.47; //27 1265 -0.47 Fixed Palette Pattern Twinkles, Forest Palette - - Brightness
+    public final static double RAINBOW_WAVES = -0.45; //28 1275 -0.45 Fixed Palette Pattern Color Waves, Rainbow Palette - - Brightness
+    public final static double PARTY_WAVES =  -0.43; //29 1285 -0.43 Fixed Palette Pattern Color Waves, Party Palette - - Brightness
+    public final static double OCEAN_WAVES = -0.41; //30 1295 -0.41 Fixed Palette Pattern Color Waves, Ocean Palette - - Brightness
+    public final static double LAVA_WAVES = -0.39; //31 1305 -0.39 Fixed Palette Pattern Color Waves, Lava Palette - - Brightness
+    public final static double FOREST_WAVES = -0.37; //32 1315 -0.37 Fixed Palette Pattern Color Waves, Forest Palette - - Brightness
+    public final static double RED_SCANNER=  -0.35 ; //33 1325 -0.35 Fixed Palette Pattern Larson Scanner, Red Pattern Width Speed Brightness
+    public final static double GRAY_SCANNER = -0.33; //34 1335 -0.33 Fixed Palette Pattern Larson Scanner, Gray Pattern Width Speed Brightness
+    public final static double RED_CHASE = -0.31; //35 1345 -0.31 Fixed Palette Pattern Light Chase, Red Dimming Speed Brightness
+    public final static double BLUE_CHASE = -0.29 ; //36 1355 -0.29 Fixed Palette Pattern Light Chase, Blue Dimming Speed Brightness
+    public final static double GRAY_CHASE = -0.27; //37 1365 -0.27 Fixed Palette Pattern Light Chase, Gray Dimming Speed Brightness
+    public final static double RED_HEARTBEAT =  -0.25; //38 1375 -0.25 Fixed Palette Pattern Heartbeat, Red - - Brightness
+    public final static double BLUE_HEARTBEAT = -0.23 ; //39 1385 -0.23 Fixed Palette Pattern Heartbeat, Blue - - Brightness
+    public final static double WHITE_HEARTBEAT = -0.21; //40 1395 -0.21 Fixed Palette Pattern Heartbeat, White - - Brightness
+    public final static double GRAY_HEARTBEAT = -0.19; //41 1405 -0.19 Fixed Palette Pattern Heartbeat, Gray - - Brightness
+    public final static double RED_BREATH = -0.17; //42 1415 -0.17 Fixed Palette Pattern Breath, Red - - Brightness
+    public final static double BLUE_BREATH = -0.15; //43 1425  Fixed Palette Pattern Breath, Blue - - Brightness
+    public final static double GRAY_BREATH =  -0.13 ; //44 1435 -0.13 Fixed Palette Pattern Breath, Gray - - Brightness
     public final static double RED_STROBE =  -0.11; //45 1445 -0.11 Fixed Palette Pattern Strobe, Red - - Brightness
     public final static double BLUE_STROBE = -0.09 ; //46 1455 -0.09 Fixed Palette Pattern Strobe, Blue - - Brightness
     public final static double GOLD_STROBE = -0.07 ; //47 1465 -0.07 Fixed Palette Pattern Strobe, Gold - - Brightness
@@ -58,7 +102,7 @@ public class BlinkenConstants {
     public final static double BLUE =  0.87; //94 1935 0.87 Solid Colors Blue - - Brightness
     public final static double BLUE_VIOLET = 0.89; //95 1945 0.89 Solid Colors Blue Violet - - Brightness
     public final static double VIOLET = 0.91; //96 1955 0.91 Solid Colors Violet - - Brightness
-    public final static double  WHITE =  0.93; //97 1965 0.93 Solid Colors White - - Brightness
+    public final static double WHITE =  0.93; //97 1965 0.93 Solid Colors White - - Brightness
     public final static double GRAY = 0.95 ; //98 1975 0.95 Solid Colors Gray - - Brightness
     public final static double GRAY_DARK = 0.97; //99 1985 0.97 Solid Colors Dark Gray - - Brightness
     public final static double BLACK = 0.99; //100 1995 0.99 Solid Colors Black - - Brightness
