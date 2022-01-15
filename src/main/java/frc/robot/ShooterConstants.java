@@ -9,6 +9,7 @@ public final class ShooterConstants {
 
     public static final int SHOOTER_MOTOR_ID = 0;
     public static final double SHOOTER_VELOCITY = 0;
+    public static final double SHOOTER_NO_VELOCITY = 0;
     
     public static final class FLY_WHEEL_GAINS{
 
