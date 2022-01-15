@@ -19,62 +19,64 @@ import frc.robot.Constants.IntakeConstants;
 /** Add your docs here. */
 public class Intake extends SubsystemBase {
 
-private TalonSRX intakeMotor = new TalonSRX(IntakeConstants.INTAKE_MOTOR);
-  
-  //Dropping the intake is set up as forward and raising it as reverse, may have to change based on mechanics and wiring.
-  private Solenoid dropIntakeSolenoid;// = new Solenoid(Constants.PCM_ID,PneumaticsModuleType.REVPH, IntakeConstants.DROP_INTAKE_SOLENOID_CHANNEL);
-  private Solenoid raiseIntakeSolenoid;// = new Solenoid(Constants.PCM_ID,PneumaticsModuleType.REVPH,IntakeConstants.RAISE_INTAKE_SOLENOID_CHANNEL);
+	private TalonSRX intakeMotor = new TalonSRX(IntakeConstants.INTAKE_MOTOR);
 
-  
-  /**
-   * Creates a new Intake.
-   */
-  public Intake(Conveyor conveyor) {
-    super();
-    intakeMotor.configFactoryDefault();
-    intakeMotor.setInverted(true);
-    intakeMotor.setNeutralMode(NeutralMode.Brake);
-  }
+	// Dropping the intake is set up as forward and raising it as reverse, may have
+	// to change based on mechanics and wiring.
+	private Solenoid dropIntakeSolenoid;// = new Solenoid(Constants.PCM_ID,PneumaticsModuleType.REVPH,
+										// IntakeConstants.DROP_INTAKE_SOLENOID_CHANNEL);
+	private Solenoid raiseIntakeSolenoid;// = new
+											// Solenoid(Constants.PCM_ID,PneumaticsModuleType.REVPH,IntakeConstants.RAISE_INTAKE_SOLENOID_CHANNEL);
 
-  @Override
-  public void periodic() {
-    Faults faults = new Faults();
-    StickyFaults stickyFaults = new StickyFaults();
-    intakeMotor.getFaults(faults);
-    intakeMotor.getStickyFaults(stickyFaults);
-    if (faults.hasAnyFault()){
-      SmartDashboard.putString("Intake Faults",faults.toString());
-    } else {
-      SmartDashboard.putString("Intake Faults", "none");
-    }
-    if (stickyFaults.hasAnyFault()){
-      SmartDashboard.putString("Intake Sticky Faults",stickyFaults.toString());
-    } else {
-      SmartDashboard.putString("IntakeSticky Faults", "none");
-    }
+	/**
+	 * Creates a new Intake.
+	 */
+	public Intake(Conveyor conveyor) {
+		super();
+		intakeMotor.configFactoryDefault();
+		intakeMotor.setInverted(true);
+		intakeMotor.setNeutralMode(NeutralMode.Brake);
+	}
 
-    
-  }
+	@Override
+	public void periodic() {
 
-  public void dropIntake(){
-    dropIntakeSolenoid.set(true); 
-    raiseIntakeSolenoid.set(false); 
-    intakeMotor.set(ControlMode.PercentOutput, .45 );
-  }
+		Faults faults = new Faults();
+		StickyFaults stickyFaults = new StickyFaults();
+		intakeMotor.getFaults(faults);
+		intakeMotor.getStickyFaults(stickyFaults);
+		if (faults.hasAnyFault()) {
+			SmartDashboard.putString("Intake Faults", faults.toString());
+		} else {
+			SmartDashboard.putString("Intake Faults", "none");
+		}
+		if (stickyFaults.hasAnyFault()) {
+			SmartDashboard.putString("Intake Sticky Faults", stickyFaults.toString());
+		} else {
+			SmartDashboard.putString("IntakeSticky Faults", "none");
+		}
 
-  public void raiseIntake(){
-    intakeMotor.set(ControlMode.PercentOutput, 0 );
-    dropIntakeSolenoid.set(false); 
-    raiseIntakeSolenoid.set(true); 
-    
-  }
+	}
 
-  public boolean isDown(){
-    return dropIntakeSolenoid.get();
-  }
-  public void reverseIntake(){
-    intakeMotor.set(ControlMode.PercentOutput, -.75 ); 
-  }
-  
+	public void dropIntake() {
+		dropIntakeSolenoid.set(true);
+		raiseIntakeSolenoid.set(false);
+		intakeMotor.set(ControlMode.PercentOutput, .45);
+	}
+
+	public void raiseIntake() {
+		intakeMotor.set(ControlMode.PercentOutput, 0);
+		dropIntakeSolenoid.set(false);
+		raiseIntakeSolenoid.set(true);
+
+	}
+
+	public boolean isDown() {
+		return dropIntakeSolenoid.get();
+	}
+
+	public void reverseIntake() {
+		intakeMotor.set(ControlMode.PercentOutput, -.75);
+	}
+
 }
- 
