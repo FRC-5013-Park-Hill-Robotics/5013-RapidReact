@@ -24,7 +24,7 @@ public class Shooter extends SubsystemBase {
   public Shooter(Conveyor conveyor) {
     motor.setInverted(true);
     m_conveyor = conveyor;
-    setPID(motor,ShooterConstants.FLY_WHEEL_GAINS.kP, 0, 0, ShooterConstants.FLY_WHEEL_GAINS.kF);
+    setPID(motor,ShooterConstants.kP, 0, 0, ShooterConstants.kF);
   }
 
   //method for testing.

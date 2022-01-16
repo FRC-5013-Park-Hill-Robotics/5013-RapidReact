@@ -16,34 +16,6 @@ public class Conveyor extends SubsystemBase {
     public static final double kSpeed = 0.4;//percent output
     public static final double kSpeedForShooter = 0.6;//percent output
     
-    public void startForShooter() {
-        override=false;
-        //SmartDashboard.putString("Last Conveyor Command", "start for shooter");
-        setPercentOutput(kSpeedForShooter, 0L);
-        //leftMotor1.set(ControlMode.PercentOutput, .6);
-        //rightMotor1.set(ControlMode.PercentOutput, .6);
-      }
-    
-      public void reverse() {
-        override = true;
-        setPercentOutput(-kSpeed, 0L);
-    
-        //leftMotor1.set(ControlMode.PercentOutput, -0.6);
-        //rightMotor1.set(ControlMode.PercentOutput,- 0.6);   
-      }
-
-    public void stop() {
-        override=false;
-        //SmartDashboard.putString("Last Conveyor Command", "stop");
-        setPercentOutput(0, 0L);
-        //leftMotor1.set(ControlMode.PercentOutput, 0.0);
-        //rightMotor1.set(ControlMode.PercentOutput, 0.0);
-      }
-    
-    public boolean isBallReadyToShoot(){
-        return upperEye.get();
-      }
-    
   
     /**
      * Creates a new Conveyor.
