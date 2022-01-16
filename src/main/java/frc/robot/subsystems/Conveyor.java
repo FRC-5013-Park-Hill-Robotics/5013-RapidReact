@@ -33,4 +33,23 @@ public class Conveyor extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+  public void stop(){
+
+  }
+
+  public void start(){
+
+  }
+
+  public void startForShooter(){
+
+  }
+
+  public boolean isBallReadyToShoot(){
+	  return false;
+  }
+
+  public void reverse(){
+
+  }
 }

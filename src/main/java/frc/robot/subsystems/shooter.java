@@ -8,13 +8,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.ShooterConstants;
+import static frc.robot.ShooterConstants.*;
+
 
 
 public class Shooter extends SubsystemBase {
-  private WPI_TalonFX motor = new WPI_TalonFX(ShooterConstants.SHOOTER_MOTOR_ID);
+  private WPI_TalonFX motor = new WPI_TalonFX(SHOOTER_MOTOR_ID);
   private boolean firing = false;
-  private double heightVelocity = ShooterConstants.SHOOTER_VELOCITY;
+  private double heightVelocity = SHOOTER_VELOCITY;
   private double m_targetVelocity = 0;
   private Conveyor m_conveyor;
 
@@ -24,7 +25,7 @@ public class Shooter extends SubsystemBase {
   public Shooter(Conveyor conveyor) {
     motor.setInverted(true);
     m_conveyor = conveyor;
-    setPID(motor,ShooterConstants.kP, 0, 0, ShooterConstants.kF);
+    setPID(motor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
   }
 
   //method for testing.
@@ -56,7 +57,7 @@ public class Shooter extends SubsystemBase {
 
   public void stopFiring(){
     firing = false;
-    setTargetVelocity(ShooterConstants.SHOOTER_NO_VELOCITY);
+   // setTargetVelocity(SHOOTER_NO_VELOCITY);
     m_conveyor.stop();
   }
 
@@ -79,7 +80,7 @@ public class Shooter extends SubsystemBase {
       } 
       motor.set(ControlMode.Velocity,getTargetVelocity());
     } else {
-      motor.set(ControlMode.Velocity,ShooterConstants.SHOOTER_VELOCITY);
+      motor.set(ControlMode.Velocity,SHOOTER_VELOCITY);
     }
 
   }
@@ -101,6 +102,6 @@ public class Shooter extends SubsystemBase {
     heightVelocity += amount;
   }
   public void resetVelocity(){
-    heightVelocity = ShooterConstants.SHOOTER_VELOCITY;
+    heightVelocity = SHOOTER_VELOCITY;
   }
 }

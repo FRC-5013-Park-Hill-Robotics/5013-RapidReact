@@ -11,7 +11,6 @@ public final class ShooterConstants {
     public static final double SHOOTER_VELOCITY = 0;
     
     public static final class FLY_WHEEL_GAINS{
-
         public static final double kF = 0.0;
         // (output% * 1023) / (tuner value for velocity at output%)
 
@@ -24,12 +23,6 @@ public final class ShooterConstants {
 
         public static final double kD = 0.0;
         // (10 x kP)
-    }
-
-    public static final class TURRET{
-
-        public static final double MIN_TURN = 0.0;
-
     }
 
 }
