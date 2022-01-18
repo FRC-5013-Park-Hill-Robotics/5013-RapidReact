@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.LogitechController;
@@ -34,6 +35,9 @@ public class GamepadDrive extends CommandBase {
 
     @Override
     public void execute() {
+		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY() );
+		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX() );
+		SmartDashboard.putNumber("Right X", m_gamepad.getLeftX() );
         m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
                 getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(), m_drivetrain.getGyroscopeRotation()));
     }
@@ -46,13 +50,11 @@ public class GamepadDrive extends CommandBase {
     private double getXTranslationMetersPerSecond() {
         // on the controller y is up, on the field x is away from the driver
         return -DrivetrainSubsystem.percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
-        //return -percentOutputToMetersPerSecond(modifyAxis(m_gamepad.getLeftY()));
     }
 
     private double getYTranslationMetersPerSecond() {
         // on the controller y is up, on the field x is away from the driver
         return -DrivetrainSubsystem.percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
-        //return -percentOutputToMetersPerSecond(modifyAxis(m_gamepad.getLeftX()));
     }
 
     private double getRotationRadiansPerSecond() {

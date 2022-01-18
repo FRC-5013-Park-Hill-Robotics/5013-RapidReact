@@ -8,7 +8,6 @@ import static frc.robot.Constants.DrivetrainConstants.PIGEON_ID;
 import static frc.robot.Constants.DrivetrainConstants.SWERVE_GEAR_RATIO;
 import static frc.robot.Constants.DrivetrainConstants.MAX_VOLTAGE;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
@@ -35,8 +34,7 @@ import frc.robot.Constants.DrivetrainConstants.TranslationGains;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-    private final TalonSRX pigeonTalon = new TalonSRX(PIGEON_ID);
-    private final PigeonIMU m_pigeon = new PigeonIMU(pigeonTalon);
+    private final PigeonIMU m_pigeon = new PigeonIMU(PIGEON_ID);
     private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
             // Front left
             new Translation2d(DrivetrainGeometry.TRACKWIDTH_METERS / 2.0, DrivetrainGeometry.WHEELBASE_METERS / 2.0),
