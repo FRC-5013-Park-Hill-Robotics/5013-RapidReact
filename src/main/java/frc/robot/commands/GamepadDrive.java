@@ -38,9 +38,19 @@ public class GamepadDrive extends CommandBase {
 		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY() );
 		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX() );
 		SmartDashboard.putNumber("Right X", m_gamepad.getLeftX() );
+/*
+		double translationX = modifyAxis(-m_gamepad.getLeftY());
+		double translationY = modifyAxis(-m_gamepad.getLeftX());
+		double angle = calculateTranslationDirection(translationX, translationY);
+		translationX = Math.cos(angle) * m_gamepad.getRightTriggerAxis();
+		translationY = Math.sin(angle) * m_gamepad.getRightTriggerAxis();
+
+		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
+		DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(), m_drivetrain.getGyroscopeRotation()));
+*/
         m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
-                getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(), m_drivetrain.getGyroscopeRotation()));
-    }
+               getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(), m_drivetrain.getGyroscopeRotation()));
+	  }
 
     @Override
     public void end(boolean interrupted) {
@@ -58,7 +68,7 @@ public class GamepadDrive extends CommandBase {
     }
 
     private double getRotationRadiansPerSecond() {
-        return -DrivetrainSubsystem.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX())));
+        return -DrivetrainSubsystem.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX())))/2;
 
     }
 
@@ -73,4 +83,9 @@ public class GamepadDrive extends CommandBase {
 
         return value;
     }
+	private double calculateTranslationDirection(double x, double y) {
+		// Calculate the angle.
+		// Swapping x/y and inverting y because our coordinate system has +x forwards and -y right
+		return Math.atan2(x, -y)  - Math.PI;
+	  }
 }
