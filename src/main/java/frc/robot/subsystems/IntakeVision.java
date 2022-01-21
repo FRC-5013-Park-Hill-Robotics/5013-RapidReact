@@ -9,7 +9,7 @@ import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import frc.robot.IntakeVisionConstants;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeVision extends SubsystemBase {
@@ -51,6 +51,6 @@ public class IntakeVision extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		// This method will be called once per scheduler run
+		SmartDashboard.putNumber("Angle of Error", getAngleOfError());
 	}
 }

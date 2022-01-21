@@ -14,78 +14,87 @@ import frc.robot.LogitechController;
 import frc.robot.Constants.ControllerConstants;
 
 public class GamepadDrive extends CommandBase {
-    
-    private DrivetrainSubsystem m_drivetrain;
-    private LogitechController m_gamepad;
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
-    private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3);
 
+	private DrivetrainSubsystem m_drivetrain;
+	private LogitechController m_gamepad;
+	private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
+	private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
+	private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3);
 
-    /** 
-     *  Constructor method for the GamepadDrive class
-     *  - Creates a new GamepadDrive object. 
-     */
-    public GamepadDrive(DrivetrainSubsystem drivetrain, LogitechController gamepad) {
-        super();
-        addRequirements(drivetrain);
-        m_gamepad = gamepad;
-        m_drivetrain = drivetrain;
-    }
+	/**
+	 * Constructor method for the GamepadDrive class
+	 * - Creates a new GamepadDrive object.
+	 */
+	public GamepadDrive(DrivetrainSubsystem drivetrain, LogitechController gamepad) {
+		super();
+		addRequirements(drivetrain);
+		m_gamepad = gamepad;
+		m_drivetrain = drivetrain;
+	}
 
-    @Override
-    public void execute() {
-		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY() );
-		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX() );
-		SmartDashboard.putNumber("Right X", m_gamepad.getLeftX() );
-/*
+	@Override
+	public void execute() {
+		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY());
+		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX());
+		SmartDashboard.putNumber("Right X", m_gamepad.getRightX());
+		;
+		double throttle = modifyAxis(m_gamepad.getRightTriggerAxis());
+
 		double translationX = modifyAxis(-m_gamepad.getLeftY());
 		double translationY = modifyAxis(-m_gamepad.getLeftX());
-		double angle = calculateTranslationDirection(translationX, translationY);
-		translationX = Math.cos(angle) * m_gamepad.getRightTriggerAxis();
-		translationY = Math.sin(angle) * m_gamepad.getRightTriggerAxis();
+		if (!(translationX == 0.0 && translationY == 0.0)) {
+			double angle = calculateTranslationDirection(translationX, translationY);
+			translationX = Math.cos(angle) * throttle;
+			translationY = Math.sin(angle) * throttle;
+		}
+		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
+				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),
+				m_drivetrain.getGyroscopeRotation()));
 
-		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
-		DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(), m_drivetrain.getGyroscopeRotation()));
-*/
-        m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
-               getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(), m_drivetrain.getGyroscopeRotation()));
-	  }
+		/*
+		 * m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+		 * getXTranslationMetersPerSecond(),
+		 * getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(),
+		 * m_drivetrain.getGyroscopeRotation()));
+		 */ }
 
-    @Override
-    public void end(boolean interrupted) {
-        m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-    }
+	@Override
+	public void end(boolean interrupted) {
+		m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+	}
 
-    private double getXTranslationMetersPerSecond() {
-        // on the controller y is up, on the field x is away from the driver
-        return -DrivetrainSubsystem.percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
-    }
+	private double getXTranslationMetersPerSecond() {
+		// on the controller y is up, on the field x is away from the driver
+		return -DrivetrainSubsystem
+				.percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
+	}
 
-    private double getYTranslationMetersPerSecond() {
-        // on the controller y is up, on the field x is away from the driver
-        return -DrivetrainSubsystem.percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
-    }
+	private double getYTranslationMetersPerSecond() {
+		// on the controller y is up, on the field x is away from the driver
+		return -DrivetrainSubsystem
+				.percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
+	}
 
-    private double getRotationRadiansPerSecond() {
-        return -DrivetrainSubsystem.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX())))/2;
+	private double getRotationRadiansPerSecond() {
+		return -DrivetrainSubsystem
+				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX()))) / 2;
 
-    }
+	}
 
+	private static double modifyAxis(double value) {
+		// Deadband
+		value = MathUtil.applyDeadband(value, ControllerConstants.DEADBAND);
 
+		// Square the axis
+		// value = Math.copySign(value * value, value);
 
-    private static double modifyAxis(double value) {
-        // Deadband
-        value = MathUtil.applyDeadband(value, ControllerConstants.DEADBAND);
+		return value;
+	}
 
-        // Square the axis
-        value = Math.copySign(value * value, value);
-
-        return value;
-    }
 	private double calculateTranslationDirection(double x, double y) {
 		// Calculate the angle.
-		// Swapping x/y and inverting y because our coordinate system has +x forwards and -y right
-		return Math.atan2(x, -y)  - Math.PI;
-	  }
+		// Swapping x/y
+		return Math.atan2(x, y) + Math.PI / 2;
+	}
 }
