@@ -14,16 +14,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeVision extends SubsystemBase {
 	// change to match camera name//
-	private PhotonCamera camera = new PhotonCamera("photonvision");
+	private PhotonCamera camera = new PhotonCamera("IntakeCamera");
 
 	/** Creates a new IntakeVision. */
 	public IntakeVision() {
+		super();
 	}
 
 	public PhotonPipelineResult getResult() {
+		System.out.println("Get Results");
+		if (camera != null){
+			System.out.println("Camera exists");
+		}
 		PhotonPipelineResult result = camera.getLatestResult();
 		return result;
 	}
+	
 
 	public void setPipeline(int pipeline) {
 		camera.setPipelineIndex(pipeline);
@@ -51,6 +57,8 @@ public class IntakeVision extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Angle of Error", getAngleOfError());
+		SmartDashboard.putString("Test", "TEst");
+			SmartDashboard.putNumber("Angle of Error", getAngleOfError());
+		SmartDashboard.putBoolean("Has Target", hasTarget());
 	}
 }

@@ -78,20 +78,22 @@ public class GamepadDrive extends CommandBase {
 
 	private double getRotationRadiansPerSecond() {
 		return -DrivetrainSubsystem
-				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX()))) / 2;
+				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX(),2))) / 3;
 
 	}
 
 	private static double modifyAxis(double value) {
+	
+		return modifyAxis(value, 1);
+	}
+	private static double modifyAxis(double value, int exponent) {
 		// Deadband
 		value = MathUtil.applyDeadband(value, ControllerConstants.DEADBAND);
 
-		// Square the axis
-		// value = Math.copySign(value * value, value);
+		 value = Math.copySign(Math.pow(value, exponent), value);
 
 		return value;
 	}
-
 	private double calculateTranslationDirection(double x, double y) {
 		// Calculate the angle.
 		// Swapping x/y

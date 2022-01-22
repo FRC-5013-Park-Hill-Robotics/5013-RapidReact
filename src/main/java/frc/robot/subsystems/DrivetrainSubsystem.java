@@ -115,7 +115,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
-        m_desiredStates = m_kinematics.toSwerveModuleStates(chassisSpeeds);
+		if (m_desiredStates != null && chassisSpeeds.vxMetersPerSecond == 0 && chassisSpeeds.vyMetersPerSecond == 0 && chassisSpeeds.omegaRadiansPerSecond == 0){
+			m_desiredStates[0].speedMetersPerSecond = 0;
+			m_desiredStates[1].speedMetersPerSecond = 0;
+			m_desiredStates[2].speedMetersPerSecond = 0;
+			m_desiredStates[3].speedMetersPerSecond = 0;
+		} else {
+			m_desiredStates = m_kinematics.toSwerveModuleStates(chassisSpeeds);
+		}
     }
 
     public void setDesiredStates(SwerveModuleState[] newStates) {
