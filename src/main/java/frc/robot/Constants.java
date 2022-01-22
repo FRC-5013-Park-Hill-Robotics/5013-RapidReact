@@ -73,7 +73,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 2;
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ENCODER_ID = 4;
-            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(189.1 - 180);
+            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(198.3 -180);
             public static final int STATES_INDEX = 0;
         }
 
@@ -81,7 +81,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 5;
             public static final int DRIVE_MOTOR_ID = 6;
             public static final int ENCODER_ID = 7;
-            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(180 + 84.1);
+            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(83.8 + 180);
             public static final int STATES_INDEX = 1;
         }
 
@@ -97,7 +97,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 11;
             public static final int DRIVE_MOTOR_ID = 12;
             public static final int ENCODER_ID = 13;
-            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(82.2 + 180);
+            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(87.6 + 180);
             public static final int STATES_INDEX = 3;
         }
 
