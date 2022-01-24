@@ -43,7 +43,7 @@ public class RobotContainer {
 	private ShooterVision m_shooterVision;// = new ShooterVision();
 	private Shooter m_shooter; //= new Shooter();
 	private Conveyor m_conveyor;// = new Conveyor();
-	private IntakeVision m_IntakeVision;// = new IntakeVision();
+	private IntakeVision m_IntakeVision = new IntakeVision();
 	private Intake m_intake;// = new Intake(m_conveyor);
 	private Climber m_Climber;// = new Climber();
 	
@@ -75,11 +75,11 @@ public class RobotContainer {
                 .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
         new Button(m_controller::getAButton)
                 .whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI));
-/*
+
 		new Button(m_controller::getLeftBumper)
 			.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision, m_intake,m_controller::getLeftX,m_controller::getLeftY,
 				 m_controller::getRightTriggerAxis, isRedAlliance()?IntakeVisionConstants.RED_CARGO:IntakeVisionConstants.BLUE_CARGO));
-	*/
+	
 				
 }
 
