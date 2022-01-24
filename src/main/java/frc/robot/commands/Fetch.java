@@ -29,7 +29,8 @@ public class Fetch extends CommandBase {
   /** Creates a new Fetch. */
   public Fetch(DrivetrainSubsystem drivetrain, IntakeVision vision, Intake intake,DoubleSupplier xTranslation, DoubleSupplier yTranslation, DoubleSupplier throttle, int pipeline) {
     super();
-    addRequirements(drivetrain, intake);
+    //addRequirements(drivetrain, intake);
+	addRequirements(drivetrain);
     m_drivetrain = drivetrain;
     m_intake = intake;
     m_vision = vision;

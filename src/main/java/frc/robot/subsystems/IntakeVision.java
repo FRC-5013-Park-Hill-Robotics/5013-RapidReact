@@ -52,13 +52,16 @@ public class IntakeVision extends SubsystemBase {
 	}
 
 	public double getAngleOfError() {
-		return this.getResult().getBestTarget().getYaw();
+		if (hasTarget()){
+			return this.getResult().getBestTarget().getYaw();
+		}
+		return 0;
 	}
 
 	@Override
 	public void periodic() {
 		SmartDashboard.putString("Test", "TEst");
-			SmartDashboard.putNumber("Angle of Error", getAngleOfError());
+		SmartDashboard.putNumber("Angle of Error", getAngleOfError());
 		SmartDashboard.putBoolean("Has Target", hasTarget());
 	}
 }
