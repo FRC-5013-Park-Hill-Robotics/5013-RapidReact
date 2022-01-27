@@ -10,9 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.ShooterConstants.*;
 
-
-
-public class Shooter extends SubsystemBase {
+public class CargoShooter extends SubsystemBase {
   private WPI_TalonFX motor = new WPI_TalonFX(SHOOTER_MOTOR_ID);
   private boolean firing = false;
   private double heightVelocity = SHOOTER_VELOCITY;
@@ -22,7 +20,7 @@ public class Shooter extends SubsystemBase {
   /**
    * Creates a new Shooter.
    */
-  public Shooter(Conveyor conveyor) {
+  public CargoShooter(Conveyor conveyor) {
     motor.setInverted(true);
     m_conveyor = conveyor;
     setPID(motor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
