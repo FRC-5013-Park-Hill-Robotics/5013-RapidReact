@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.ShooterConstants.*;
 
 
-
 public class Shooter extends SubsystemBase {
   private WPI_TalonFX motor = new WPI_TalonFX(SHOOTER_MOTOR_ID);
   private boolean firing = false;
