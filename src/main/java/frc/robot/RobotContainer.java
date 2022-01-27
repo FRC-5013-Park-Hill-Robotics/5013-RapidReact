@@ -18,7 +18,7 @@ import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeVision;
-import frc.robot.subsystems.CargoShooter;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.StatusLED;
 import frc.robot.subsystems.Turret;
@@ -41,7 +41,7 @@ public class RobotContainer {
 	private Turret m_turret;// = new Turret();
 	private StatusLED m_StatusLED;// = new StatusLed(this);
 	private ShooterVision m_shooterVision;// = new ShooterVision();
-	private CargoShooter m_shooter; //= new Shooter();
+	private Shooter m_shooter; //= new Shooter();
 	private Conveyor m_conveyor;// = new Conveyor();
 	private IntakeVision m_IntakeVision = new IntakeVision();
 	private Intake m_intake;// = new Intake(m_conveyor);
@@ -136,11 +136,11 @@ public class RobotContainer {
 		this.m_shooterVision = m_shooterVision;
 	}
 
-	public CargoShooter getshooter() {
+	public Shooter getshooter() {
 		return m_shooter;
 	}
 
-	public void setshooter(CargoShooter m_shooter) {
+	public void setshooter(Shooter m_shooter) {
 		this.m_shooter = m_shooter;
 	}
 
