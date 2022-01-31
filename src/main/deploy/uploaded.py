@@ -178,15 +178,16 @@ class Tester:
                         print(xmin, xmax, ymin, ymax)
                         continue
 
-                    red = [0,  100, 255]
-                    redtolerance = [25, 125, 50]
-                    blue = [255, 100, 0]
-                    bluetolerance = [50, 125, 25]
+                    red = [45,  40, 200]
+                    redtolerance = [25, 255, 55]
+                    blue = [90, 60, 30]
+                    bluetolerance = [255,255,255]
 
                     cropped = frame_cv2[ymin:ymax, xmin: xmax]
                     averages = np.average(cropped, axis=(0, 1))
+                    print("averages:", averages[0],",",averages[1],",",averages[2])
 
-                    if self.isWithinTolerance(red, averages, redtolerance):
+                    if averages[2] > averages[0] and averages[2] > averages[1]:
                         class_ids[i] = 0
                         cv2.rectangle(frame_cv2, (xmin, ymin), (xmax, ymax), red, 2)
                     elif self.isWithinTolerance(blue, averages, bluetolerance):

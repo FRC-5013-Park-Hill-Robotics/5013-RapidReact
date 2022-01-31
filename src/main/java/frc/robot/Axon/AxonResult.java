@@ -49,10 +49,20 @@ public class AxonResult {
 		return getDetections() != null && getDetections().size() > 0;
 	}
 
-	public Detection[] getDetectionsByLabel(String label){
-		Detection[] result = null;
+	public List<Detection> getDetectionsByLabel(String label){
+		List<Detection> result = null;
 		if (hasDetection()){
 			getDetections().stream().filter(detection -> detection.getLabel().equals(label));
+		}
+		return result;
+	}
+
+	public Detection getClosest(String label){
+		Detection result = null;
+		List<Detection> detections = getDetectionsByLabel(label);
+		if (detections != null && !detections.isEmpty()){
+			detections.sort(null);
+			result = detections.get(0);
 		}
 		return result;
 	}
