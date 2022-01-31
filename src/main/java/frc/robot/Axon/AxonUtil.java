@@ -36,8 +36,5 @@ public class AxonUtil {
 		}
 		return results;
 	}
-	public static int horizontalOffset(Detection detection, int width){
-		Box box = detection.getBox();
-		return width/2 - box.getXmax()-box.getXmin();
-	}
+
 }
