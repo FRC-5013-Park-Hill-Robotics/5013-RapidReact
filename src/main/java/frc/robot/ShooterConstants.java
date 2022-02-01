@@ -7,8 +7,10 @@ package frc.robot;
 /** Add your docs here. */
 public final class ShooterConstants {
 
-    public static final int SHOOTER_MOTOR_ID = 0;
+    public static final int SHOOTER_TOP_MOTOR = 0;
+    public static final int SHOOTER_BOTTOM_MOTOR = 0;
     public static final double SHOOTER_VELOCITY = 0;
+    public static final double TOP_PERCENT_OF_BOTTOM = 0;
     
     public static final class FLY_WHEEL_GAINS{
         public static final double kF = 0.0;

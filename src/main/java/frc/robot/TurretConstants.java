@@ -5,4 +5,6 @@
 package frc.robot;
 
 /** Add your docs here. */
-public class TurretConstants {}
+public class TurretConstants {
+    public static final int TURRET_MOTOR = 0;
+}

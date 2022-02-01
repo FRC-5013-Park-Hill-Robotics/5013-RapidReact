@@ -91,7 +91,9 @@ public class CargoShooter extends SubsystemBase {
   public void setTargetVelocity(double bottomMotorTarget){
     m_targetVelocity = bottomMotorTarget;
   }
-
+  public double getTopTargetVelocity(){
+    return m_targetVelocity * TOP_PERCENT_OF_BOTTOM;
+  }
   public double getTargetVelocity(){
     return m_targetVelocity;
   }
