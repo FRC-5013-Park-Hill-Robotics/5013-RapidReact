@@ -9,51 +9,56 @@ import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import frc.robot.IntakeVisionConstants;
+import frc.robot.Axon.AxonResult;
+import frc.robot.Axon.AxonUtil;
+import frc.robot.Axon.Detection;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class IntakeVision extends SubsystemBase {
 	// change to match camera name//
 	private PhotonCamera camera = new PhotonCamera("IntakeCamera");
+    private NetworkTable table = NetworkTableInstance.getDefault().getTable("Ml");
+    private String label;
 
 	/** Creates a new IntakeVision. */
 	public IntakeVision() {
 		super();
 	}
 
-	public PhotonPipelineResult getResult() {
+	public AxonResult getResult() {
 		System.out.println("Get Results");
 		if (camera != null){
 			System.out.println("Camera exists");
 		}
-		PhotonPipelineResult result = camera.getLatestResult();
+		AxonResult result = AxonUtil.getAxonResult(table);
 		return result;
 	}
+
+    public void setLabel(String l){
+        label=l;
+    }
 	
-
-	public void setPipeline(int pipeline) {
-		camera.setPipelineIndex(pipeline);
-	}
-
 	public boolean hasTarget() {
-		boolean hasTarget = this.getResult().hasTargets();
+		boolean hasTarget = this.getResult().hasDetection();
 		return hasTarget;
 	}
 
-	public PhotonTrackedTarget getTarget() {
-		PhotonTrackedTarget target = this.getResult().getBestTarget();
+	public Detection getTarget() {
+		Detection target = this.getResult().getClosest(label);
 		return target;
 	}
 
 	public double getDistanceFromTarget() {
-		return PhotonUtils.calculateDistanceToTargetMeters(IntakeVisionConstants.CAMERA_HEIGHT,
-				IntakeVisionConstants.TARGET_HEIGHT, Math.toRadians(this.getTarget().getYaw()),
-				Math.toRadians(this.getTarget().getPitch()));
+		
 	}
 
 	public double getAngleOfError() {
 		if (hasTarget()){
-			return this.getResult().getBestTarget().getYaw();
+			return this.getResult().getXAngle(getTarget(), cameraFieldOfViewXAngle);
 		}
 		return 0;
 	}
