@@ -23,7 +23,6 @@ import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.StatusLED;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
@@ -77,7 +76,7 @@ public class RobotContainer {
                 .whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI));
 
 		new Button(m_controller::getLeftBumper)
-			.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision, m_intake,m_controller::getLeftX,m_controller::getLeftY,
+			.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
 				 m_controller::getRightTriggerAxis, isRedAlliance()?IntakeVisionConstants.RED_CARGO:IntakeVisionConstants.BLUE_CARGO));
 	
 				

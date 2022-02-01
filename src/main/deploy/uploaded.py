@@ -118,6 +118,7 @@ class Tester:
         self.coral_entry = ntinst.getTable("ML").getEntry("coral")
         self.fps_entry = ntinst.getTable("ML").getEntry("fps")
         self.resolution_entry = ntinst.getTable("ML").getEntry("resolution")
+		self.timestamp = ntinst.getTable("ML").getEntry("timestamp")
         self.temp_entry = []
 
         print("Starting camera server")
@@ -178,15 +179,16 @@ class Tester:
                         print(xmin, xmax, ymin, ymax)
                         continue
 
-                    red = [0,  100, 255]
-                    redtolerance = [25, 125, 50]
-                    blue = [255, 100, 0]
-                    bluetolerance = [50, 125, 25]
+                    red = [45,  40, 200]
+                    redtolerance = [25, 255, 55]
+                    blue = [90, 60, 30]
+                    bluetolerance = [255,255,255]
 
                     cropped = frame_cv2[ymin:ymax, xmin: xmax]
                     averages = np.average(cropped, axis=(0, 1))
+                    print("averages:", averages[0],",",averages[1],",",averages[2])
 
-                    if self.isWithinTolerance(red, averages, redtolerance):
+                    if averages[2] > averages[0] and averages[2] > averages[1]:
                         class_ids[i] = 0
                         cv2.rectangle(frame_cv2, (xmin, ymin), (xmax, ymax), red, 2)
                     elif self.isWithinTolerance(blue, averages, bluetolerance):
@@ -210,6 +212,7 @@ class Tester:
                                                  y_scale)
             self.output.putFrame(frame_cv2)
             self.entry.setString(json.dumps(self.temp_entry))
+			self.timestamp.setNumber(time.time())
             self.temp_entry = []
             if self.frames % 100 == 0:
                 print("Completed", self.frames, "frames. FPS:", (1 / (time() - start)))
