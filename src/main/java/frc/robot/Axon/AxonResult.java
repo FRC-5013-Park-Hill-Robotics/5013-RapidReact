@@ -7,8 +7,6 @@ package frc.robot.Axon;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.Timer;
-
 /** Add your docs here. */
 public class AxonResult {
 	private List<Detection> detections;
@@ -18,7 +16,6 @@ public class AxonResult {
 	private double timestamp;
 
 	public AxonResult() {
-		timestamp = Timer.getFPGATimestamp();
 	}
 
 	public List<Detection> getDetections() {

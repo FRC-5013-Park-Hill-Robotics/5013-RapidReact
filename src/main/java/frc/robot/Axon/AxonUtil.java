@@ -8,6 +8,7 @@ public class AxonUtil {
 	public static final String DETECTIONS_KEY = "detections";
 	public static final String CORAL_KEY = "coral";
 	public static final String RESOLUTION_KEY = "resolution";
+	public static final String TIMESTAMP_KEY = "timestamp";
 	public static Detection[] getAxonDetections(NetworkTable table){
 		String json = table.getEntry(DETECTIONS_KEY).getString("");
 		return parseAxonDetections(json);
@@ -23,6 +24,7 @@ public class AxonUtil {
 			result.setResolutionWidth(Integer.parseInt(resolutionList[0]));
 			result.setResolutioHeight(Integer.parseInt(resolutionList[1]));
 		}
+		result.setTimestamp(Double.valueOf(table.getEntry(TIMESTAMP_KEY).getNumber(0).doubleValue()));
 		return result;
 	}
 	
