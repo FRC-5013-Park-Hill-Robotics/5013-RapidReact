@@ -2,7 +2,7 @@ package frc.robot.Axon;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Detection implements Comparable{
+public class Detection implements Comparable<Detection>{
 	@JsonProperty
 	private Double confidence;
 	@JsonProperty
@@ -38,7 +38,7 @@ public class Detection implements Comparable{
 	}
 
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Detection o) {
 		return Integer.valueOf(this.getBox().getYmin()).compareTo(((Detection)o).getBox().getYmin());
 	}
 
