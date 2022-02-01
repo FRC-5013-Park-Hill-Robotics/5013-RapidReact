@@ -1,6 +1,5 @@
 package frc.robot.Axon;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -26,6 +25,7 @@ public class AxonUtil {
 		}
 		return result;
 	}
+	
 	public static Detection[] parseAxonDetections(String json){
 		Detection[] results = null;
 		try {

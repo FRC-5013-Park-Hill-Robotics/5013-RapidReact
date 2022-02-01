@@ -7,14 +7,18 @@ package frc.robot.Axon;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /** Add your docs here. */
 public class AxonResult {
-	List<Detection> detections;
-	boolean coral;
-	int resolutionWidth;
-	int resolutioHeight;
-	
+	private List<Detection> detections;
+	private boolean coral;
+	private int resolutionWidth;
+	private int resolutioHeight;
+	private double timestamp;
+
 	public AxonResult() {
+		timestamp = Timer.getFPGATimestamp();
 	}
 
 	public List<Detection> getDetections() {
@@ -44,6 +48,13 @@ public class AxonResult {
 	public void setResolutioHeight(int resolutioHeight) {
 		this.resolutioHeight = resolutioHeight;
 	}
+	public double getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(double timestamp) {
+		this.timestamp = timestamp;
+	}
 
 	public boolean hasDetection(){
 		return getDetections() != null && getDetections().size() > 0;
@@ -65,5 +76,17 @@ public class AxonResult {
 			result = detections.get(0);
 		}
 		return result;
+	}
+
+	public double getXAngle(Box target, double cameraFieldOfViewXAngle){
+		double pixelsPerDegree = getResolutionWidth()/cameraFieldOfViewXAngle;
+		int horizontalOffsetPixels = target.getHorizontalCenter() - (getResolutionWidth()/2);
+		return horizontalOffsetPixels/pixelsPerDegree;
+	}
+
+	public double getYAngle(Box target, double cameraFieldOfViewYAngle){
+		double pixelsPerDegree = getResolutioHeight()/cameraFieldOfViewYAngle;
+		int verticalOffsetPixels = target.getVerticalCenter() - (getResolutioHeight()/2);
+		return verticalOffsetPixels/pixelsPerDegree;
 	}
 }
