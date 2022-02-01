@@ -10,7 +10,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeVision;
 import static frc.robot.Constants.DrivetrainConstants.ThetaGains.*;
 
@@ -19,7 +18,6 @@ import java.util.function.DoubleSupplier;
 public class Fetch extends CommandBase {
   private DrivetrainSubsystem m_drivetrain;
   private IntakeVision m_vision;
-  private Intake m_intake;
   private DoubleSupplier m_throttle;
   private DoubleSupplier m_yTranslation;
   private DoubleSupplier m_xTranslation;
@@ -27,12 +25,10 @@ public class Fetch extends CommandBase {
 
 
   /** Creates a new Fetch. */
-  public Fetch(DrivetrainSubsystem drivetrain, IntakeVision vision, Intake intake,DoubleSupplier xTranslation, DoubleSupplier yTranslation, DoubleSupplier throttle, int pipeline) {
+  public Fetch(DrivetrainSubsystem drivetrain, IntakeVision vision, DoubleSupplier xTranslation, DoubleSupplier yTranslation, DoubleSupplier throttle, int pipeline) {
     super();
-    //addRequirements(drivetrain, intake);
 	addRequirements(drivetrain);
     m_drivetrain = drivetrain;
-    m_intake = intake;
     m_vision = vision;
     m_throttle = throttle;
 	m_xTranslation = xTranslation;
@@ -50,10 +46,6 @@ public class Fetch extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   // make sure intake is down.
-  /*if (!m_intake.isDown()){
-    m_intake.dropIntake();;
-  }*/
     // Call pid controller calculate passing in the x offset from vision and 0 for the setpoint
    double PIDOutput = m_thetaController.calculate(m_vision.getAngleOfError(), 0);
    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(DrivetrainSubsystem.percentOutputToMetersPerSecond(getXTranslation()), 
