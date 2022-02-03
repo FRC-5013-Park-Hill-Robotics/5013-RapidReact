@@ -214,6 +214,7 @@ class Tester:
             self.entry.setString(json.dumps(self.temp_entry))
 			self.timestamp.setNumber(time.time())
             self.temp_entry = []
+			
             if self.frames % 100 == 0:
                 print("Completed", self.frames, "frames. FPS:", (1 / (time() - start)))
             if self.frames % 10 == 0:
