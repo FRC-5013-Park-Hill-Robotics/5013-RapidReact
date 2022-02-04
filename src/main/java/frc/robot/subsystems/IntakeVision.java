@@ -4,36 +4,33 @@
 
 package frc.robot.subsystems;
 
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonUtils;
-import org.photonvision.targeting.PhotonPipelineResult;
-import org.photonvision.targeting.PhotonTrackedTarget;
-import frc.robot.IntakeVisionConstants;
+
+import static frc.robot.IntakeVisionConstants.*;
+
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.Axon.AxonResult;
 import frc.robot.Axon.AxonUtil;
 import frc.robot.Axon.Detection;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class IntakeVision extends SubsystemBase {
 	// change to match camera name//
-	private PhotonCamera camera = new PhotonCamera("IntakeCamera");
-    private NetworkTable table = NetworkTableInstance.getDefault().getTable("Ml");
+    private NetworkTable table = NetworkTableInstance.getDefault().getTable("ML");
     private String label;
+	private RobotContainer m_robotContainer;
 
 	/** Creates a new IntakeVision. */
-	public IntakeVision() {
+	public IntakeVision(RobotContainer container) {
 		super();
+		m_robotContainer = container;
+		setLabel(container.isRedAlliance()?RED_CARGO:RED_CARGO);
 	}
 
 	public AxonResult getResult() {
-		System.out.println("Get Results");
-		if (camera != null){
-			System.out.println("Camera exists");
-		}
 		AxonResult result = AxonUtil.getAxonResult(table);
 		return result;
 	}
@@ -53,14 +50,17 @@ public class IntakeVision extends SubsystemBase {
 	}
 
 	public double getDistanceFromTarget() {
-		
+		return 0;
 	}
 
 	public double getAngleOfError() {
 		if (hasTarget()){
-			return this.getResult().getXAngle(getTarget(), cameraFieldOfViewXAngle);
+			return this.getResult().getXAngle(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
 		}
 		return 0;
+	}
+
+	public double getTargetAngle(){
 	}
 
 	@Override
