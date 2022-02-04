@@ -22,6 +22,8 @@ public class IntakeVision extends SubsystemBase {
     private NetworkTable table = NetworkTableInstance.getDefault().getTable("ML");
     private String label;
 	private RobotContainer m_robotContainer;
+	private double lastTargetAngle;
+	private AxonResult lastResult;
 
 	/** Creates a new IntakeVision. */
 	public IntakeVision(RobotContainer container) {
@@ -53,20 +55,34 @@ public class IntakeVision extends SubsystemBase {
 		return 0;
 	}
 
-	public double getAngleOfError() {
+	public double getXAngleOfError() {
+		return getXAngleOfError(this.getResult());
+	}
+
+	public double getXAngleOfError(AxonResult result) {
 		if (hasTarget()){
-			return this.getResult().getXAngle(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
+			return result.getXAngle(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
 		}
 		return 0;
 	}
 
-	public double getTargetAngle(){
+	public double getTargetXAngle(){
+		AxonResult axonResult = getResult();
+		double result = 0;
+		if (lastResult == axonResult){
+			result =  lastTargetAngle;
+		} else {
+			result = (m_robotContainer.getdrivetrainSubsystem().getHeading() + getXAngleOfError(axonResult) ) % 360;
+			lastResult = axonResult;
+			lastTargetAngle = result; 
+		}
+		return result ;
 	}
 
 	@Override
 	public void periodic() {
 		SmartDashboard.putString("Test", "TEst");
-		SmartDashboard.putNumber("Angle of Error", getAngleOfError());
+		SmartDashboard.putNumber("Angle of Error", getXAngleOfError());
 		SmartDashboard.putBoolean("Has Target", hasTarget());
 	}
 }

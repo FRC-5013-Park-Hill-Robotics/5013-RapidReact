@@ -25,7 +25,7 @@ public class Fetch extends CommandBase {
 
 
   /** Creates a new Fetch. */
-  public Fetch(DrivetrainSubsystem drivetrain, IntakeVision vision, DoubleSupplier xTranslation, DoubleSupplier yTranslation, DoubleSupplier throttle, int pipeline) {
+  public Fetch(DrivetrainSubsystem drivetrain, IntakeVision vision, DoubleSupplier xTranslation, DoubleSupplier yTranslation, DoubleSupplier throttle) {
     super();
 	addRequirements(drivetrain);
     m_drivetrain = drivetrain;
@@ -46,7 +46,7 @@ public class Fetch extends CommandBase {
   @Override
   public void execute() {
     // Call pid controller calculate passing in the x offset from vision and 0 for the setpoint
-   double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeading(), m_vision.getTargetAngle());
+   double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeading(), m_vision.getTargetXAngle());
    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(DrivetrainSubsystem.percentOutputToMetersPerSecond(getXTranslation()), 
    DrivetrainSubsystem.percentOutputToMetersPerSecond(getYTranslation()), PIDOutput);
    // use the output from calculate to make a new ChassisSpeed object to pass to the drivetrain
