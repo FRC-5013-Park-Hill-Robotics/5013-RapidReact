@@ -59,7 +59,9 @@ public class AxonResult {
 
 	public List<Detection> getDetectionsByLabel(String label){
 		List<Detection> result = null;
-		if (hasDetection()){
+		if (label == null){
+			result = getDetections();
+		} else if (getDetections() != null){
 			getDetections().stream().filter(detection -> detection.getLabel().equals(label));
 		}
 		return result;
