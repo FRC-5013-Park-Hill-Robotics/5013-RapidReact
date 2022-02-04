@@ -33,7 +33,6 @@ public class Fetch extends CommandBase {
     m_throttle = throttle;
 	m_xTranslation = xTranslation;
 	m_yTranslation = yTranslation;
-	m_vision.setPipeline(pipeline);
     m_thetaController =  new PIDController(kP, kI, kD);
     m_thetaController.setTolerance(kTurnToleranceRad,kTurnRateToleranceRadPerS);
   }
@@ -47,7 +46,7 @@ public class Fetch extends CommandBase {
   @Override
   public void execute() {
     // Call pid controller calculate passing in the x offset from vision and 0 for the setpoint
-   double PIDOutput = m_thetaController.calculate(m_vision.getAngleOfError(), 0);
+   double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeading(), m_vision.getTargetAngle());
    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(DrivetrainSubsystem.percentOutputToMetersPerSecond(getXTranslation()), 
    DrivetrainSubsystem.percentOutputToMetersPerSecond(getYTranslation()), PIDOutput);
    // use the output from calculate to make a new ChassisSpeed object to pass to the drivetrain
