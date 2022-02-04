@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.ShooterConstants.*;
 
 public class CargoShooter extends SubsystemBase {
-  private WPI_TalonFX motor = new WPI_TalonFX(SHOOTER_MOTOR_ID);
+  private WPI_TalonFX topMotor = new WPI_TalonFX(SHOOTER_TOP_MOTOR);
+  private WPI_TalonFX bottomMotor = new WPI_TalonFX(SHOOTER_BOTTOM_MOTOR);
   private boolean firing = false;
   private double heightVelocity = SHOOTER_VELOCITY;
   private double m_targetVelocity = 0;
@@ -21,9 +22,11 @@ public class CargoShooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public CargoShooter(Conveyor conveyor) {
-    motor.setInverted(true);
+    topMotor.setInverted(true);
+    bottomMotor.setInverted(!topMotor.getInverted());
     m_conveyor = conveyor;
-    setPID(motor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
+    setPID(bottomMotor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
+    setPID(topMotor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
   }
 
   //method for testing.
@@ -64,7 +67,7 @@ public class CargoShooter extends SubsystemBase {
     //SmartDashboard.putString("topShooterTargetVelocity",""+ getTopTargetVelocity());
     //SmartDashboard.putString("bottomShooterTargetVelocity", ""+getTargetVelocity());
     //SmartDashboard.putString("topShooterVelocity",""+ topMotor.getSelectedSensorVelocity());
-    SmartDashboard.putString("ShooterVelocity", ""+motor.getSelectedSensorVelocity());
+    SmartDashboard.putString("shooterVelocity", ""+topMotor.getSelectedSensorVelocity());
     if (firing){
       if (atSpeed()){
         //SmartDashboard.putString("at speed", ""+true);
@@ -75,25 +78,30 @@ public class CargoShooter extends SubsystemBase {
         if (m_conveyor.isBallReadyToShoot()){
           m_conveyor.reverse();
         }
-      } 
-      motor.set(ControlMode.Velocity,getTargetVelocity());
+      }
+      topMotor.set(ControlMode.Velocity,getTargetVelocity()); 
+      bottomMotor.set(ControlMode.Velocity,getTargetVelocity());
     } else {
-      motor.set(ControlMode.Velocity,SHOOTER_VELOCITY);
+      topMotor.set(ControlMode.Velocity,SHOOTER_VELOCITY);
+      bottomMotor.set(ControlMode.Velocity,SHOOTER_VELOCITY);
     }
 
   }
 
-  public void setTargetVelocity(double motorTarget){
-    m_targetVelocity = motorTarget;
+  public void setTargetVelocity(double bottomMotorTarget){
+    m_targetVelocity = bottomMotorTarget;
   }
-
+  public double getTopTargetVelocity(){
+    return m_targetVelocity * TOP_PERCENT_OF_BOTTOM;
+  }
   public double getTargetVelocity(){
     return m_targetVelocity;
   }
   public boolean atSpeed(){
     //Boolean("Is BottomMotor at speed?: ", bottomMotor.getSelectedSensorVelocity() >= getTargetVelocity() );
 
-    return motor.getSelectedSensorVelocity() >= getTargetVelocity() *.95;
+    return topMotor.getSelectedSensorVelocity() >= getTargetVelocity() *.95&&
+    bottomMotor.getSelectedSensorVelocity() >= getTargetVelocity() *.95;
   }
 
   public void changeVelocity(double amount){
