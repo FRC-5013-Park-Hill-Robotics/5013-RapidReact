@@ -186,7 +186,6 @@ class Tester:
 
                     cropped = frame_cv2[ymin:ymax, xmin: xmax]
                     averages = np.average(cropped, axis=(0, 1))
-                    print("averages:", averages[0],",",averages[1],",",averages[2])
 
                     if averages[2] > averages[0] and averages[2] > averages[1]:
                         class_ids[i] = 0
