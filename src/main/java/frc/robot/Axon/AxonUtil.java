@@ -9,22 +9,33 @@ public class AxonUtil {
 	public static final String CORAL_KEY = "coral";
 	public static final String RESOLUTION_KEY = "resolution";
 	public static final String TIMESTAMP_KEY = "timestamp";
+	private static double lastTimestamp = 0;
+	private static AxonResult lastResult = null;
+
 	public static Detection[] getAxonDetections(NetworkTable table){
 		String json = table.getEntry(DETECTIONS_KEY).getString("");
 		return parseAxonDetections(json);
 	}
 
 	public static AxonResult getAxonResult(NetworkTable table){
-		AxonResult result = new AxonResult();
-		result.setDetections(parseAxonDetections(table.getEntry(DETECTIONS_KEY).getString("")));
-		result.setCoral(Boolean.valueOf(table.getEntry(CORAL_KEY).getString(Boolean.FALSE.toString())));
-		String resolution = table.getEntry(RESOLUTION_KEY).toString();
-		if (resolution != null){
-		String [] resolutionList = resolution.split(",");
-			result.setResolutionWidth(Integer.parseInt(resolutionList[0]));
-			result.setResolutioHeight(Integer.parseInt(resolutionList[1]));
+		AxonResult result;
+		double timestamp = Double.valueOf(table.getEntry(TIMESTAMP_KEY).getNumber(0).doubleValue());
+		if (timestamp == lastTimestamp){
+			result = lastResult;
+		} else {
+			result = new AxonResult();
+			lastResult = result;
+			lastTimestamp = timestamp;
+			result.setDetections(parseAxonDetections(table.getEntry(DETECTIONS_KEY).getString("")));
+			result.setCoral(Boolean.valueOf(table.getEntry(CORAL_KEY).getString(Boolean.FALSE.toString())));
+			String resolution = table.getEntry(RESOLUTION_KEY).toString();
+			if (resolution != null){
+			String [] resolutionList = resolution.split(",");
+				result.setResolutionWidth(Integer.parseInt(resolutionList[0]));
+				result.setResolutioHeight(Integer.parseInt(resolutionList[1]));
+			}
+			result.setTimestamp(timestamp);
 		}
-		result.setTimestamp(Double.valueOf(table.getEntry(TIMESTAMP_KEY).getNumber(0).doubleValue()));
 		return result;
 	}
 	

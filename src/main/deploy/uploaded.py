@@ -118,7 +118,7 @@ class Tester:
         self.coral_entry = ntinst.getTable("ML").getEntry("coral")
         self.fps_entry = ntinst.getTable("ML").getEntry("fps")
         self.resolution_entry = ntinst.getTable("ML").getEntry("resolution")
-		self.timestamp = ntinst.getTable("ML").getEntry("timestamp")
+        self.timestamp = ntinst.getTable("ML").getEntry("timestamp")
         self.temp_entry = []
 
         print("Starting camera server")
@@ -212,8 +212,9 @@ class Tester:
                                                  y_scale)
             self.output.putFrame(frame_cv2)
             self.entry.setString(json.dumps(self.temp_entry))
-			self.timestamp.setNumber(time.time())
+            self.timestamp.setNumber(time())
             self.temp_entry = []
+			
             if self.frames % 100 == 0:
                 print("Completed", self.frames, "frames. FPS:", (1 / (time() - start)))
             if self.frames % 10 == 0:
