@@ -56,7 +56,7 @@ public class ShooterVision extends SubsystemBase {
   }
 
     /**Returns distance to target in inches */
-  public double distanceToTargetInInches(){
+  public double distanceToTargetinMeter(){
     double cameraAngle = ShooterVisionConstants.CAMERA_ANGLE; 
     double angleToTarget = this.tx.getDouble(0.0);
     double camHeight = ShooterVisionConstants.CAMERA_HEIGHT;
