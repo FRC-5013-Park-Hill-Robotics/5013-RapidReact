@@ -19,6 +19,7 @@ import frc.robot.Constants.IntakeConstants;
 /** Add your docs here. */
 public class Intake extends SubsystemBase {
 
+
 	private TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_MOTOR);
 
 	// Dropping the intake is set up as forward and raising it as reverse, may have
@@ -79,3 +80,4 @@ public class Intake extends SubsystemBase {
 		intakeMotor.set(ControlMode.PercentOutput, -.75);
 	}
 }
+
