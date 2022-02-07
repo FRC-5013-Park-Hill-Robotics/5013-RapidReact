@@ -10,9 +10,18 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.commands.Fetch;
 import frc.robot.commands.GamepadDrive;
 import frc.robot.commands.TurnToAngleCommand;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeVision;
+import frc.robot.subsystems.CargoShooter;
+import frc.robot.subsystems.ShooterVision;
+import frc.robot.subsystems.StatusLED;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
@@ -27,9 +36,16 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
-    private PowerDistribution m_PowerDistribution = new PowerDistribution(PDP_ID, ModuleType.kRev);
-
-
+    private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
+	private Turret m_turret;// = new Turret();
+	private StatusLED m_StatusLED;// = new StatusLed(this);
+	private ShooterVision m_shooterVision;// = new ShooterVision();
+	private CargoShooter m_shooter; //= new Shooter();
+	private Conveyor m_conveyor;// = new Conveyor();
+	private IntakeVision m_IntakeVision = new IntakeVision(this);
+	private Intake m_intake;// = new Intake(m_conveyor);
+	private Climber m_Climber;// = new Climber();
+	
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
@@ -58,7 +74,13 @@ public class RobotContainer {
                 .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
         new Button(m_controller::getAButton)
                 .whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI));
-    }
+
+		new Button(m_controller::getLeftBumper)
+			.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
+				 m_controller::getRightTriggerAxis));
+	
+				
+}
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -73,4 +95,83 @@ public class RobotContainer {
     public boolean isRedAlliance() {
         return DriverStation.getAlliance() == Alliance.Red;
     }
+	public DrivetrainSubsystem getdrivetrainSubsystem() {
+		return m_drivetrainSubsystem;
+	}
+
+	public LogitechController getcontroller() {
+		return m_controller;
+	}
+
+	public PowerDistribution getPowerDistribution() {
+		return m_PowerDistribution;
+	}
+
+	public void setPowerDistribution(PowerDistribution m_PowerDistribution) {
+		this.m_PowerDistribution = m_PowerDistribution;
+	}
+
+	public Turret getturret() {
+		return m_turret;
+	}
+
+	public void setturret(Turret m_turret) {
+		this.m_turret = m_turret;
+	}
+
+	public StatusLED getStatusLED() {
+		return m_StatusLED;
+	}
+
+	public void setStatusLED(StatusLED m_StatusLED) {
+		this.m_StatusLED = m_StatusLED;
+	}
+
+	public ShooterVision getshooterVision() {
+		return m_shooterVision;
+	}
+
+	public void setshooterVision(ShooterVision m_shooterVision) {
+		this.m_shooterVision = m_shooterVision;
+	}
+
+	public CargoShooter getshooter() {
+		return m_shooter;
+	}
+
+	public void setshooter(CargoShooter m_shooter) {
+		this.m_shooter = m_shooter;
+	}
+
+	public Conveyor getconveyor() {
+		return m_conveyor;
+	}
+
+	public void setconveyor(Conveyor m_conveyor) {
+		this.m_conveyor = m_conveyor;
+	}
+
+	public IntakeVision getIntakeVision() {
+		return m_IntakeVision;
+	}
+
+	public void setIntakeVision(IntakeVision m_IntakeVision) {
+		this.m_IntakeVision = m_IntakeVision;
+	}
+
+	public Intake getintake() {
+		return m_intake;
+	}
+
+	public void setintake(Intake m_intake) {
+		this.m_intake = m_intake;
+	}
+
+	public Climber getClimber() {
+		return m_Climber;
+	}
+
+	public void setClimber(Climber m_Climber) {
+		this.m_Climber = m_Climber;
+	}
 }

@@ -4,50 +4,85 @@
 
 package frc.robot.subsystems;
 
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonUtils;
-import org.photonvision.targeting.PhotonPipelineResult;
-import org.photonvision.targeting.PhotonTrackedTarget;
-import frc.robot.IntakeVisionConstants;
 
+import static frc.robot.IntakeVisionConstants.*;
+
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
+import frc.robot.Axon.AxonResult;
+import frc.robot.Axon.AxonUtil;
+import frc.robot.Axon.Detection;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class IntakeVision extends SubsystemBase {
-  //change to match camera name//
-  private PhotonCamera camera = new PhotonCamera("photonvision");
+	// change to match camera name//
+    private NetworkTable table = NetworkTableInstance.getDefault().getTable("ML");
+    private String label;
+	private RobotContainer m_robotContainer;
+	private double lastTargetAngle;
+	private AxonResult lastResult;
 
-  /** Creates a new IntakeVision. */
-  public IntakeVision() {}
+	/** Creates a new IntakeVision. */
+	public IntakeVision(RobotContainer container) {
+		super();
+		m_robotContainer = container;
+		setLabel(container.isRedAlliance()?RED_CARGO:RED_CARGO);
+	}
 
-  public PhotonPipelineResult getResult(){
-    PhotonPipelineResult result = camera.getLatestResult();
-    return result;
-  }
-  public void setPipeline(int pipeline){
-    camera.setPipelineIndex(pipeline);
-  }
+	public AxonResult getResult() {
+		AxonResult result = AxonUtil.getAxonResult(table);
+		return result;
+	}
 
-  public boolean hasTarget(){
-    boolean hasTarget = this.getResult().hasTargets();
-    return hasTarget;
-  }
+    public void setLabel(String l){
+        label=l;
+    }
+	
+	public boolean hasTarget() {
+		boolean hasTarget = this.getResult().hasDetection();
+		return hasTarget;
+	}
 
-  public PhotonTrackedTarget getTarget(){
-    PhotonTrackedTarget target = this.getResult().getBestTarget();
-    return target;
-  }
-  public void getDistanceFromTarget(){
-    PhotonUtils.calculateDistanceToTargetMeters(IntakeVisionConstants.CAMERA_HEIGHT, IntakeVisionConstants.TARGET_HEIGHT, Math.toRadians(this.getTarget().getYaw()), Math.toRadians(this.getTarget().getPitch()));
-  }
-  public double getAngleOfError(){
-    return this.getResult().getBestTarget().getYaw();
-  }
-  
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+	public Detection getTarget() {
+		Detection target = this.getResult().getClosest(label);
+		return target;
+	}
+
+	public double getDistanceFromTarget() {
+		return 0;
+	}
+
+	public double getXAngleOfError() {
+		return getXAngleOfError(this.getResult());
+	}
+
+	public double getXAngleOfError(AxonResult result) {
+		if (hasTarget()){
+			return result.getXAngle(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
+		}
+		return 0;
+	}
+
+	public double getTargetXAngle(){
+		AxonResult axonResult = getResult();
+		double result = 0;
+		if (lastResult == axonResult){
+			result =  lastTargetAngle;
+		} else {
+			result = (m_robotContainer.getdrivetrainSubsystem().getHeading() + getXAngleOfError(axonResult) ) % 360;
+			lastResult = axonResult;
+			lastTargetAngle = result; 
+		}
+		return result ;
+	}
+
+	@Override
+	public void periodic() {
+		SmartDashboard.putString("Test", "TEst");
+		SmartDashboard.putNumber("Angle of Error", getXAngleOfError());
+		SmartDashboard.putBoolean("Has Target", hasTarget());
+	}
 }
-
-
