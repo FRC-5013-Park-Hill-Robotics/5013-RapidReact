@@ -4,52 +4,108 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.ConveyorConstants.*;
 
 public class Conveyor extends SubsystemBase {
-    private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(LEFT_CONVEYOR_MOTOR);
-    private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RIGHT_CONVEYOR_MOTOR);
-    public static final double kSpeed = 0.4;//percent output
-    public static final double kSpeedForShooter = 0.6;//percent output
-    
-  
-    /**
-     * Creates a new Conveyor.
-     */
-    public Conveyor() {
-      leftMotor1.configFactoryDefault();
-      rightMotor1.configFactoryDefault();
-      leftMotor1.setInverted(true);
-      rightMotor1.setInverted(false);
-      leftMotor1.setNeutralMode(NeutralMode.Brake);
-      rightMotor1.setNeutralMode(NeutralMode.Brake);
-    }
 
+  // Componenets ---------------------------------------------------
+  private TalonFX conveyorMotor;// = new WIP_TalonFX( ID Number );
+  // REPLACE WITH ACTUAL COLOR SENCOR
+  private DigitalInput eye; //= new DigitalInput( ID Number );
+
+  // Values --------------------------------------------------------
+  private double percentOutput;
+  private long startTime;
+  private boolean override = false;
+
+
+  // Statics ------------------------------------------------------
+  /** Precent Output **/
+  public static final double kSpeed = 0.3;
+  /** Precent Output **/
+  public static final double kSpeedToShoot = 0.6;
+
+  // Constructor --------------------------------------------------
+  /** Creates a new Conveyor. */
+  public Conveyor(  ) 
+  {
+    this.conveyorMotor.configFactoryDefault();
+  }
+  
   @Override
-  public void periodic() {
+  public void periodic() 
+  {
     // This method will be called once per scheduler run
   }
-  public void stop(){
 
+  // Set Output ---------------------------------------------------
+  private void setPercentOutput(double targetPercent, Long timeout)
+  {
+    this.percentOutput = targetPercent;
+    if (timeout == 0)
+    {
+      this.startTime = 0;
+    } 
+    else if (startTime == 0) 
+    { 
+      //Don't set if you are delaying already.
+      this.startTime = System.currentTimeMillis() + timeout;
+    }
   }
 
-  public void start(){
-
+  // Starts ----------------------------------------------------------
+  public void start(long timeout) 
+  {
+    this.override = false;
+    if ( !this.isMoving() )
+    {
+      setPercentOutput( kSpeed, timeout);
+    }
   }
 
-  public void startForShooter(){
-
+  public void start() 
+  {
+    this.override = false;
+    setPercentOutput( kSpeed, 0L);
   }
 
-  public boolean isBallReadyToShoot(){
-	  return false;
+  public void sendToShooter() 
+  {
+    this.override = false;
+    setPercentOutput( kSpeedToShoot, 0L);
   }
 
-  public void reverse(){
-
+  public void reverse() 
+  {
+    this.override = true;
+    setPercentOutput( -kSpeed, 0L);
   }
+
+  // Start Override ----------------------------------------
+  public void startOverride() 
+  {
+    override = true;
+    if( isBallReadyToShoot() )
+    {
+      setPercentOutput(kSpeed, 0L);
+    }
+  }
+
+  // Checks --------------------------------------------------
+  public boolean isMoving()
+  {
+    return Math.abs(percentOutput) > 0.0;
+  }
+
+  public boolean isBallReadyToShoot()
+  {
+    return this.eye.get();
+  }
+
+  ///////////////////////////////////////////////////////////
+  
 }
