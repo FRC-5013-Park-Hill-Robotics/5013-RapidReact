@@ -7,70 +7,96 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.LogitechController;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 
 public class GamepadDrive extends CommandBase {
-    private DrivetrainSubsystem m_drivetrain;
-    private LogitechController m_gamepad;
-    private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
-    private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
-    private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3);
 
-    /** Creates a new GamepadDrive. */
-    public GamepadDrive(DrivetrainSubsystem drivetrain, LogitechController gamepad) {
-        super();
-        addRequirements(drivetrain);
-        m_gamepad = gamepad;
-        m_drivetrain = drivetrain;
-    }
+	private DrivetrainSubsystem m_drivetrain;
+	private LogitechController m_gamepad;
+	private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
+	private SlewRateLimiter yLimiter = new SlewRateLimiter(3);
+	private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3);
 
-    @Override
-    public void execute() {
-        m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
-                getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(), m_drivetrain.getGyroscopeRotation()));
-    }
+	/**
+	 * Constructor method for the GamepadDrive class
+	 * - Creates a new GamepadDrive object.
+	 */
+	public GamepadDrive(DrivetrainSubsystem drivetrain, LogitechController gamepad) {
+		super();
+		addRequirements(drivetrain);
+		m_gamepad = gamepad;
+		m_drivetrain = drivetrain;
+	}
 
-    @Override
-    public void end(boolean interrupted) {
-        m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-    }
+	@Override
+	public void execute() {
+		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY());
+		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX());
+		SmartDashboard.putNumber("Right X", m_gamepad.getRightX());
+		;
+		double throttle = modifyAxis(m_gamepad.getRightTriggerAxis());
 
-    private double getXTranslationMetersPerSecond() {
-        // on the controller y is up, on the field x is away from the driver
-        return -percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
-        //return -percentOutputToMetersPerSecond(modifyAxis(m_gamepad.getLeftY()));
-    }
+		double translationX = modifyAxis(-m_gamepad.getLeftY());
+		double translationY = modifyAxis(-m_gamepad.getLeftX());
+		if (!(translationX == 0.0 && translationY == 0.0)) {
+			double angle = calculateTranslationDirection(translationX, translationY);
+			translationX = Math.cos(angle) * throttle;
+			translationY = Math.sin(angle) * throttle;
+		}
+		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
+				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),
+				m_drivetrain.getGyroscopeRotation()));
 
-    private double getYTranslationMetersPerSecond() {
-        // on the controller y is up, on the field x is away from the driver
-        return -percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
-        //return -percentOutputToMetersPerSecond(modifyAxis(m_gamepad.getLeftX()));
-    }
+		/*
+		 * m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+		 * getXTranslationMetersPerSecond(),
+		 * getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(),
+		 * m_drivetrain.getGyroscopeRotation()));
+		 */ }
 
-    private double getRotationRadiansPerSecond() {
-        return -percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX())));
+	@Override
+	public void end(boolean interrupted) {
+		m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+	}
 
-    }
+	private double getXTranslationMetersPerSecond() {
+		// on the controller y is up, on the field x is away from the driver
+		return -DrivetrainSubsystem
+				.percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
+	}
 
-    private double percentOutputToMetersPerSecond(double percentOutput){
-        return DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND * percentOutput;
-    }
+	private double getYTranslationMetersPerSecond() {
+		// on the controller y is up, on the field x is away from the driver
+		return -DrivetrainSubsystem
+				.percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
+	}
 
-    private double percentOutputToRadiansPerSecond(double percentOutput){
-        return DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND * percentOutput;
-    }
+	private double getRotationRadiansPerSecond() {
+		return -DrivetrainSubsystem
+				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX(),2))) / 3;
 
-    private static double modifyAxis(double value) {
-        // Deadband
-        value = MathUtil.applyDeadband(value, ControllerConstants.DEADBAND);
+	}
 
-        // Square the axis
-        value = Math.copySign(value * value, value);
+	private static double modifyAxis(double value) {
+	
+		return modifyAxis(value, 1);
+	}
+	private static double modifyAxis(double value, int exponent) {
+		// Deadband
+		value = MathUtil.applyDeadband(value, ControllerConstants.DEADBAND);
 
-        return value;
-    }
+		 value = Math.copySign(Math.pow(value, exponent), value);
+
+		return value;
+	}
+	private double calculateTranslationDirection(double x, double y) {
+		// Calculate the angle.
+		// Swapping x/y
+		return Math.atan2(x, y) + Math.PI / 2;
+	}
 }
