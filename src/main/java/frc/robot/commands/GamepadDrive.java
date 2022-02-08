@@ -14,7 +14,6 @@ import frc.robot.LogitechController;
 import frc.robot.Constants.ControllerConstants;
 
 public class GamepadDrive extends CommandBase {
-
 	private DrivetrainSubsystem m_drivetrain;
 	private LogitechController m_gamepad;
 	private SlewRateLimiter xLimiter = new SlewRateLimiter(3);
