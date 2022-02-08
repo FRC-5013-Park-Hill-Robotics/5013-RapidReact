@@ -95,6 +95,9 @@ public class Conveyor extends SubsystemBase {
     }
   }
 
+  public void stop(){
+	  setPercentOutput(0, 0L);
+  }
   // Checks --------------------------------------------------
   public boolean isMoving()
   {
@@ -105,7 +108,6 @@ public class Conveyor extends SubsystemBase {
   {
     return this.eye.get();
   }
-
   ///////////////////////////////////////////////////////////
   
 }

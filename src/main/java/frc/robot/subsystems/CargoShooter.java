@@ -17,7 +17,7 @@ public class CargoShooter extends SubsystemBase {
   private double heightVelocity = SHOOTER_VELOCITY;
   private double m_targetVelocity = 0;
   private Conveyor m_conveyor;
-
+  
   /**
    * Creates a new Shooter.
    */
@@ -71,7 +71,7 @@ public class CargoShooter extends SubsystemBase {
     if (firing){
       if (atSpeed()){
         //SmartDashboard.putString("at speed", ""+true);
-        m_conveyor.startForShooter();
+        m_conveyor.start();
       } else {
         //SmartDashboard.putString("at speed", ""+false);
         m_conveyor.stop();
