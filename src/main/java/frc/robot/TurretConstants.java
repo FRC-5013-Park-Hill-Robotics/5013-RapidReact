@@ -7,5 +7,13 @@ package frc.robot;
 /** Add your docs here. */
 public class TurretConstants {
     public static final int TURRET_MOTOR = 0;
+
+    // minimum angle the turret can rotate to
+    public static final int TURRET_MIN_ANGLE = 0;
+
+    // maximum angle the turret can rotate to
+    public static final int TURRET_MAX_ANGLE = 270;
+
+
 }
 //need pid controls

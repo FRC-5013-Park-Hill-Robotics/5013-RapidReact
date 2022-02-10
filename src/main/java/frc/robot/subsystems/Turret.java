@@ -10,25 +10,29 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 public class Turret extends SubsystemBase {
     private WPI_TalonSRX motor = new WPI_TalonSRX(TURRET_MOTOR);
+    double desiredAngle = 0;
 	/** Creates a new Turret. */
 	public Turret() {
-        super();
 	}
+    //Gets the current angle of the Talon SRX.
     public double getCurrentAngle() {
-        return 1;
-        //max 270, min0?
-    }
-    
-    public double setDesiredAngle() {
-        Rotation2d angle = Rotation2d.fromDegrees(getCurrentAngle());
-        return 1; 
+        return motor.getSelectedSensorPosition();
         
+    }
+    //Sets the desired angle of the 
+    public void setDesiredAngle(double desiredAngle) {
+        this.desiredAngle = desiredAngle;
+        
+    }
+    public void setOpenLoop(double speed) {
+        motor.set(speed);
     }
     
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
-        //pid controller
+        //pid controls
+        //motor.set
         //commands
 	}
 }
