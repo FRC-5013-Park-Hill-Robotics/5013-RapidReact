@@ -9,11 +9,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ConveyorConstants;
 
 public class Conveyor extends SubsystemBase {
 
   // Componenets ---------------------------------------------------
-  private TalonFX conveyorMotor;// = new WIP_TalonFX( ID Number );
+  private TalonFX conveyorMotor = new TalonFX( ConveyorConstants.CONVEYOR_ID );
   // REPLACE WITH ACTUAL COLOR SENCOR
   private DigitalInput eye; //= new DigitalInput( ID Number );
 
