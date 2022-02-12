@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -26,7 +27,7 @@ public class Conveyor extends SubsystemBase {
 
   // Statics ------------------------------------------------------
   /** Precent Output **/
-  public static final double kSpeed = 0.3;
+  public static final double kSpeed = 0.6;
   /** Precent Output **/
   public static final double kSpeedToShoot = 0.6;
 
@@ -40,7 +41,7 @@ public class Conveyor extends SubsystemBase {
   @Override
   public void periodic() 
   {
-    // This method will be called once per scheduler run
+    conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
   }
 
   // Set Output ---------------------------------------------------
@@ -107,7 +108,8 @@ public class Conveyor extends SubsystemBase {
 
   public boolean isBallReadyToShoot()
   {
-    return this.eye.get();
+	  return true;
+    //return this.eye.get();
   }
   ///////////////////////////////////////////////////////////
   

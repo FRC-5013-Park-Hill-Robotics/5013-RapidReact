@@ -133,9 +133,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		updateOdometry();
-		updateDriveStates(m_desiredStates);
-		SmartDashboard.putNumber("pigeon", getGyroscopeRotation().getDegrees());
+	//	updateOdometry();
+	//	updateDriveStates(m_desiredStates);
+	//	SmartDashboard.putNumber("pigeon", getGyroscopeRotation().getDegrees());
 	}
 
 	private void updateOdometry() {

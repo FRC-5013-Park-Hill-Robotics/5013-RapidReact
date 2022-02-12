@@ -42,7 +42,8 @@ public class IntakeVision extends SubsystemBase {
     }
 	
 	public boolean hasTarget() {
-		boolean hasTarget = this.getResult().hasDetection();
+		AxonResult result = this.getResult();
+		boolean hasTarget = result!=null && this.getResult().hasDetection();
 		return hasTarget;
 	}
 

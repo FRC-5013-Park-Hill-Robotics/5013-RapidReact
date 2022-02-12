@@ -22,7 +22,7 @@ public class CargoShooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public CargoShooter(Conveyor conveyor) {
-    topMotor.setInverted(true);
+    topMotor.setInverted(false);
     bottomMotor.setInverted(!topMotor.getInverted());
     m_conveyor = conveyor;
     setPID(bottomMotor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
