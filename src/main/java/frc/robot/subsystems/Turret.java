@@ -11,8 +11,12 @@ import edu.wpi.first.wpilibj.Servo;
 
 public class Turret extends SubsystemBase {
     private WPI_TalonSRX motor = new WPI_TalonSRX(TURRET_MOTOR);
+    private Servo leftServo = new Servo(SERVO_LEFT_ID);
+    private Servo rightServo = new Servo(SERVO_RIGHT_ID);
+
 
     double desiredAngle = 0;
+    
 	/** Creates a new Turret. */
 	public Turret() {
 	}
@@ -21,7 +25,7 @@ public class Turret extends SubsystemBase {
         return motor.getSelectedSensorPosition();
         
     }
-    //Sets the desired angle of the 
+    //Sets the desired angle of the turret
     public void setDesiredAngle(double desiredAngle) {
         this.desiredAngle = desiredAngle;
         
@@ -35,6 +39,6 @@ public class Turret extends SubsystemBase {
 		// This method will be called once per scheduler run
         //pid controls
         //motor.set
-        //commands
+        //coding stuff by baylee, a super expert programmer
 	}
 }
