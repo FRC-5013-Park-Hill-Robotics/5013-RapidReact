@@ -19,4 +19,6 @@ public final class ShooterVisionConstants {
     public static final double RANGE_TOO_FAR=-9;
     public static final double RANGE_PRIME_START=0;
     public static final double RANGE_PRIME_END=-2;
+    public static final double HORAZONTAL_OFFSET = 0;
+    public static final double VERTICAL_OFFSET = 0;
 }

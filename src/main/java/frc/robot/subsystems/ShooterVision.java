@@ -104,9 +104,14 @@ public class ShooterVision extends SubsystemBase {
   /**Returns the angle to targed in degrees negative values to the left and positive to the right
    * used for turn to target
    */
-  public double getAngleOfError(){
+  public double getHorazontalAngleOfError(){
     //+1 is a fudge factor cor camera mounting
-    return getTx().getDouble(0.0) + 1.5;
+    return getTx().getDouble(0.0) + ShooterVisionConstants.HORAZONTAL_OFFSET;
+  }
+
+  public double getVerticalAngleOfError(){
+    //+1 is a fudge factor cor camera mounting
+    return getTy().getDouble(0.0) + ShooterVisionConstants.VERTICAL_OFFSET;
   }
 
   public void switchPipeline(boolean targeting){
