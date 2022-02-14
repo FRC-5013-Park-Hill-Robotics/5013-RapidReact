@@ -7,16 +7,17 @@ package frc.robot;
 /** Add your docs here. */
 public final class ShooterConstants {
 
-    public static final int SHOOTER_TOP_MOTOR = 0;
-    public static final int SHOOTER_BOTTOM_MOTOR = 0;
-    public static final double SHOOTER_VELOCITY = 0;
-    public static final double TOP_PERCENT_OF_BOTTOM = 0;
+    public static final int SHOOTER_TOP_MOTOR = 18;
+    public static final int SHOOTER_BOTTOM_MOTOR = 17;
+    public static final double SHOOTER_VELOCITY = 4500;
+    public static final double TOP_PERCENT_OF_BOTTOM = 75;
     
     public static final class FLY_WHEEL_GAINS{
-        public static final double kF = 0.0;
         // (output% * 1023) / (tuner value for velocity at output%)
+		public static final double kP = .45;
+        //public static final double kF = .049;
+        public static final double kF = .055;
 
-        public static final double kP = 0.0;
         // (throttle% x 1023) / (servo error # after just running w/ F gain)
 
         public static final double kI = 0.0;

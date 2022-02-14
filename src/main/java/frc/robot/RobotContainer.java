@@ -23,6 +23,7 @@ import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.StatusLED;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
@@ -40,9 +41,9 @@ public class RobotContainer {
 	private Turret m_turret;// = new Turret();
 	private StatusLED m_StatusLED;// = new StatusLed(this);
 	private ShooterVision m_shooterVision;// = new ShooterVision();
-	private CargoShooter m_shooter; //= new Shooter();
-	private Conveyor m_conveyor;// = new Conveyor();
-	private IntakeVision m_IntakeVision = new IntakeVision(this);
+	private Conveyor m_conveyor = new Conveyor();
+	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
+	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
 	private Intake m_intake;// = new Intake(m_conveyor);
 	private Climber m_Climber;// = new Climber();
 	
@@ -71,15 +72,14 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         new Button(m_controller::getBackButton)
                 // No requirements because we don't need to interrupt anything
-                .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
-        new Button(m_controller::getAButton)
-                .whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI));
-
+                .whenPressed(new InstantCommand(m_drivetrainSubsystem::zeroGyroscope));
 		new Button(m_controller::getLeftBumper)
 			.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
 				 m_controller::getRightTriggerAxis));
 	
-				
+		new Button(m_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire));
+		new Button(m_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));
+
 }
 
     /**

@@ -4,16 +4,17 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ConveyorConstants;
 
 public class Conveyor extends SubsystemBase {
 
   // Componenets ---------------------------------------------------
-  private TalonFX conveyorMotor;// = new WIP_TalonFX( ID Number );
+  private WPI_TalonFX conveyorMotor = new WPI_TalonFX( ConveyorConstants.CONVEYOR_ID );
   // REPLACE WITH ACTUAL COLOR SENCOR
   private DigitalInput eye; //= new DigitalInput( ID Number );
 
@@ -25,7 +26,7 @@ public class Conveyor extends SubsystemBase {
 
   // Statics ------------------------------------------------------
   /** Precent Output **/
-  public static final double kSpeed = 0.3;
+  public static final double kSpeed = 0.6;
   /** Precent Output **/
   public static final double kSpeedToShoot = 0.6;
 
@@ -39,7 +40,7 @@ public class Conveyor extends SubsystemBase {
   @Override
   public void periodic() 
   {
-    // This method will be called once per scheduler run
+    conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
   }
 
   // Set Output ---------------------------------------------------
@@ -106,7 +107,8 @@ public class Conveyor extends SubsystemBase {
 
   public boolean isBallReadyToShoot()
   {
-    return this.eye.get();
+	  return true;
+    //return this.eye.get();
   }
   ///////////////////////////////////////////////////////////
   
