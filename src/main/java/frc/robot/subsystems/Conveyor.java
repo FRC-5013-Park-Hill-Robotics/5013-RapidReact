@@ -5,17 +5,16 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ConveyorConstants;
 
 public class Conveyor extends SubsystemBase {
 
   // Componenets ---------------------------------------------------
-  private TalonFX conveyorMotor = new TalonFX( ConveyorConstants.CONVEYOR_ID );
+  private WPI_TalonFX conveyorMotor = new WPI_TalonFX( ConveyorConstants.CONVEYOR_ID );
   // REPLACE WITH ACTUAL COLOR SENCOR
   private DigitalInput eye; //= new DigitalInput( ID Number );
 

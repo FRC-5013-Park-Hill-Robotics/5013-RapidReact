@@ -8,9 +8,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StickyFaults;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,7 +19,7 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase {
 
 
-	private TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_MOTOR);
+	private WPI_TalonFX  intakeMotor = new WPI_TalonFX(IntakeConstants.INTAKE_MOTOR);
 
 	// Dropping the intake is set up as forward and raising it as reverse, may have
 	// to change based on mechanics and wiring.
