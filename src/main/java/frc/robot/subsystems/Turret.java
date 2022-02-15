@@ -4,16 +4,18 @@
 
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.TurretConstants.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Servo;
+import frc.robot.subsystems.ShooterVision;
 
 public class Turret extends SubsystemBase {
     private WPI_TalonSRX motor = new WPI_TalonSRX(TURRET_MOTOR);
     private Servo leftServo = new Servo(SERVO_LEFT_ID);
     private Servo rightServo = new Servo(SERVO_RIGHT_ID);
-
 
     double desiredAngle = 0;
     
@@ -28,12 +30,18 @@ public class Turret extends SubsystemBase {
     //Sets the desired angle of the turret
     public void setDesiredAngle(double desiredAngle) {
         this.desiredAngle = desiredAngle;
+        desiredAngle = getCurrentAngle();
         
     }
     public void setOpenLoop(double speed) {
         motor.set(speed);
     }
     
+    //Sets the pulse width (height) of the left/right servos
+    public void setHeight(double height) {
+        leftServo.set(height);
+        rightServo.set(height);
+    }
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
