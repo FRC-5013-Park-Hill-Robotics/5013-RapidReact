@@ -1,4 +1,4 @@
-package frc.robot.TrobotLib;
+package frc.robot.trobotlib;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Servo;
