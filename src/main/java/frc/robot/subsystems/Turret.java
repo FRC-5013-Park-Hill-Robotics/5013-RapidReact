@@ -5,22 +5,21 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.TurretConstants.*;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.Servo;
-import frc.robot.subsystems.ShooterVision;
+import frc.robot.trobot5013lib.LinearServo;
 
 public class Turret extends SubsystemBase {
     private WPI_TalonSRX motor = new WPI_TalonSRX(TURRET_MOTOR);
-    private Servo leftServo = new Servo(SERVO_LEFT_ID);
-    private Servo rightServo = new Servo(SERVO_RIGHT_ID);
+    private LinearServo servo = new LinearServo(SERVO_LEFT_ID,140,32);
+
 
     double desiredAngle = 0;
     
 	/** Creates a new Turret. */
 	public Turret() {
+		servo.setPosition(0);
 	}
     //Gets the current angle of the Talon SRX.
     public double getCurrentAngle() {
@@ -37,13 +36,23 @@ public class Turret extends SubsystemBase {
         motor.set(speed);
     }
     
+
     //Sets the pulse width (height) of the left/right servos
     public void setHeight(double height) {
-        leftServo.set(height);
-        rightServo.set(height);
+        servo.setHeight(height);
     }
+
+	public void up(double increment){
+		setHeight(servo.getHeight() + increment);
+	}
+
+	public void down(double increment){
+		setHeight(servo.getHeight() - increment);
+	}
+
 	@Override
 	public void periodic() {
+		SmartDashboard.putNumber("Height", servo.getHeight());
 		// This method will be called once per scheduler run
         //pid controls
         //motor.set
