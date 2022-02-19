@@ -101,7 +101,7 @@ public class LogitechController extends GenericHID {
 		return getPov(Direction.DOWN);
 	}
 
-	public boolean getDPadLeft(){
+	public boolean getDPadLEft(){
 		return getPov(Direction.LEFT);
 	}
 

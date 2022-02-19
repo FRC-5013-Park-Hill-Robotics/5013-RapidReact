@@ -75,13 +75,13 @@ public class Intake extends SubsystemBase {
 		return dropIntakeSolenoid.get();
 	}
 	public void start(){
-		intakeMotor.set(ControlMode.PercentOutput, .40);
+		intakeMotor.set(ControlMode.PercentOutput, .30);
 	}
 	public void stop(){
 		intakeMotor.set(ControlMode.PercentOutput, 0);
 	}
 	public void reverseIntake() {
-		intakeMotor.set(ControlMode.PercentOutput, -.40);
+		intakeMotor.set(ControlMode.PercentOutput, -.30);
 	}
 }
 

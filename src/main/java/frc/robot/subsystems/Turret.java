@@ -42,10 +42,6 @@ public class Turret extends SubsystemBase {
         servo.setHeight(height);
     }
 
-	public double getHeight() {
-        return servo.getHeight();
-    }
-
 	public void up(double increment){
 		setHeight(servo.getHeight() + increment);
 	}
