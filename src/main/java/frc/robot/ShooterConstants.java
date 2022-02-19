@@ -10,7 +10,7 @@ public final class ShooterConstants {
     public static final int SHOOTER_TOP_MOTOR = 18;
     public static final int SHOOTER_BOTTOM_MOTOR = 17;
     public static final double SHOOTER_VELOCITY = 4500;
-    public static final double TOP_PERCENT_OF_BOTTOM = 75;
+    public static final double TOP_PERCENT_OF_BOTTOM = 1.25;
     
     public static final class FLY_WHEEL_GAINS{
         // (output% * 1023) / (tuner value for velocity at output%)
