@@ -21,8 +21,6 @@ public final class Constants {
     public static final int PCM_ID = 1;
     public static final int FALCON_500_MAX_RPM = 6380;
     public static final int STATUS_LED_PWM_PORT = 0;
-	public static final int PNEUMATICS_HUB = 19;
-
 
     public static final class ControllerConstants {
         public static final int DRIVER_CONTROLLER_PORT = 0;
@@ -126,7 +124,7 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int INTAKE_MOTOR = 20;
+        public static final int INTAKE_MOTOR = 0;
         public static final int DROP_INTAKE_SOLENOID_CHANNEL = 0;
         public static final int RAISE_INTAKE_SOLENOID_CHANNEL = 0;
         public static final int ROLLER_SERVO = 0;
