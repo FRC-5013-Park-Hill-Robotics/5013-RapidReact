@@ -77,37 +77,6 @@ public class LogitechController extends GenericHID {
         }
     }
 
-    public static enum Direction {
-        UP(0), RIGHT(90), DOWN(180), LEFT(270);
-
-        int direction;
-
-        private Direction(int direction) {
-            this.direction = direction;
-        }
-    }
-
-    public boolean getPov(Direction direction ) {
-        int dPadValue = getPOV();
-        return (dPadValue == direction.direction) || (dPadValue == (direction.direction + 45) % 360)
-                || (dPadValue == (direction.direction + 315) % 360);
-    }
-
-	public boolean getDPadUp(){
-		return getPov(Direction.UP);
-	}
-
-	public boolean getDPadDown(){
-		return getPov(Direction.DOWN);
-	}
-
-	public boolean getDPadLEft(){
-		return getPov(Direction.LEFT);
-	}
-
-	public boolean getDPadRight(){
-		return getPov(Direction.RIGHT);
-	}
     /**
      * Construct an instance of a controller.
      *
