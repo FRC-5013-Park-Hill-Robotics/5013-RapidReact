@@ -36,6 +36,7 @@ public class GamepadDrive extends CommandBase {
 		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY());
 		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX());
 		SmartDashboard.putNumber("Right X", m_gamepad.getRightX());
+
 		;
 		double throttle = modifyAxis(m_gamepad.getRightTriggerAxis());
 
@@ -46,33 +47,17 @@ public class GamepadDrive extends CommandBase {
 			translationX = Math.cos(angle) * throttle;
 			translationY = Math.sin(angle) * throttle;
 		}
+		SmartDashboard.putNumber("rotation ", getRotationRadiansPerSecond());
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
 				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),
 				m_drivetrain.getGyroscopeRotation()));
 
-		/*
-		 * m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-		 * getXTranslationMetersPerSecond(),
-		 * getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(),
-		 * m_drivetrain.getGyroscopeRotation()));
-		 */ }
+	 }
 
 	@Override
 	public void end(boolean interrupted) {
 		m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-	}
-
-	private double getXTranslationMetersPerSecond() {
-		// on the controller y is up, on the field x is away from the driver
-		return -DrivetrainSubsystem
-				.percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
-	}
-
-	private double getYTranslationMetersPerSecond() {
-		// on the controller y is up, on the field x is away from the driver
-		return -DrivetrainSubsystem
-				.percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
 	}
 
 	private double getRotationRadiansPerSecond() {
