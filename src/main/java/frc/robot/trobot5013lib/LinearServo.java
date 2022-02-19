@@ -2,12 +2,13 @@ package frc.robot.trobot5013lib;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
 
 public class LinearServo extends Servo {
 	double m_speed;
 	double m_length;
-	double desiredHeight;
-	double currentHeight;
+	double setPos;
+	double curPos;
 
 	/**
 	 * Parameters for L16-R Actuonix Linear Actuators
@@ -30,12 +31,47 @@ public class LinearServo extends Servo {
 	 *
 	 * @param setpoint the target position of the servo [mm]
 	 */
-	public void setHeight(double setpoint) {
-		desiredHeight = MathUtil.clamp(setpoint, 0, m_length);
-		set(desiredHeight/m_length);
+	public void setPosition(double setpoint) {
+		setPos = MathUtil.clamp(setpoint, 0, m_length);
+		setSpeed((setPos / m_length * 2) - 1);
 	}
 
-	public double getHeight(){
-		return getPosition() * m_length;
+	double lastTime = 0;
+
+	/**
+	 * Run this method in any periodic function to update the position estimation of
+	 * your
+	 * servo
+	 */
+	public void updateCurPos() {
+		double dt = Timer.getFPGATimestamp() - lastTime;
+		if (curPos > setPos + m_speed * dt) {
+			curPos -= m_speed * dt;
+		} else if (curPos < setPos - m_speed * dt) {
+			curPos += m_speed * dt;
+		} else {
+			curPos = setPos;
+		}
+	}
+
+	/**
+	 * Current position of the servo, must be calling {@link #updateCurPos()
+	 * updateCurPos()} periodically
+	 *
+	 * @return Servo Position [mm]
+	 */
+	public double getPosition() {
+		return curPos;
+	}
+
+	/**
+	 * Checks if the servo is at its target position, must be calling
+	 * {@link #updateCurPos()
+	 * updateCurPos()} periodically
+	 * 
+	 * @return true when servo is at its target
+	 */
+	public boolean isFinished() {
+		return curPos == setPos;
 	}
 }
