@@ -45,7 +45,7 @@ public final class Constants {
              * The left-to-right distance between the drivetrain wheels Should be measured
              * from center to center.
              */
-            public static final double TRACKWIDTH_METERS = 585;
+            public static final double TRACKWIDTH_METERS = .585;
             /**
              * The front-to-back distance between the drivetrain wheels. Should be measured
              * from center to center.
