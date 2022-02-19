@@ -38,13 +38,13 @@ public class RobotContainer {
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
     private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
-	private Turret m_turret = new Turret();
+	private Turret m_turret;// = new Turret();
 	private StatusLED m_StatusLED;// = new StatusLed(this);
 	private ShooterVision m_shooterVision;// = new ShooterVision();
 	private Conveyor m_conveyor = new Conveyor();
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
 	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
-	private Intake m_intake = new Intake(m_conveyor);
+	private Intake m_intake;// = new Intake(m_conveyor);
 	private Climber m_Climber;// = new Climber();
 	
     /**
@@ -79,9 +79,7 @@ public class RobotContainer {
 	
 		new Button(m_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire));
 		new Button(m_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));
-		new Button(m_controller::getXButton).whileHeld(new InstantCommand(m_intake::start)).whenReleased(new InstantCommand(m_intake::stop));
-		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
-		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
+
 }
 
     /**
