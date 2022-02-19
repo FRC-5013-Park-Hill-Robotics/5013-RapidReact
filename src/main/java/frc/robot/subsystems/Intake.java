@@ -34,7 +34,7 @@ public class Intake extends SubsystemBase {
 	public Intake(Conveyor conveyor) {
 		super();
 		intakeMotor.configFactoryDefault();
-		intakeMotor.setInverted(true);
+		intakeMotor.setInverted(false);
 		intakeMotor.setNeutralMode(NeutralMode.Brake);
 	}
 
@@ -74,9 +74,14 @@ public class Intake extends SubsystemBase {
 	public boolean isDown() {
 		return dropIntakeSolenoid.get();
 	}
-
+	public void start(){
+		intakeMotor.set(ControlMode.PercentOutput, .30);
+	}
+	public void stop(){
+		intakeMotor.set(ControlMode.PercentOutput, 0);
+	}
 	public void reverseIntake() {
-		intakeMotor.set(ControlMode.PercentOutput, -.75);
+		intakeMotor.set(ControlMode.PercentOutput, -.30);
 	}
 }
 
