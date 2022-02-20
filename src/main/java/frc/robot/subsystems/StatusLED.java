@@ -4,15 +4,21 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.BlinkenConstants;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.trobot5013lib.led.RainbowPattern;
+import frc.robot.trobot5013lib.led.SolidColorPattern;
+import frc.robot.trobot5013lib.led.TrobotAddressableLED;
+import frc.robot.trobot5013lib.led.TrobotAddressableLEDPattern;
 
 public class StatusLED extends SubsystemBase {
-	private PWM m_pwm = new PWM(Constants.STATUS_LED_PWM_PORT);
+	private TrobotAddressableLED m_led = new TrobotAddressableLED(Constants.STATUS_LED_PWM_PORT,60);
 	private RobotContainer m_RobotContainer;
+	private TrobotAddressableLEDPattern m_bluePattern = new SolidColorPattern(Color.kFirstBlue);
+	private TrobotAddressableLEDPattern m_redPattern = new SolidColorPattern(Color.kFirstRed);
+	private TrobotAddressableLEDPattern m_disabledPattern = new RainbowPattern();
 
 	/** Creates a new StatusLED. */
 	public StatusLED(RobotContainer robotContainer) {
@@ -27,14 +33,14 @@ public class StatusLED extends SubsystemBase {
 		// subsystems
 
 		// Until we have interesting statuses to code set color to alliance
-		if (m_RobotContainer.isRedAlliance()) {
-			setColorPattern(BlinkenConstants.RED_BRIGHT);
+		if (m_RobotContainer.isDisabled()){
+			m_led.setPattern(m_disabledPattern);
+		} else if (m_RobotContainer.isRedAlliance()) {
+			m_led.setPattern(m_redPattern);
 		} else {
-			setColorPattern(BlinkenConstants.BLUE);
+			m_led.setPattern(m_bluePattern);
 		}
 	}
 
-	public void setColorPattern(double color) {
-		m_pwm.setSpeed(color);
-	}
+
 }
