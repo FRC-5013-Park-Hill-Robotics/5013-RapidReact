@@ -39,7 +39,7 @@ public class RobotContainer {
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
     private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
 	private Turret m_turret = new Turret();
-	private StatusLED m_StatusLED;// = new StatusLed(this);
+	private StatusLED m_StatusLED = new StatusLED(this);
 	private ShooterVision m_shooterVision = new ShooterVision();
 	private Conveyor m_conveyor = new Conveyor();
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
@@ -100,7 +100,10 @@ public class RobotContainer {
     public boolean isRedAlliance() {
         return DriverStation.getAlliance() == Alliance.Red;
     }
-	public DrivetrainSubsystem getdrivetrainSubsystem() {
+	public boolean isDisabled(){
+		return DriverStation.isDisabled();
+	}
+	public DrivetrainSubsystem getDrivetrainSubsystem() {
 		return m_drivetrainSubsystem;
 	}
 

@@ -73,7 +73,7 @@ public class IntakeVision extends SubsystemBase {
 		if (lastResult == axonResult){
 			result =  lastTargetAngle;
 		} else {
-			result = (m_robotContainer.getdrivetrainSubsystem().getHeading() + getXAngleOfError(axonResult) ) % 360;
+			result = (m_robotContainer.getDrivetrainSubsystem().getHeading() + getXAngleOfError(axonResult) ) % 360;
 			lastResult = axonResult;
 			lastTargetAngle = result; 
 		}
