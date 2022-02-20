@@ -23,4 +23,7 @@ public class RainbowPattern implements TrobotAddressableLEDPattern{
 
 		m_firstHue = (m_firstHue + 3) % 180;
 	}
+	public boolean isAnimated(){
+		return true;
+	}
 }
