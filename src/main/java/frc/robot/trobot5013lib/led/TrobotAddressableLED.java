@@ -4,6 +4,9 @@
 
 package frc.robot.trobot5013lib.led;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
@@ -13,8 +16,10 @@ public class TrobotAddressableLED {
 	private AddressableLED m_LED;
 	private AddressableLEDBuffer m_buffer;
 	private TrobotAddressableLEDPattern m_pattern;
+	private Timer timer = new Timer();
+	private TimerTask task;
 
-	public TrobotAddressableLED(int pwmPort, int length){
+	public TrobotAddressableLED(int pwmPort, int length) {
 		super();
 		m_LED = new AddressableLED(pwmPort);
 		m_buffer = new AddressableLEDBuffer(length);
@@ -39,14 +44,29 @@ public class TrobotAddressableLED {
 		this.m_buffer = buffer;
 	}
 
-	public void setPattern(TrobotAddressableLEDPattern pattern){
-		m_pattern = pattern;
-		update();
+	public void setPattern(TrobotAddressableLEDPattern pattern) {
+		if (pattern != m_pattern) {
+			m_pattern = pattern;
+			if (task != null) {
+				task.cancel();
+				task = null;
+			}
+			if (pattern.isAnimated()) {
+				task = new TimerTask() {
+					public void run() {
+						update();
+					}
+				};
+				timer.scheduleAtFixedRate(
+						task,
+						20, // run first occurrence immediately
+						20); // run every three seconds
+			}
+			update();
+		}
 	}
 
-	//Calls setLEd and setData agaim.  allows for
-	// animated patterns if called repeatedly without setting pattern again
-	public void update(){
+	protected void update() {
 		m_pattern.setLEDs(getBuffer());
 		getLED().setData(getBuffer());
 	}

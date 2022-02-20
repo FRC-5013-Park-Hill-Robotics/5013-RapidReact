@@ -41,5 +41,7 @@ public class BlinkingPattern implements TrobotAddressableLEDPattern {
 		}
 	
 	}
-
+	public boolean isAnimated(){
+		return true;
+	}
 }
