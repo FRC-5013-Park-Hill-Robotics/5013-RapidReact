@@ -49,8 +49,8 @@ public class GamepadDrive extends CommandBase {
 		}
 		SmartDashboard.putNumber("rotation ", getRotationRadiansPerSecond());
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
-				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),
+				-xLimiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX)),
+				yLimiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY)), getRotationRadiansPerSecond(),
 				m_drivetrain.getGyroscopeRotation()));
 
 	 }
