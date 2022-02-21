@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.trobot5013lib.led.RainbowPattern;
+import frc.robot.trobot5013lib.led.ChasePattern;
 import frc.robot.trobot5013lib.led.SolidColorPattern;
 import frc.robot.trobot5013lib.led.TrobotAddressableLED;
 import frc.robot.trobot5013lib.led.TrobotAddressableLEDPattern;
@@ -18,7 +18,7 @@ public class StatusLED extends SubsystemBase {
 	private RobotContainer m_RobotContainer;
 	private TrobotAddressableLEDPattern m_bluePattern = new SolidColorPattern(Color.kFirstBlue);
 	private TrobotAddressableLEDPattern m_redPattern = new SolidColorPattern(Color.kFirstRed);
-	private TrobotAddressableLEDPattern m_disabledPattern = new RainbowPattern();
+	private TrobotAddressableLEDPattern m_disabledPattern = new ChasePattern(new Color[]{Color.kRed,Color.kWhite},3);
 
 	/** Creates a new StatusLED. */
 	public StatusLED(RobotContainer robotContainer) {
