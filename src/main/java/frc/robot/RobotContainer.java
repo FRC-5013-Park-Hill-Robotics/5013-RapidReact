@@ -103,6 +103,14 @@ public class RobotContainer {
 	public boolean isDisabled(){
 		return DriverStation.isDisabled();
 	}
+
+	public boolean isAutonomous(){
+		return DriverStation.isAutonomous();
+	}
+
+	public boolean isTeleop(){
+		return DriverStation.isTeleop();
+	}
 	public DrivetrainSubsystem getDrivetrainSubsystem() {
 		return m_drivetrainSubsystem;
 	}
