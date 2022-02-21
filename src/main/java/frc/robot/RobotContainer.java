@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.commands.Fetch;
 import frc.robot.commands.GamepadDrive;
 import frc.robot.commands.TurnToAngleCommand;
@@ -59,7 +60,8 @@ public class RobotContainer {
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotation
         m_drivetrainSubsystem.setDefaultCommand(new GamepadDrive(m_drivetrainSubsystem, m_controller));
-        // Configure the button bindings
+		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_shooter, m_intake));
+		// Configure the button bindings
         configureButtonBindings();
 		m_pneumaticsHub.enableCompressorDigital();
 		
