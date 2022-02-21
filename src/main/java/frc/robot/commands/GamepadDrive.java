@@ -10,8 +10,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.trobot5013lib.TrobotUtil;
 import frc.robot.LogitechController;
-import frc.robot.Constants.ControllerConstants;
+import static frc.robot.Constants.ControllerConstants.DEADBAND;
 
 public class GamepadDrive extends CommandBase {
 	private DrivetrainSubsystem m_drivetrain;
@@ -38,10 +39,10 @@ public class GamepadDrive extends CommandBase {
 		SmartDashboard.putNumber("Right X", m_gamepad.getRightX());
 
 		;
-		double throttle = modifyAxis(m_gamepad.getRightTriggerAxis());
+		double throttle = TrobotUtil.modifyAxis(m_gamepad.getRightTriggerAxis(),DEADBAND);
 
-		double translationX = modifyAxis(-m_gamepad.getLeftY());
-		double translationY = modifyAxis(-m_gamepad.getLeftX());
+		double translationX = TrobotUtil.modifyAxis(-m_gamepad.getLeftY(),DEADBAND);
+		double translationY = TrobotUtil.modifyAxis(-m_gamepad.getLeftX(),DEADBAND);
 		if (!(translationX == 0.0 && translationY == 0.0)) {
 			double angle = calculateTranslationDirection(translationX, translationY);
 			translationX = Math.cos(angle) * throttle;
@@ -49,8 +50,8 @@ public class GamepadDrive extends CommandBase {
 		}
 		SmartDashboard.putNumber("rotation ", getRotationRadiansPerSecond());
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-				-xLimiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX)),
-				yLimiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY)), getRotationRadiansPerSecond(),
+				getTranslationMetersPerSecond(translationX, xLimiter),
+				getTranslationMetersPerSecond(translationY,yLimiter), getRotationRadiansPerSecond(),
 				m_drivetrain.getGyroscopeRotation()));
 
 	 }
@@ -60,24 +61,16 @@ public class GamepadDrive extends CommandBase {
 		m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
 	}
 
+	private double getTranslationMetersPerSecond(double translationPercentOutput, SlewRateLimiter limiter){
+		return -limiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationPercentOutput));
+	}
 	private double getRotationRadiansPerSecond() {
 		return -DrivetrainSubsystem
-				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX(),2))) / 3;
+				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(TrobotUtil.modifyAxis(m_gamepad.getRightX(),2,DEADBAND))) / 3;
 
 	}
 
-	private static double modifyAxis(double value) {
-	
-		return modifyAxis(value, 1);
-	}
-	private static double modifyAxis(double value, int exponent) {
-		// Deadband
-		value = MathUtil.applyDeadband(value, ControllerConstants.DEADBAND);
 
-		 value = Math.copySign(Math.pow(value, exponent), value);
-
-		return value;
-	}
 	private double calculateTranslationDirection(double x, double y) {
 		// Calculate the angle.
 		// Swapping x/y
