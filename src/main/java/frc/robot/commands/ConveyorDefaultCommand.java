@@ -14,17 +14,6 @@ public class ConveyorDefaultCommand extends CommandBase {
   public ConveyorDefaultCommand( Conveyor conveyor, CargoShooter shooter, Intake intake ) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements( conveyor );
-    if( intake.isDown() )
-    {
-        while( conveyor.isBallReadyToShoot() )
-        {
-            conveyor.start();
-        }
-        if( shooter.atSpeed() )
-        {
-            conveyor.sendToShooter();
-        }
-    }
   }
 
   // Called when the command is initially scheduled.
