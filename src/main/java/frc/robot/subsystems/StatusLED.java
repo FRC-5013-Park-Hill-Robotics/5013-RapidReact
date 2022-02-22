@@ -8,19 +8,26 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.trobot5013lib.led.BlinkingPattern;
 import frc.robot.trobot5013lib.led.ChasePattern;
 import frc.robot.trobot5013lib.led.RainbowPattern;
 import frc.robot.trobot5013lib.led.SolidColorPattern;
 import frc.robot.trobot5013lib.led.TrobotAddressableLED;
 import frc.robot.trobot5013lib.led.TrobotAddressableLEDPattern;
+import frc.robot.subsystems.ShooterVision;
 
 public class StatusLED extends SubsystemBase {
 	private TrobotAddressableLED m_led = new TrobotAddressableLED(Constants.STATUS_LED_PWM_PORT,60);
 	private RobotContainer m_RobotContainer;
+    private ShooterVision m_ShooterVision;
 	private TrobotAddressableLEDPattern m_bluePattern = new SolidColorPattern(Color.kBlue);
 	private TrobotAddressableLEDPattern m_redPattern = new SolidColorPattern(Color.kRed);
 	//private TrobotAddressableLEDPattern m_disabledPattern = new ChasePattern(new Color[]{Color.kRed,Color.kWhite},3);
 	private TrobotAddressableLEDPattern m_disabledPattern = new RainbowPattern();
+    private TrobotAddressableLEDPattern m_greenPattern = new SolidColorPattern(Color.kGreen);
+    private TrobotAddressableLEDPattern m_yellowPattern = new SolidColorPattern(Color.kLightYellow);
+    private TrobotAddressableLEDPattern m_blinkingRed = new BlinkingPattern(Color.kRed, 0.25);
+    private TrobotAddressableLEDPattern m_purplePattern = new SolidColorPattern (Color.kPurple);
 
 	/** Creates a new StatusLED. */
 	public StatusLED(RobotContainer robotContainer) {
@@ -42,7 +49,15 @@ public class StatusLED extends SubsystemBase {
 		} else {
 			m_led.setPattern(m_bluePattern);
 		}
-	}
-
-
+        if (m_ShooterVision.isTargeting()){
+            if (m_ShooterVision.hasTarget()){
+                m_led.setPattern(m_yellowPattern);
+                if(m_ShooterVision.isPrimeRange()){
+                    m_led.setPattern(m_greenPattern);    
+                }
+            }
+        else {
+            m_led.setPattern(m_blinkingRed);
+        }
+    }
 }
