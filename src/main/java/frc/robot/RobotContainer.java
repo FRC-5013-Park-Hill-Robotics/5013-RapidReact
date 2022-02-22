@@ -7,12 +7,13 @@ package frc.robot;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.commands.Fetch;
 import frc.robot.commands.GamepadDrive;
-import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.StatusLED;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
@@ -37,13 +39,14 @@ public class RobotContainer {
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
     private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
-	private Turret m_turret;// = new Turret();
-	private StatusLED m_StatusLED;// = new StatusLed(this);
-	private ShooterVision m_shooterVision;// = new ShooterVision();
-	private CargoShooter m_shooter; //= new Shooter();
-	private Conveyor m_conveyor;// = new Conveyor();
-	private IntakeVision m_IntakeVision = new IntakeVision(this);
-	private Intake m_intake;// = new Intake(m_conveyor);
+	private PneumaticHub m_pneumaticsHub = new PneumaticHub(PNEUMATICS_HUB);
+	private Turret m_turret = new Turret();
+	private StatusLED m_StatusLED = new StatusLED(this);
+	private ShooterVision m_shooterVision = new ShooterVision();
+	private Conveyor m_conveyor = new Conveyor();
+	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
+	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
+	private Intake m_intake = new Intake(m_conveyor,this);
 	private Climber m_Climber;// = new Climber();
 	
     /**
@@ -56,8 +59,11 @@ public class RobotContainer {
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotation
         m_drivetrainSubsystem.setDefaultCommand(new GamepadDrive(m_drivetrainSubsystem, m_controller));
-        // Configure the button bindings
+		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_shooter, m_intake));
+		// Configure the button bindings
         configureButtonBindings();
+		m_pneumaticsHub.enableCompressorDigital();
+		
 
     }
 
@@ -71,16 +77,20 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         new Button(m_controller::getBackButton)
                 // No requirements because we don't need to interrupt anything
-                .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
-        new Button(m_controller::getAButton)
-                .whenPressed(new TurnToAngleCommand(m_drivetrainSubsystem, Math.PI));
-
-		new Button(m_controller::getLeftBumper)
-			.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
-				 m_controller::getRightTriggerAxis));
+                .whenPressed(new InstantCommand(m_drivetrainSubsystem::zeroGyroscope));
+		//new Button(m_controller::getLeftBumper)
+		//	.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
+		//		 m_controller::getRightTriggerAxis));
 	
-				
-}
+		new Button(m_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire)).whenReleased(new InstantCommand(m_shooter::stopFiring));
+		new Button(m_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));
+		new Button(m_controller::getXButton).whileHeld(new InstantCommand(m_intake::start));//.whenReleased(new InstantCommand(m_intake::stop));
+		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
+		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
+		new Button(m_controller::getDPadRight).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(100)));
+		new Button(m_controller::getDPadLeft).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(-100)));
+		new Button(m_controller::getLeftBumper).whileHeld(new InstantCommand(m_intake::dropIntake)).whenReleased(new InstantCommand(m_intake::raiseIntake));
+		}
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -95,7 +105,18 @@ public class RobotContainer {
     public boolean isRedAlliance() {
         return DriverStation.getAlliance() == Alliance.Red;
     }
-	public DrivetrainSubsystem getdrivetrainSubsystem() {
+	public boolean isDisabled(){
+		return DriverStation.isDisabled();
+	}
+
+	public boolean isAutonomous(){
+		return DriverStation.isAutonomous();
+	}
+
+	public boolean isTeleop(){
+		return DriverStation.isTeleop();
+	}
+	public DrivetrainSubsystem getDrivetrainSubsystem() {
 		return m_drivetrainSubsystem;
 	}
 
@@ -173,5 +194,8 @@ public class RobotContainer {
 
 	public void setClimber(Climber m_Climber) {
 		this.m_Climber = m_Climber;
+	}
+	public PneumaticHub getPneumaticsHub(){
+		return m_pneumaticsHub;
 	}
 }

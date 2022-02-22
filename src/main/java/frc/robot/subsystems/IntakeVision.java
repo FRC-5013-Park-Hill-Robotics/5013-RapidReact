@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 
 import static frc.robot.IntakeVisionConstants.*;
 
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Axon.AxonResult;
 import frc.robot.Axon.AxonUtil;
@@ -42,7 +41,8 @@ public class IntakeVision extends SubsystemBase {
     }
 	
 	public boolean hasTarget() {
-		boolean hasTarget = this.getResult().hasDetection();
+		AxonResult result = this.getResult();
+		boolean hasTarget = result!=null && this.getResult().hasDetection();
 		return hasTarget;
 	}
 
@@ -72,7 +72,7 @@ public class IntakeVision extends SubsystemBase {
 		if (lastResult == axonResult){
 			result =  lastTargetAngle;
 		} else {
-			result = (m_robotContainer.getdrivetrainSubsystem().getHeading() + getXAngleOfError(axonResult) ) % 360;
+			result = (m_robotContainer.getDrivetrainSubsystem().getHeading() + getXAngleOfError(axonResult) ) % 360;
 			lastResult = axonResult;
 			lastTargetAngle = result; 
 		}

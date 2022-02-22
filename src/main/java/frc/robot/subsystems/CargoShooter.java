@@ -17,12 +17,12 @@ public class CargoShooter extends SubsystemBase {
   private double heightVelocity = SHOOTER_VELOCITY;
   private double m_targetVelocity = 0;
   private Conveyor m_conveyor;
-
+  
   /**
    * Creates a new Shooter.
    */
   public CargoShooter(Conveyor conveyor) {
-    topMotor.setInverted(true);
+    topMotor.setInverted(false);
     bottomMotor.setInverted(!topMotor.getInverted());
     m_conveyor = conveyor;
     setPID(bottomMotor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
@@ -65,25 +65,25 @@ public class CargoShooter extends SubsystemBase {
   @Override
   public void periodic() {
     //SmartDashboard.putString("topShooterTargetVelocity",""+ getTopTargetVelocity());
-    //SmartDashboard.putString("bottomShooterTargetVelocity", ""+getTargetVelocity());
-    //SmartDashboard.putString("topShooterVelocity",""+ topMotor.getSelectedSensorVelocity());
+    SmartDashboard.putString("bottomShooterTargetVelocity", ""+bottomMotor.getSelectedSensorVelocity());
+    SmartDashboard.putString("topShooterVelocity",""+ topMotor.getSelectedSensorVelocity());
     SmartDashboard.putString("shooterVelocity", ""+topMotor.getSelectedSensorVelocity());
     if (firing){
       if (atSpeed()){
-        //SmartDashboard.putString("at speed", ""+true);
-        m_conveyor.startForShooter();
+        SmartDashboard.putString("at speed", ""+true);
+        m_conveyor.start();
       } else {
-        //SmartDashboard.putString("at speed", ""+false);
+        SmartDashboard.putString("at speed", ""+false);
         m_conveyor.stop();
-        if (m_conveyor.isBallReadyToShoot()){
-          m_conveyor.reverse();
-        }
+     //   if (m_conveyor.isBallReadyToShoot()){
+     //     m_conveyor.reverse();
+     //   }
       }
-      topMotor.set(ControlMode.Velocity,getTargetVelocity()); 
+      topMotor.set(ControlMode.Velocity,getTargetVelocity() * TOP_PERCENT_OF_BOTTOM); 
       bottomMotor.set(ControlMode.Velocity,getTargetVelocity());
     } else {
-      topMotor.set(ControlMode.Velocity,SHOOTER_VELOCITY);
-      bottomMotor.set(ControlMode.Velocity,SHOOTER_VELOCITY);
+      topMotor.set(ControlMode.Velocity,getTargetVelocity() * TOP_PERCENT_OF_BOTTOM);
+      bottomMotor.set(ControlMode.Velocity,getTargetVelocity() );
     }
 
   }

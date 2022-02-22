@@ -8,7 +8,7 @@ import static frc.robot.Constants.DrivetrainConstants.PIGEON_ID;
 import static frc.robot.Constants.DrivetrainConstants.SWERVE_GEAR_RATIO;
 import static frc.robot.Constants.DrivetrainConstants.MAX_VOLTAGE;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
@@ -34,7 +34,7 @@ import frc.robot.Constants.DrivetrainConstants.TranslationGains;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-	private final PigeonIMU m_pigeon = new PigeonIMU(PIGEON_ID);
+	private final WPI_Pigeon2 m_pigeon = new WPI_Pigeon2(PIGEON_ID);
 	private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
 			// Front left
 			new Translation2d(DrivetrainGeometry.TRACKWIDTH_METERS / 2.0, DrivetrainGeometry.WHEELBASE_METERS / 2.0),
@@ -92,7 +92,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	 * robot is currently facing to the 'forwards' direction.
 	 */
 	public void zeroGyroscope() {
-		m_pigeon.setFusedHeading(0.0);
+		m_pigeon.setYaw(0.0);
 
 	}
 
@@ -105,7 +105,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	 * Return the gyroscope's heading as a Rotation2d object
 	 */
 	public Rotation2d getGyroscopeRotation() {
-		return Rotation2d.fromDegrees(m_pigeon.getFusedHeading());
+		return Rotation2d.fromDegrees(m_pigeon.getYaw());
 	}
 
 	/*
