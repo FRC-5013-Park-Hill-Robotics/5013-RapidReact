@@ -8,7 +8,6 @@ import static frc.robot.Constants.DrivetrainConstants.PIGEON_ID;
 import static frc.robot.Constants.DrivetrainConstants.SWERVE_GEAR_RATIO;
 import static frc.robot.Constants.DrivetrainConstants.MAX_VOLTAGE;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
