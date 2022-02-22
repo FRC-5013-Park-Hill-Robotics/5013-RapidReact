@@ -23,14 +23,15 @@ public class BaseTurnToTarget extends CommandBase {
 		addRequirements(driveTrain);
 		m_Vision = vision;
 		m_Drivetrain = driveTrain;
+		controller.setTolerance(kTurnToleranceRad, kTurnRateToleranceRadPerS);
+		controller.enableContinuousInput(0, 360);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
 		controller.reset();
-		controller.setTolerance(kTurnToleranceRad, kTurnRateToleranceRadPerS);
-		controller.enableContinuousInput(0, 360);
+
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.

@@ -60,13 +60,13 @@ public class TrobotAddressableLED {
 				timer.scheduleAtFixedRate(
 						task,
 						20, // run first occurrence immediately
-						20); // run every three seconds
+						50); // run every three seconds
 			}
 			update();
 		}
 	}
 
-	protected void update() {
+	public void update() {
 		m_pattern.setLEDs(getBuffer());
 		getLED().setData(getBuffer());
 	}

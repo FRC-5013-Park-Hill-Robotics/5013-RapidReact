@@ -7,9 +7,11 @@ package frc.robot;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.commands.Fetch;
 import frc.robot.commands.GamepadDrive;
 import frc.robot.commands.TurnToAngleCommand;
@@ -38,13 +40,14 @@ public class RobotContainer {
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
     private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
+	private PneumaticHub m_pneumaticsHub = new PneumaticHub(PNEUMATICS_HUB);
 	private Turret m_turret = new Turret();
 	private StatusLED m_StatusLED = new StatusLED(this);
 	private ShooterVision m_shooterVision = new ShooterVision();
 	private Conveyor m_conveyor = new Conveyor();
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
 	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
-	private Intake m_intake = new Intake(m_conveyor);
+	private Intake m_intake = new Intake(m_conveyor,this);
 	private Climber m_Climber;// = new Climber();
 	
     /**
@@ -57,8 +60,11 @@ public class RobotContainer {
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotation
         m_drivetrainSubsystem.setDefaultCommand(new GamepadDrive(m_drivetrainSubsystem, m_controller));
-        // Configure the button bindings
+		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_shooter, m_intake));
+		// Configure the button bindings
         configureButtonBindings();
+		m_pneumaticsHub.enableCompressorDigital();
+		
 
     }
 
@@ -84,7 +90,7 @@ public class RobotContainer {
 		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
 		new Button(m_controller::getDPadRight).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(100)));
 		new Button(m_controller::getDPadLeft).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(-100)));
-
+		new Button(m_controller::getLeftBumper).whileHeld(new InstantCommand(m_intake::dropIntake)).whenReleased(new InstantCommand(m_intake::raiseIntake));
 		}
 
     /**
@@ -189,5 +195,8 @@ public class RobotContainer {
 
 	public void setClimber(Climber m_Climber) {
 		this.m_Climber = m_Climber;
+	}
+	public PneumaticHub getPneumaticsHub(){
+		return m_pneumaticsHub;
 	}
 }
