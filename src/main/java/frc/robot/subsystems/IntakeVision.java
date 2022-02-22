@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 
 import static frc.robot.IntakeVisionConstants.*;
 
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Axon.AxonResult;
 import frc.robot.Axon.AxonUtil;
