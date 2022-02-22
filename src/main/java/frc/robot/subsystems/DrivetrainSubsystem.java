@@ -108,6 +108,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 		return Rotation2d.fromDegrees(m_pigeon.getYaw());
 	}
 
+    public Rotation2d getGyroscopeRotationRoll() {
+		return Rotation2d.fromDegrees(m_pigeon.getRoll());
+	}
+
 	/*
 	 * Return the gyroscope's heading in Radians
 	 */
