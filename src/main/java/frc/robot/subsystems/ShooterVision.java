@@ -62,7 +62,6 @@ public class ShooterVision extends SubsystemBase {
     double camHeight = ShooterVisionConstants.CAMERA_HEIGHT;
     double targetHeight = ShooterVisionConstants.TARGET_HEIGHT;
     double distance =  ((targetHeight-camHeight) / Math.tan(cameraAngle+angleToTarget));
-    
     return distance;
     
   }

@@ -48,8 +48,8 @@ public class GamepadDrive extends CommandBase {
 		}
 		SmartDashboard.putNumber("rotation ", getRotationRadiansPerSecond());
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-				getTranslationMetersPerSecond(translationX, xLimiter),
-				getTranslationMetersPerSecond(translationY,yLimiter), getRotationRadiansPerSecond(),
+				getTranslationMetersPerSecond(translationX, null),
+				getTranslationMetersPerSecond(translationY,null), getRotationRadiansPerSecond(),
 				m_drivetrain.getGyroscopeRotation()));
 
 	 }
@@ -60,7 +60,12 @@ public class GamepadDrive extends CommandBase {
 	}
 
 	private double getTranslationMetersPerSecond(double translationPercentOutput, SlewRateLimiter limiter){
-		return -limiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationPercentOutput));
+		if (limiter == null){
+			return DrivetrainSubsystem.percentOutputToMetersPerSecond(translationPercentOutput);
+		} else {
+			return limiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationPercentOutput));
+		}
+		
 	}
 	private double getRotationRadiansPerSecond() {
 		return -DrivetrainSubsystem
