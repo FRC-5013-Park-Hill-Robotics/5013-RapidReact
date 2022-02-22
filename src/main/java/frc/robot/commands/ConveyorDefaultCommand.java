@@ -5,26 +5,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Intake;
 
 public class ConveyorDefaultCommand extends CommandBase {
   /** Creates a new ConveyorDefaultCommand. */
-  public ConveyorDefaultCommand( Conveyor conveyor, CargoShooter shooter, Intake intake ) {
+
+  private Conveyor conveyor;
+  private Intake intake;
+
+  public ConveyorDefaultCommand( Conveyor conveyor, Intake intake ) {
     // Use addRequirements() here to declare subsystem dependencies.
+    super();
     addRequirements( conveyor );
-    if( intake.isDown() )
-    {
-        while( conveyor.isBallReadyToShoot() )
-        {
-            conveyor.start();
-        }
-        if( shooter.atSpeed() )
-        {
-            conveyor.sendToShooter();
-        }
-    }
+    this.conveyor = conveyor;
+    this.intake = intake;
   }
 
   // Called when the command is initially scheduled.
@@ -38,7 +33,14 @@ public class ConveyorDefaultCommand extends CommandBase {
   @Override
   public void execute() 
   {
-      
+     if( intake.isDown() == true && conveyor.isBallReadyToShoot() == false ) 
+     {
+        conveyor.start();
+     }
+     else
+     {
+        return;
+     }
   }
 
   // Called once the command ends or is interrupted.
