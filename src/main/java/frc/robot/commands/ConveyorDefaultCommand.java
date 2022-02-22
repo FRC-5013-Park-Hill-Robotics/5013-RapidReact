@@ -5,12 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Intake;
 
 public class ConveyorDefaultCommand extends CommandBase {
 	private Conveyor m_Conveyor;
-	private CargoShooter  m_Shooter;
 	private Intake m_Intake;
 
   public ConveyorDefaultCommand( Conveyor conveyor, Intake intake ) {
@@ -18,7 +18,6 @@ public class ConveyorDefaultCommand extends CommandBase {
     super();
     addRequirements( conveyor );
 	m_Intake = intake;
-	m_Shooter = shooter;
 	m_Conveyor = conveyor;;
 
   }

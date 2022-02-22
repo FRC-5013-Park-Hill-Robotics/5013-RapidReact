@@ -55,9 +55,9 @@ public class StatusLED extends SubsystemBase {
                 if(m_ShooterVision.isPrimeRange()){
                     m_led.setPattern(m_greenPattern);    
                 }
-            }
-        else {
-            m_led.setPattern(m_blinkingRed);
+            } else {
+            	m_led.setPattern(m_blinkingRed);
+			}
         }
     }
 }
