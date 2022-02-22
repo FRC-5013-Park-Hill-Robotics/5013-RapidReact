@@ -51,7 +51,8 @@ public class CargoShooter extends SubsystemBase {
   }
 
   public void fire(){
-    setTargetVelocity(heightVelocity);
+   // setTargetVelocity(heightVelocity);
+   m_conveyor.start();
     firing = true;
     //String("Shooter is Firing: ", ""+firing);
   }

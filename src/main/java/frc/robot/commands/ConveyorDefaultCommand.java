@@ -9,23 +9,17 @@ import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Intake;
 
 public class ConveyorDefaultCommand extends CommandBase {
-  /** Creates a new ConveyorDefaultCommand. */
-
-  private Conveyor conveyor;
-  private Intake intake;
+	private Conveyor m_Conveyor;
+	private CargoShooter  m_Shooter;
+	private Intake m_Intake;
 
   public ConveyorDefaultCommand( Conveyor conveyor, Intake intake ) {
     // Use addRequirements() here to declare subsystem dependencies.
     super();
     addRequirements( conveyor );
-    this.conveyor = conveyor;
-    this.intake = intake;
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() 
-  {
+	m_Intake = intake;
+	m_Shooter = shooter;
+	m_Conveyor = conveyor;;
 
   }
 
@@ -33,23 +27,12 @@ public class ConveyorDefaultCommand extends CommandBase {
   @Override
   public void execute() 
   {
-     if( intake.isDown() == true && conveyor.isBallReadyToShoot() == false ) 
-     {
-        conveyor.start();
-     }
-     else
-     {
-        return;
-     }
-  }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+	if(!m_Conveyor.isBallReadyToShoot() && m_Intake.isDown()){
+		m_Conveyor.start();
+	} else {
+		m_Conveyor.stop();
+	}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }

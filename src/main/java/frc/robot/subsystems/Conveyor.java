@@ -16,7 +16,7 @@ public class Conveyor extends SubsystemBase {
   // Componenets ---------------------------------------------------
   private WPI_TalonFX conveyorMotor = new WPI_TalonFX( ConveyorConstants.CONVEYOR_ID );
   // REPLACE WITH ACTUAL COLOR SENCOR
-  private DigitalInput eye; //= new DigitalInput( ID Number );
+  private DigitalInput eye = new DigitalInput( ConveyorConstants.EYE_ID );
 
   // Values --------------------------------------------------------
   private double percentOutput;
@@ -107,8 +107,8 @@ public class Conveyor extends SubsystemBase {
 
   public boolean isBallReadyToShoot()
   {
-	  return true;
-    //return this.eye.get();
+	 // return true;
+      return this.eye.get();
   }
   ///////////////////////////////////////////////////////////
   

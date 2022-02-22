@@ -7,4 +7,5 @@ package frc.robot;
 /** Add your docs here. */
 public class ConveyorConstants {
 	public static int CONVEYOR_ID = 15;
+	public static int EYE_ID = 0;
 }
