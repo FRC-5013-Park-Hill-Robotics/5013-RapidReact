@@ -125,6 +125,9 @@ public class ShooterVision extends SubsystemBase {
     return m_targeting;
   }
 
+  public void setTargeting(boolean targeting){
+	  m_targeting = targeting;
+  }
   public boolean isOutOfRange(){
     return (getTy().getDouble(0) > ShooterVisionConstants.RANGE_TOO_CLOSE || getTy().getDouble(0) < ShooterVisionConstants.RANGE_TOO_FAR);
   }

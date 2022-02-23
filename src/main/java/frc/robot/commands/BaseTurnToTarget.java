@@ -37,14 +37,18 @@ public class BaseTurnToTarget extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		double setpoint = m_Vision.getHorazontalAngleOfError() + m_Drivetrain.getHeading();
-		double output = controller.calculate(m_Drivetrain.getHeading(), setpoint);
-		m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, output, m_Drivetrain.getGyroscopeRotation()));
+		m_Vision.setTargeting(true);
+		if (m_Vision.hasTarget()){
+			double setpoint = m_Vision.getHorazontalAngleOfError() + m_Drivetrain.getHeading();
+			double output = controller.calculate(m_Drivetrain.getHeading(), setpoint);
+			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, output, m_Drivetrain.getGyroscopeRotation()));
+		}
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
+		m_Vision.setTargeting(false);
 	}
 
 	public ShooterVision getVision() {
