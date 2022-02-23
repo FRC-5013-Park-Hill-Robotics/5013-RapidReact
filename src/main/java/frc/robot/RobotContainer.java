@@ -63,7 +63,7 @@ public class RobotContainer {
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotation
         m_drivetrainSubsystem.setDefaultCommand(new GamepadDrive(m_drivetrainSubsystem, m_controller));
-		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_shooter, m_intake));
+		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_intake));
 		// Configure the button bindings
         configureButtonBindings();
 		m_pneumaticsHub.enableCompressorDigital();
