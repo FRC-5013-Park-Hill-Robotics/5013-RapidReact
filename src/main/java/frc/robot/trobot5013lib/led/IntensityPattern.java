@@ -42,5 +42,15 @@ public class IntensityPattern  implements TrobotAddressableLEDPattern {
 		
 	}
 
+	@Override
+	public boolean isAnimated() {
+		return true;
+	}
+
+	public void setIntensity(double intensity){
+		m_Intensity = intensity;
+		
+	}
+
 
 }
