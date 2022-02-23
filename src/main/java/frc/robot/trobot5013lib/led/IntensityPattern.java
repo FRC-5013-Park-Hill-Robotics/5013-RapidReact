@@ -28,7 +28,6 @@ public class IntensityPattern  implements TrobotAddressableLEDPattern {
 		this.m_HighColor = highColor;
 		this.m_LowColor = lowColor;
 		this.m_Intensity = intensity;
-		System.out.println("Intensity :" + intensity);
 	}
 
 	@Override
