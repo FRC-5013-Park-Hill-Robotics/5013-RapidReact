@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.commands.FenderShot;
 import frc.robot.commands.Fetch;
@@ -51,7 +52,7 @@ public class RobotContainer {
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
 	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
 	private Intake m_intake = new Intake(m_conveyor,this);
-	private Climber m_Climber;// = new Climber();
+	private Climber m_Climber = new Climber();
 	
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -64,6 +65,7 @@ public class RobotContainer {
         // Right stick X axis -> rotation
         m_drivetrainSubsystem.setDefaultCommand(new GamepadDrive(m_drivetrainSubsystem, m_controller));
 		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_intake));
+		m_Climber.setDefaultCommand(new ClimberCommand(m_Climber, m_operator_controller));
 		// Configure the button bindings
         configureButtonBindings();
 		m_pneumaticsHub.enableCompressorDigital();
