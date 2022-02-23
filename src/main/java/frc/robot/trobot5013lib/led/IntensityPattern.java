@@ -4,31 +4,43 @@
 
 package frc.robot.trobot5013lib.led;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
 /** Add your docs here. */
 public class IntensityPattern  implements TrobotAddressableLEDPattern {
-	private Color m_color;
-	private double m_intensity;
+	private Color m_HighColor;
+	private Color m_LowColor;
+	private double m_Intensity;
 
 	/**
 	 * 
-	 * @param aColor Brightest color
+	 * @param highColor Brightest color
 	 * @param intensity 0..1 with 1 being the color and 0 being black 
 	 */
-	public IntensityPattern(Color aColor, double intensity){
+	public IntensityPattern(Color highColor, double intensity){
+		this(Color.kBlack,highColor,intensity);
+	}
+
+	public IntensityPattern(Color lowColor, Color highColor, double intensity){
 		super();
-		this.m_color = aColor;
-		this.m_intensity = intensity;
+		this.m_HighColor = highColor;
+		this.m_LowColor = lowColor;
+		this.m_Intensity = intensity;
+		System.out.println("Intensity :" + intensity);
 	}
 
 	@Override
 	public void setLEDs(AddressableLEDBuffer buffer) {
-		
+		double red = MathUtil.interpolate(m_LowColor.red, m_HighColor.red, m_Intensity);
+		double green =		MathUtil.interpolate(m_LowColor.green, m_HighColor.green, m_Intensity);
+		double blue =		MathUtil.interpolate(m_LowColor.blue, m_HighColor.blue, m_Intensity);
 		for (int index = 0; index < buffer.getLength(); index++){
-			buffer.setLED(index, new Color(m_intensity * m_color.red,m_intensity * m_color.green, m_intensity * m_color.blue));
+			buffer.setLED(index, new Color(red,green,blue));
 		}
 		
 	}
+
+
 }
