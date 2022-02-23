@@ -134,11 +134,8 @@ public final class Constants {
         public static final int ROLLER_SERVO = 0;
     }
 
-    public static final class ConveyorConstants {
-        public static final int LEFT_CONVEYOR_MOTOR = 9;
-        public static final int RIGHT_CONVEYOR_MOTOR = 10;
-        public static final int LOWER_EYE = 1;
-        public static final int UPPER_EYE = 0;
-        public static final int NUDGE = 19;
+	public static final class ClimberConstants{
+        public static final int LEFT_MOTOR = 21;
+        public static final int RIGHT_MOTOR = 22;
     }
 }

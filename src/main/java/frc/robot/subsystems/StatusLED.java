@@ -19,7 +19,6 @@ import frc.robot.subsystems.ShooterVision;
 public class StatusLED extends SubsystemBase {
 	private TrobotAddressableLED m_led = new TrobotAddressableLED(Constants.STATUS_LED_PWM_PORT,60);
 	private RobotContainer m_RobotContainer;
-    private ShooterVision m_ShooterVision;
 	private TrobotAddressableLEDPattern m_bluePattern = new SolidColorPattern(Color.kBlue);
 	private TrobotAddressableLEDPattern m_redPattern = new SolidColorPattern(Color.kRed);
 	//private TrobotAddressableLEDPattern m_disabledPattern = new ChasePattern(new Color[]{Color.kRed,Color.kWhite},3);
@@ -49,10 +48,10 @@ public class StatusLED extends SubsystemBase {
 		} else {
 			m_led.setPattern(m_bluePattern);
 		}
-        if (m_ShooterVision.isTargeting()){
-            if (m_ShooterVision.hasTarget()){
+        if (m_RobotContainer.getshooterVision().isTargeting()){
+            if (m_RobotContainer.getshooterVision().hasTarget()){
                 m_led.setPattern(m_yellowPattern);
-                if(m_ShooterVision.isPrimeRange()){
+                if(m_RobotContainer.getshooterVision().isPrimeRange()){
                     m_led.setPattern(m_greenPattern);    
                 }
             } else {
