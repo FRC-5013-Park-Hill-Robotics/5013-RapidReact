@@ -40,21 +40,6 @@ public class Intake extends SubsystemBase {
 	@Override
 	public void periodic() {
 
-		Faults faults = new Faults();
-		StickyFaults stickyFaults = new StickyFaults();
-		intakeMotor.getFaults(faults);
-		intakeMotor.getStickyFaults(stickyFaults);
-		if (faults.hasAnyFault()) {
-			SmartDashboard.putString("Intake Faults", faults.toString());
-		} else {
-			SmartDashboard.putString("Intake Faults", "none");
-		}
-		if (stickyFaults.hasAnyFault()) {
-			SmartDashboard.putString("Intake Sticky Faults", stickyFaults.toString());
-		} else {
-			SmartDashboard.putString("IntakeSticky Faults", "none");
-		}
-
 	}
 
 	public void dropIntake() {
