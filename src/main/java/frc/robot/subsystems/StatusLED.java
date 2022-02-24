@@ -20,6 +20,7 @@ public class StatusLED extends SubsystemBase {
 	private TrobotAddressableLED m_led = new TrobotAddressableLED(Constants.STATUS_LED_PWM_PORT,60);
 	private RobotContainer m_RobotContainer;
     private ShooterVision m_ShooterVision;
+    private DrivetrainSubsystem m_DrivetrainSubsystem;
 	private TrobotAddressableLEDPattern m_bluePattern = new SolidColorPattern(Color.kBlue);
 	private TrobotAddressableLEDPattern m_redPattern = new SolidColorPattern(Color.kRed);
 	//private TrobotAddressableLEDPattern m_disabledPattern = new ChasePattern(new Color[]{Color.kRed,Color.kWhite},3);
@@ -59,5 +60,9 @@ public class StatusLED extends SubsystemBase {
         else {
             m_led.setPattern(m_blinkingRed);
         }
+        if (m_DrivetrainSubsystem.getGyroscopeRotationRoll().getDegrees()>=100||m_DrivetrainSubsystem.getGyroscopeRotationRoll().getDegrees()<=80){
+            m_led.setPattern(m_purplePattern);
+        }
     }
-}
+}}
+
