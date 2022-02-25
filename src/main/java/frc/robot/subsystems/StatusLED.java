@@ -58,5 +58,9 @@ public class StatusLED extends SubsystemBase {
             	m_led.setPattern(m_blinkingRed);
 			}
         }
+        if (m_DrivetrainSubsystem.getGyroscopeRotationRoll().getDegrees()>=100||m_DrivetrainSubsystem.getGyroscopeRotationRoll().getDegrees()<=80){
+            m_led.setPattern(m_purplePattern);
+        }
     }
-}
+}}
+
