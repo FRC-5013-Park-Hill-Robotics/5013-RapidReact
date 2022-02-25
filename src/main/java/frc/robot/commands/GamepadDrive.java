@@ -42,10 +42,14 @@ public class GamepadDrive extends CommandBase {
 		double translationX = modifyAxis(-m_gamepad.getLeftY());
 		double translationY = modifyAxis(-m_gamepad.getLeftX());
 		if (!(translationX == 0.0 && translationY == 0.0)) {
+			
 			double angle = calculateTranslationDirection(translationX, translationY);
 			translationX = Math.cos(angle) * throttle;
 			translationY = Math.sin(angle) * throttle;
 		}
+
+		SmartDashboard.putNumber("Translation X",translationX);
+		SmartDashboard.putNumber("Translation y", translationY);
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
 				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),

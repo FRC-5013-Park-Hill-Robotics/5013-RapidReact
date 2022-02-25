@@ -111,7 +111,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return AutonomousCommandFactory.createAutonomous(m_drivetrainSubsystem);
+        return AutonomousCommandFactory.createAutonomous(this);
     }
 
     public boolean isRedAlliance() {

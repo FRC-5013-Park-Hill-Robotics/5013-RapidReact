@@ -28,8 +28,8 @@ public class ClimberCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climber.extendLeft(modifyAxis(m_controller.getRightY()));
-    m_climber.extendRight(modifyAxis(m_controller.getLeftY())
+    m_climber.extendLeft(modifyAxis(m_controller.getLeftY()));
+    m_climber.extendRight(modifyAxis(m_controller.getRightY())
     );
   }
 
