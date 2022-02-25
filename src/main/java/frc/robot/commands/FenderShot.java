@@ -33,6 +33,8 @@ public class FenderShot extends CommandBase {
 		m_Shooter.atSpeed())
 	{
 		m_Shooter.fire();
+	} else {
+		m_Shooter.stopFiring();
 	}
   }
 
