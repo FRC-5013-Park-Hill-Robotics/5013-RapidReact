@@ -176,8 +176,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	private double velocityToDriveVolts(double speedMetersPerSecond) {
 		double ff = m_feedForward.calculate(speedMetersPerSecond);
 		return MathUtil.clamp(ff, -MAX_VOLTAGE, MAX_VOLTAGE);
-		// return speedMetersPerSecond /
-		// DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE;
 	}
 
 	public Pose2d getPose() {
