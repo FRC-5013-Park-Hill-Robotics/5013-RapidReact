@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.ConveyorDefaultCommand;
+import frc.robot.commands.FenderShot;
 import frc.robot.commands.Fetch;
 import frc.robot.commands.GamepadDrive;
 import frc.robot.subsystems.Climber;
@@ -38,7 +40,10 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
     private final LogitechController m_controller = new LogitechController(ControllerConstants.DRIVER_CONTROLLER_PORT);
-    private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
+    private final LogitechController m_operator_controller = new LogitechController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
+	private final LogitechController m_programmer_controller = new LogitechController(ControllerConstants.PROGRAMMER_CONTROLLER_PORT);
+   
+	private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
 	private PneumaticHub m_pneumaticsHub = new PneumaticHub(PNEUMATICS_HUB);
 	private Turret m_turret = new Turret();
 	private StatusLED m_StatusLED = new StatusLED(this);
@@ -47,7 +52,7 @@ public class RobotContainer {
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
 	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
 	private Intake m_intake = new Intake(m_conveyor,this);
-	private Climber m_Climber;// = new Climber();
+	private Climber m_Climber = new Climber();
 	
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -59,7 +64,8 @@ public class RobotContainer {
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotation
         m_drivetrainSubsystem.setDefaultCommand(new GamepadDrive(m_drivetrainSubsystem, m_controller));
-		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_shooter, m_intake));
+		m_conveyor.setDefaultCommand(new ConveyorDefaultCommand(m_conveyor, m_intake));
+		m_Climber.setDefaultCommand(new ClimberCommand(m_Climber, m_operator_controller));
 		// Configure the button bindings
         configureButtonBindings();
 		m_pneumaticsHub.enableCompressorDigital();
@@ -84,13 +90,19 @@ public class RobotContainer {
 	
 		new Button(m_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire)).whenReleased(new InstantCommand(m_shooter::stopFiring));
 		new Button(m_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));
-		new Button(m_controller::getXButton).whileHeld(new InstantCommand(m_intake::start));//.whenReleased(new InstantCommand(m_intake::stop));
+		new Button(m_controller::getRightBumper).whileHeld(new InstantCommand(m_intake::dropIntake)).whenReleased(new InstantCommand(m_intake::raiseIntake));
+		new Button(m_controller::getLeftBumper).whileHeld(new FenderShot(m_shooter, m_turret));
 		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
 		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
-		new Button(m_controller::getDPadRight).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(100)));
-		new Button(m_controller::getDPadLeft).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(-100)));
-		new Button(m_controller::getLeftBumper).whileHeld(new InstantCommand(m_intake::dropIntake)).whenReleased(new InstantCommand(m_intake::raiseIntake));
-		}
+		
+		//programmer controls
+		new Button(m_programmer_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire)).whenReleased(new InstantCommand(m_shooter::stopFiring));
+		new Button(m_programmer_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));
+		new Button(m_programmer_controller::getXButton).whileHeld(new InstantCommand(m_intake::start));//.whenReleased(new InstantCommand(m_intake::stop));
+		new Button(m_programmer_controller::getDPadRight).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(100)));
+		new Button(m_programmer_controller::getDPadLeft).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(-100)));
+		new Button(m_programmer_controller::getLeftBumper).whileHeld(new InstantCommand(m_intake::dropIntake)).whenReleased(new InstantCommand(m_intake::raiseIntake));
+	}
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -99,7 +111,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return AutonomousCommandFactory.createAutonomous(m_drivetrainSubsystem);
+        return AutonomousCommandFactory.createAutonomous(this);
     }
 
     public boolean isRedAlliance() {

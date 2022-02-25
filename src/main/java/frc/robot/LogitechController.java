@@ -2,7 +2,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
 public class LogitechController extends GenericHID {
-    /** Represents a digital button on an XboxController. */
     public enum Button {
         kLeftBumper(5),
         kRightBumper(6),

@@ -18,8 +18,8 @@ public class TeleopTurnToTargetCommand extends BaseTurnToTarget {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		//ralways return false because command will end when controller button is released
-		
+		//always return false because command will end when controller button is released
+
 		return false ;
 	}
 }

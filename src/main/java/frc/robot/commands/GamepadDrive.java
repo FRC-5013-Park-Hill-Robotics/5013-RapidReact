@@ -3,14 +3,15 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.trobot5013lib.TrobotUtil;
 import frc.robot.LogitechController;
-import static frc.robot.Constants.ControllerConstants.DEADBAND;
+import frc.robot.Constants.ControllerConstants;
 
 public class GamepadDrive extends CommandBase {
 	private DrivetrainSubsystem m_drivetrain;
@@ -35,40 +36,67 @@ public class GamepadDrive extends CommandBase {
 		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY());
 		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX());
 		SmartDashboard.putNumber("Right X", m_gamepad.getRightX());
-
 		;
-		double throttle = TrobotUtil.modifyAxis(m_gamepad.getRightTriggerAxis(),DEADBAND);
+		double throttle = modifyAxis(m_gamepad.getRightTriggerAxis());
 
-		double translationX = TrobotUtil.modifyAxis(-m_gamepad.getLeftY(),DEADBAND);
-		double translationY = TrobotUtil.modifyAxis(-m_gamepad.getLeftX(),DEADBAND);
+		double translationX = modifyAxis(-m_gamepad.getLeftY());
+		double translationY = modifyAxis(-m_gamepad.getLeftX());
 		if (!(translationX == 0.0 && translationY == 0.0)) {
+			
 			double angle = calculateTranslationDirection(translationX, translationY);
 			translationX = Math.cos(angle) * throttle;
 			translationY = Math.sin(angle) * throttle;
 		}
-		SmartDashboard.putNumber("rotation ", getRotationRadiansPerSecond());
+
+		SmartDashboard.putNumber("Translation X",translationX);
+		SmartDashboard.putNumber("Translation y", translationY);
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-				getTranslationMetersPerSecond(translationX, xLimiter),
-				getTranslationMetersPerSecond(translationY,yLimiter), getRotationRadiansPerSecond(),
+				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
+				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),
 				m_drivetrain.getGyroscopeRotation()));
 
-	 }
+		/*
+		 * m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+		 * getXTranslationMetersPerSecond(),
+		 * getYTranslationMetersPerSecond(), getRotationRadiansPerSecond(),
+		 * m_drivetrain.getGyroscopeRotation()));
+		 */ }
 
 	@Override
 	public void end(boolean interrupted) {
 		m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
 	}
 
-	private double getTranslationMetersPerSecond(double translationPercentOutput, SlewRateLimiter limiter){
-		return -limiter.calculate(DrivetrainSubsystem.percentOutputToMetersPerSecond(translationPercentOutput));
+	private double getXTranslationMetersPerSecond() {
+		// on the controller y is up, on the field x is away from the driver
+		return -DrivetrainSubsystem
+				.percentOutputToMetersPerSecond(xLimiter.calculate(modifyAxis(m_gamepad.getLeftY())));
 	}
+
+	private double getYTranslationMetersPerSecond() {
+		// on the controller y is up, on the field x is away from the driver
+		return -DrivetrainSubsystem
+				.percentOutputToMetersPerSecond(yLimiter.calculate(modifyAxis(m_gamepad.getLeftX())));
+	}
+
 	private double getRotationRadiansPerSecond() {
 		return -DrivetrainSubsystem
-				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(TrobotUtil.modifyAxis(m_gamepad.getRightX(),2,DEADBAND))) / 3;
+				.percentOutputToRadiansPerSecond(rotationLimiter.calculate(modifyAxis(m_gamepad.getRightX(),2))) / 3;
 
 	}
 
+	private static double modifyAxis(double value) {
+	
+		return modifyAxis(value, 1);
+	}
+	private static double modifyAxis(double value, int exponent) {
+		// Deadband
+		value = MathUtil.applyDeadband(value, ControllerConstants.DEADBAND);
 
+		 value = Math.copySign(Math.pow(value, exponent), value);
+
+		return value;
+	}
 	private double calculateTranslationDirection(double x, double y) {
 		// Calculate the angle.
 		// Swapping x/y
