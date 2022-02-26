@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.Conveyor;
@@ -26,7 +27,7 @@ public class ConveyorDefaultCommand extends CommandBase {
   @Override
   public void execute() 
   {
-
+	SmartDashboard.putBoolean("Eye", m_Conveyor.isBallReadyToShoot());
 	if(!m_Conveyor.isBallReadyToShoot() && m_Intake.isDown()){
 		m_Conveyor.start();
 	} else {
@@ -34,4 +35,5 @@ public class ConveyorDefaultCommand extends CommandBase {
 	}
 
   }
+  
 }

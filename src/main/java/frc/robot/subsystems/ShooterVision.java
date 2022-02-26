@@ -35,7 +35,7 @@ public class ShooterVision extends SubsystemBase {
     this.tv = table.getEntry("tv");
     this.ledMode = table.getEntry("ledMode");
     setPipeline(ShooterVisionConstants.DRIVE_PIPELINE);
-    setLedOn(false);
+    setLedOn(true);
   }
 
   @Override
@@ -68,6 +68,7 @@ public class ShooterVision extends SubsystemBase {
 
   /** Returns if limelight can see defined retroreflective target */
   public boolean hasTarget(){
+	setPipeline(ShooterVisionConstants.TARGET_PIPELINE);
    // this.table.getEntry("ledMode").setNumber(3);
     SmartDashboard.putNumber("tv; ", tv.getDouble(0));
     if(tv.getDouble(0) != 0)

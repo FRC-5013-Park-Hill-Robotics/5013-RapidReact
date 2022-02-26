@@ -10,7 +10,7 @@ public final class ShooterVisionConstants {
     public static final double CAMERA_HEIGHT = 0;
     public static final double TARGET_HEIGHT = 0;
     public static final int TARGET_PIPELINE = 0;
-    public static final int DEFAULT_PIPELINE = 1;
+    public static final int DEFAULT_PIPELINE = 0;
     public static final int DRIVE_PIPELINE = 2;
     public static final int LED_ON = 3;
     public static final int LED_OFF = 1;

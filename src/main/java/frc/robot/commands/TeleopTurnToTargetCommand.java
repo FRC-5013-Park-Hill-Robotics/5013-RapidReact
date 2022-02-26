@@ -4,15 +4,17 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterVision;
+import frc.robot.subsystems.Turret;
 
 /** Add your docs here. */
 public class TeleopTurnToTargetCommand extends BaseTurnToTarget {
 	
 	
-	public TeleopTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision) {
-		super(driveTrain, vision);
+	public TeleopTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret) {
+		super(driveTrain, vision,shooter,turret);
 	}
 
 	// Returns true when the command should end.
