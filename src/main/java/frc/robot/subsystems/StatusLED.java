@@ -28,8 +28,8 @@ public class StatusLED extends SubsystemBase {
     private TrobotAddressableLEDPattern m_yellowPattern = new SolidColorPattern(Color.kLightYellow);
     private TrobotAddressableLEDPattern m_blinkingRed = new BlinkingPattern(Color.kRed, 0.25);
     private TrobotAddressableLEDPattern m_purplePattern = new SolidColorPattern (Color.kPurple);
-    private TrobotAddressableLEDPattern m_blueIntensityPattern = new IntensityPattern (Color.kBlue, 0);
-    private TrobotAddressableLEDPattern m_redIntensityPattern = new IntensityPattern (Color.kRed, 0);
+    private IntensityPattern m_blueIntensityPattern = new IntensityPattern (Color.kBlue, 0);
+    private IntensityPattern m_redIntensityPattern = new IntensityPattern (Color.kRed, 0);
     private int intensityDegrees = 10;
 
 
@@ -67,12 +67,14 @@ public class StatusLED extends SubsystemBase {
 			|| m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees()<=80){
             m_led.setPattern(m_purplePattern);
         }
-        if (m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees()>=intensityDegrees{
-            m_redIntensityPattern.setIntensity(intensityDegrees/90);
+		double pitch = m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees();
+        if (pitch >=intensityDegrees){
+            m_redIntensityPattern.setIntensity(pitch/90);
             m_led.setPattern(m_redIntensityPattern);       
         }
-         if (m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees()<=-intensityDegrees{
-             m_blueIntensityPattern.setIntensity(-intensityDegrees/-90);
+		
+         if (pitch <=-intensityDegrees){
+             m_blueIntensityPattern.setIntensity(pitch/-90);
              m_led.setPattern(m_blueIntensityPattern);
          }
 
