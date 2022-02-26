@@ -15,6 +15,7 @@ import frc.robot.trobot5013lib.led.SolidColorPattern;
 import frc.robot.trobot5013lib.led.TrobotAddressableLED;
 import frc.robot.trobot5013lib.led.TrobotAddressableLEDPattern;
 import frc.robot.subsystems.ShooterVision;
+import frc.robot.trobot5013lib.led.IntensityPattern;
 
 public class StatusLED extends SubsystemBase {
 	private TrobotAddressableLED m_led = new TrobotAddressableLED(Constants.STATUS_LED_PWM_PORT,60);
@@ -27,6 +28,10 @@ public class StatusLED extends SubsystemBase {
     private TrobotAddressableLEDPattern m_yellowPattern = new SolidColorPattern(Color.kLightYellow);
     private TrobotAddressableLEDPattern m_blinkingRed = new BlinkingPattern(Color.kRed, 0.25);
     private TrobotAddressableLEDPattern m_purplePattern = new SolidColorPattern (Color.kPurple);
+    private TrobotAddressableLEDPattern m_blueIntensityPattern = new IntensityPattern (Color.kBlue, 0);
+    private TrobotAddressableLEDPattern m_redIntensityPattern = new IntensityPattern (Color.kRed, 0);
+    private int intensityDegrees = 10;
+
 
 	/** Creates a new StatusLED. */
 	public StatusLED(RobotContainer robotContainer) {
@@ -62,6 +67,16 @@ public class StatusLED extends SubsystemBase {
 			|| m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees()<=80){
             m_led.setPattern(m_purplePattern);
         }
+        if (m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees()>=intensityDegrees{
+            m_redIntensityPattern.setIntensity(intensityDegrees/90);
+            m_led.setPattern(m_redIntensityPattern);       
+        }
+         if (m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees()<=-intensityDegrees{
+             m_blueIntensityPattern.setIntensity(-intensityDegrees/-90);
+             m_led.setPattern(m_blueIntensityPattern);
+         }
+
+           
     }
 }
 
