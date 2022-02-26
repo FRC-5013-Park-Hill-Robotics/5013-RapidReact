@@ -15,7 +15,9 @@ import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.commands.FenderShot;
 import frc.robot.commands.Fetch;
+import frc.robot.commands.Fire;
 import frc.robot.commands.GamepadDrive;
+import frc.robot.commands.TeleopTurnToTargetCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -88,12 +90,16 @@ public class RobotContainer {
 		//	.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
 		//		 m_controller::getRightTriggerAxis));
 	
-		new Button(m_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire)).whenReleased(new InstantCommand(m_shooter::stopFiring));
+		new Button(m_controller::getBButton).whileHeld(new Fire(m_shooter)).whenReleased(new InstantCommand(m_shooter::stopFiring));
 		new Button(m_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));
 		new Button(m_controller::getRightBumper).whileHeld(new InstantCommand(m_intake::dropIntake)).whenReleased(new InstantCommand(m_intake::raiseIntake));
-		new Button(m_controller::getLeftBumper).whileHeld(new FenderShot(m_shooter, m_turret));
+		new Button(m_controller::getXButton).whileHeld(new FenderShot(m_shooter, m_turret));
+		new Button(m_controller::getLeftTriggerButton).whileHeld(new TeleopTurnToTargetCommand(m_drivetrainSubsystem,m_shooterVision, m_shooter, m_turret));
+		new Button(m_controller::getLeftBumper).whenPressed(m_shooter::fire).whenReleased(m_shooter::stopFiring);
 		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
 		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
+		new Button(m_controller::getDPadRight).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(100)));
+		new Button(m_controller::getDPadLeft).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(-100)));
 		
 		//programmer controls
 		new Button(m_programmer_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire)).whenReleased(new InstantCommand(m_shooter::stopFiring));

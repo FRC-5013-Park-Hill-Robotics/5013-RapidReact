@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.trobot5013lib.TrobotUtil;
+
 import static frc.robot.ShooterConstants.*;
 
 public class CargoShooter extends SubsystemBase {
@@ -101,7 +103,8 @@ public class CargoShooter extends SubsystemBase {
   public boolean atSpeed(){
     //Boolean("Is BottomMotor at speed?: ", bottomMotor.getSelectedSensorVelocity() >= getTargetVelocity() );
 
-    return topMotor.getSelectedSensorVelocity() >= getTargetVelocity() *.95&&
+    return TrobotUtil.withinTolerance(topMotor.getSelectedSensorVelocity(), getTopTargetVelocity(), .05* getTopTargetVelocity()) && 
+		TrobotUtil.withinTolerance(bottomMotor.getSelectedSensorVelocity(), getTargetVelocity(), .05* getTargetVelocity()) && 
     bottomMotor.getSelectedSensorVelocity() >= getTargetVelocity() *.95;
   }
 

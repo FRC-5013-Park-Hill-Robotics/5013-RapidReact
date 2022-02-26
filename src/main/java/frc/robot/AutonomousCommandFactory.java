@@ -47,7 +47,7 @@ public class AutonomousCommandFactory {
 		ParallelCommandGroup startup = new ParallelCommandGroup(
 					new InstantCommand(container.getintake()::dropIntake),
 					new InstantCommand(container.getshooter()::spinUp),
-					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision())
+					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret())
 		);
 
         // Create a voltage constraint to ensure we don't accelerate too fast
@@ -59,7 +59,7 @@ public class AutonomousCommandFactory {
 					startup,
 					new InstantCommand(container.getshooter()::fire),
 					pathCommand,
-					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision())	,
+					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret())	,
 					new InstantCommand(container.getshooter()::fire)
 		);
 	}

@@ -108,7 +108,7 @@ public class Conveyor extends SubsystemBase {
   public boolean isBallReadyToShoot()
   {
 	 // return true;
-      return this.eye.get();
+      return !this.eye.get();
   }
   ///////////////////////////////////////////////////////////
   
