@@ -33,10 +33,6 @@ public class GamepadDrive extends CommandBase {
 
 	@Override
 	public void execute() {
-		SmartDashboard.putNumber("Left Y", m_gamepad.getLeftY());
-		SmartDashboard.putNumber("Left X", m_gamepad.getLeftX());
-		SmartDashboard.putNumber("Right X", m_gamepad.getRightX());
-		;
 		double throttle = modifyAxis(m_gamepad.getRightTriggerAxis());
 
 		double translationX = modifyAxis(-m_gamepad.getLeftY());
@@ -48,8 +44,6 @@ public class GamepadDrive extends CommandBase {
 			translationY = Math.sin(angle) * throttle;
 		}
 
-		SmartDashboard.putNumber("Translation X",translationX);
-		SmartDashboard.putNumber("Translation y", translationY);
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
 				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),

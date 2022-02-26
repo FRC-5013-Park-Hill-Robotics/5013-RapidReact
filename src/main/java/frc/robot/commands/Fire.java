@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ShooterConstants;
 import frc.robot.subsystems.CargoShooter;
-import frc.robot.subsystems.ShooterVision;
-import frc.robot.subsystems.Turret;
-import frc.robot.trobot5013lib.TrobotUtil;
+import frc.robot.subsystems.Conveyor;
 
 public class Fire extends CommandBase {
 	private CargoShooter m_Shooter;
   /** Creates a new FenderShot. */
-  public Fire(CargoShooter shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public Fire(CargoShooter shooter, Conveyor conveyor) {
+	  super();
+    // Use addRequirements() here to declare subsystem dependencies.	
+	addRequirements(shooter, conveyor);
 	m_Shooter = shooter;
   }
 
