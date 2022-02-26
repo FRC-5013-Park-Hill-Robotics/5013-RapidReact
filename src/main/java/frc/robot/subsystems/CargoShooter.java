@@ -68,24 +68,19 @@ public class CargoShooter extends SubsystemBase {
   @Override
   public void periodic() {
     //SmartDashboard.putString("topShooterTargetVelocity",""+ getTopTargetVelocity());
-    SmartDashboard.putString("bottomShooterTargetVelocity", ""+bottomMotor.getSelectedSensorVelocity());
-    SmartDashboard.putString("topShooterVelocity",""+ topMotor.getSelectedSensorVelocity());
-    SmartDashboard.putString("shooterVelocity", ""+topMotor.getSelectedSensorVelocity());
-    if (firing){
+    SmartDashboard.putString("target Velocity", ""+getTargetVelocity());
+    SmartDashboard.putString("Actual Velocity", ""+bottomMotor.getSelectedSensorVelocity());
+   
+	if (firing){
       if (atSpeed()){
-        SmartDashboard.putString("at speed", ""+true);
         m_conveyor.start();
       } else {
-        SmartDashboard.putString("at speed", ""+false);
         m_conveyor.stop();
-     //   if (m_conveyor.isBallReadyToShoot()){
-     //     m_conveyor.reverse();
-     //   }
       }
-      topMotor.set(ControlMode.Velocity,getTargetVelocity() * TOP_PERCENT_OF_BOTTOM); 
+      topMotor.set(ControlMode.Velocity,getTopTargetVelocity()); 
       bottomMotor.set(ControlMode.Velocity,getTargetVelocity());
     } else {
-      topMotor.set(ControlMode.Velocity,getTargetVelocity() * TOP_PERCENT_OF_BOTTOM);
+      topMotor.set(ControlMode.Velocity,getTopTargetVelocity());
       bottomMotor.set(ControlMode.Velocity,getTargetVelocity() );
     }
 

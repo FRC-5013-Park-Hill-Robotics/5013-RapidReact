@@ -36,12 +36,30 @@ public final class ShooterConstants {
 
 	public static final class TargetConstants{
 		public static final double[][] HOOD_HEIGHT_ARRAY = {
-				{-11,1,8},
-				{140,140,40}
+				{-13,140},
+				{-12,140},
+				{-2,140},
+				{0,140},
+				{4.5, 140},
+				{5,140},
+				{7,140},
+				{11,140}
+			//	{-11,1,8},
+			//{140,140,40}
 			};
 		public static final double[][] SHOOTER_SPEED_ARRAY = {
-				{-11,1,8},
-				{5150,4900,4800}
+				{-13,4150},
+				{-12,4125},
+				{-5.5,4050},
+				{-2,3860},
+				{0,3750},
+				{2.5,3750},
+				{4.5,3770},
+				{5,3770},
+				{7,3760},
+				{11,3700}
+			//	{-11,1,8},
+			//	{5150,4900,4800}
 			};
 		public static final LinearInterpolator HOOD_INTERPOLATOR = new LinearInterpolator(HOOD_HEIGHT_ARRAY);
 		public static final LinearInterpolator SHOOTER_SPEED_INTERPOLATOR = new LinearInterpolator(SHOOTER_SPEED_ARRAY);

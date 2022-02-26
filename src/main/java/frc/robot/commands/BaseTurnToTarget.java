@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ShooterConstants;
 import frc.robot.subsystems.CargoShooter;
@@ -47,12 +48,13 @@ public class BaseTurnToTarget extends CommandBase {
 	public void execute() {
 		m_Vision.setTargeting(true);
 		if (m_Vision.hasTarget()){
-			double vision_angle = m_Vision.getHorazontalAngleOfError() ;
-		//	double setpoint = vision_angle + m_Drivetrain.getGyroscopeRotation().getDegrees();
+			double vertical_angle = m_Vision.getVerticalAngleOfError();
+			double horizontal_amgle = m_Vision.getHorazontalAngleOfError() ;
+		//	double setpoint = horizontal_amgle + m_Drivetrain.getGyroscopeRotation().getDegrees();
 		//	double output = controller.calculate(m_Drivetrain.getHeading(), setpoint);
 		//	m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, output, m_Drivetrain.getGyroscopeRotation()));
-			m_Shooter.setTargetVelocity(SHOOTER_SPEED_INTERPOLATOR.getInterpolatedValue(vision_angle));
-			m_Turret.setHeight(HOOD_INTERPOLATOR.getInterpolatedValue(vision_angle));
+			m_Shooter.setTargetVelocity(SHOOTER_SPEED_INTERPOLATOR.getInterpolatedValue(vertical_angle));
+			m_Turret.setHeight(HOOD_INTERPOLATOR.getInterpolatedValue(vertical_angle));
 		}
 	}
 
