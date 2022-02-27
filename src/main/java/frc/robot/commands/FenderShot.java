@@ -44,9 +44,4 @@ public class FenderShot extends CommandBase {
 	  m_Shooter.stopFiring();
   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
 }
