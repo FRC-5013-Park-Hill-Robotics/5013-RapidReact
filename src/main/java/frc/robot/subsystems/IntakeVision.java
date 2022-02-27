@@ -55,24 +55,24 @@ public class IntakeVision extends SubsystemBase {
 		return 0;
 	}
 
-	public double getXAngleOfError() {
-		return getXAngleOfError(this.getResult());
+	public double getXAngleOfErrorDegrees() {
+		return getXAngleOfErrorDegrees(this.getResult());
 	}
 
-	public double getXAngleOfError(AxonResult result) {
+	public double getXAngleOfErrorDegrees(AxonResult result) {
 		if (hasTarget()){
-			return result.getXAngle(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
+			return result.getXAngleDegrees(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
 		}
 		return 0;
 	}
 
-	public double getTargetXAngle(){
+	public double getTargetXAngleDegrees(){
 		AxonResult axonResult = getResult();
 		double result = 0;
 		if (lastResult == axonResult){
 			result =  lastTargetAngle;
 		} else {
-			result = (m_robotContainer.getDrivetrainSubsystem().getHeading() - getXAngleOfError(axonResult) ) % 360;
+			result = (Math.toDegrees(m_robotContainer.getDrivetrainSubsystem().getHeadingRadians() - getXAngleOfErrorDegrees(axonResult) )) % 360;
 			lastResult = axonResult;
 			lastTargetAngle = result; 
 		}
@@ -82,7 +82,7 @@ public class IntakeVision extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putString("Test", "TEst");
-		SmartDashboard.putNumber("Angle of Error", getXAngleOfError());
+		SmartDashboard.putNumber("Angle of Error", getXAngleOfErrorDegrees());
 		SmartDashboard.putBoolean("Has Target", hasTarget());
 	}
 }

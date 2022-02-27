@@ -45,7 +45,7 @@ public class StatusLED extends SubsystemBase {
 		// This method will be called once per scheduler run
 		// Set color based off of robot status. Use m_RobotContainer to access robot
 		// subsystems
-		double pitch = m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees();
+		double pitch = m_RobotContainer.getDrivetrainSubsystem().getPitchR2d().getDegrees();
 
 		if (m_RobotContainer.getshooterVision().isTargeting()) {
 			if (m_RobotContainer.getshooterVision().hasTarget()) {	
@@ -62,8 +62,8 @@ public class StatusLED extends SubsystemBase {
 			} else {
 				m_led.setPattern(m_blinkingRed);
 			}
-		} else if (m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees() >= 100
-				|| m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees() <= 80) {
+		} else if (m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() >= 100
+				|| m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() <= 80) {
 			m_led.setPattern(m_purplePattern);
 		} else if (pitch >= intensityDegrees) {
 			m_redIntensityPattern.setIntensity(pitch / 90);
@@ -79,4 +79,5 @@ public class StatusLED extends SubsystemBase {
 			m_led.setPattern(m_bluePattern);
 		}
 
-	}}
+	}
+}

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 import frc.robot.Constants.DrivetrainConstants.ThetaGains;
 import frc.robot.Constants.DrivetrainConstants.TranslationGains;
+import frc.robot.commands.AutonomousFire;
 import frc.robot.commands.AutonomousTurnToTargetCommand;
 import frc.robot.commands.PathPlannerSwerveControllerCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -57,10 +58,10 @@ public class AutonomousCommandFactory {
 
 		return  new SequentialCommandGroup(
 					startup,
-					new InstantCommand(container.getshooter()::fire),
+					new AutonomousFire(container.getshooter(), container.getconveyor()),
 					pathCommand,
 					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret())	,
-					new InstantCommand(container.getshooter()::fire)
+					new AutonomousFire(container.getshooter(), container.getconveyor())
 		);
 	}
 }
