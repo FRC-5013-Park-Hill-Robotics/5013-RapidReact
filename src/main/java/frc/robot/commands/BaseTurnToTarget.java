@@ -31,7 +31,7 @@ public class BaseTurnToTarget extends CommandBase {
 		m_Vision = vision;
 		m_Drivetrain = driveTrain;
 		controller.setTolerance(kTurnToleranceRad, kTurnRateToleranceRadPerS);
-		controller.enableContinuousInput(0, 360);
+		controller.enableContinuousInput(0, 2*Math.PI);
 		m_Shooter = shooter;
 		m_Turret = turret;
 	}
@@ -49,15 +49,22 @@ public class BaseTurnToTarget extends CommandBase {
 		m_Vision.setTargeting(true);
 		if (m_Vision.hasTarget()){
 			double vertical_angle = m_Vision.getVerticalAngleOfError();
-			double horizontal_amgle = m_Vision.getHorazontalAngleOfError() ;
-		//	double setpoint = horizontal_amgle + m_Drivetrain.getGyroscopeRotation().getDegrees();
-		//	double output = controller.calculate(m_Drivetrain.getHeading(), setpoint);
-		//	m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, output, m_Drivetrain.getGyroscopeRotation()));
+			double horizontal_amgle = -m_Vision.getHorazontalAngleOfError() ;
+			double setpoint = Math.toRadians(horizontal_amgle)+ m_Drivetrain.getGyroscopeRotation().getRadians();
+			double output = controller.calculate(m_Drivetrain.getGyroscopeRotation().getRadians(), setpoint);
+			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
+				 getYTranslationMetersPerSecond(), output, m_Drivetrain.getGyroscopeRotation()));
 			m_Shooter.setTargetVelocity(SHOOTER_SPEED_INTERPOLATOR.getInterpolatedValue(vertical_angle));
 			m_Turret.setHeight(HOOD_INTERPOLATOR.getInterpolatedValue(vertical_angle));
 		}
 	}
 
+	protected double getXTranslationMetersPerSecond(){
+		return 0;
+	}
+	protected double getYTranslationMetersPerSecond(){
+		return 0;
+	}
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
