@@ -63,8 +63,8 @@ public class StatusLED extends SubsystemBase {
             	m_led.setPattern(m_blinkingRed);
 			}
         }
-        if (m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees()>=100
-			|| m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees()<=80){
+        if (m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees()>=120
+			|| m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationRoll().getDegrees()<=60){
             m_led.setPattern(m_purplePattern);
         }
 		double pitch = m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees();
