@@ -47,8 +47,8 @@ public class Fetch extends CommandBase {
 	public void execute() {
 		// Call pid controller calculate passing in the x offset from vision and 0 for
 		// the setpoint
-		double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeading(),
-				Math.toRadians(m_vision.getTargetXAngle()));
+		double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeadingRadians(),
+				Math.toRadians(m_vision.getTargetXAngleDegrees()));
 		ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(getXTranslation()),
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(getYTranslation()), PIDOutput);

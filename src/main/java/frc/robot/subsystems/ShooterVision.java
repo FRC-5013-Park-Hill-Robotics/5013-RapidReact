@@ -5,6 +5,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ShooterVisionConstants;
+import frc.robot.trobot5013lib.TrobotUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -103,12 +104,12 @@ public class ShooterVision extends SubsystemBase {
   /**Returns the angle to targed in degrees negative values to the left and positive to the right
    * used for turn to target
    */
-  public double getHorazontalAngleOfError(){
+  public double getHorazontalAngleOfErrorDegrees(){
     //+1 is a fudge factor cor camera mounting
     return getTx().getDouble(0.0) + ShooterVisionConstants.HORAZONTAL_OFFSET;
   }
 
-  public double getVerticalAngleOfError(){
+  public double getVerticalAngleOfErrorDegrees(){
     //+1 is a fudge factor cor camera mounting
     return getTy().getDouble(0.0) + ShooterVisionConstants.VERTICAL_OFFSET;
   }
@@ -134,5 +135,8 @@ public class ShooterVision extends SubsystemBase {
 
   public boolean isPrimeRange(){
     return (getTy().getDouble(0) > ShooterVisionConstants.RANGE_PRIME_END && getTy().getDouble(0) < ShooterVisionConstants.RANGE_PRIME_START);
+  }
+  public boolean isOnTarget(){
+	  return isPrimeRange() && TrobotUtil.withinTolerance (getHorazontalAngleOfErrorDegrees(),0,ShooterVisionConstants.TOLERANCE_DEGREES);
   }
 }

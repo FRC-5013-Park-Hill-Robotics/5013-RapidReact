@@ -47,7 +47,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
 	// FIX We need to figure out initial possition.
 	private Pose2d m_pose = new Pose2d();
-	private SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation(), m_pose);
+	private SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(m_kinematics, getYahR2d(), m_pose);
 
 	// These are our modules. We initialize them in the constructor.
 	private final SwerveModule m_frontLeftModule;
@@ -104,22 +104,22 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	/*
 	 * Return the gyroscope's heading as a Rotation2d object
 	 */
-	public Rotation2d getGyroscopeRotation() {
+	public Rotation2d getYahR2d() {
 		return Rotation2d.fromDegrees(m_pigeon.getYaw());
 	}
 
-    public Rotation2d getGyroscopeRotationRoll() {
+    public Rotation2d getRollR2d() {
 		return Rotation2d.fromDegrees(m_pigeon.getRoll());
 	}
-    public Rotation2d getGyroscopeRotationPitch() {
+    public Rotation2d getPitchR2d() {
         return Rotation2d.fromDegrees(m_pigeon.getPitch());
     }
 
 	/*
 	 * Return the gyroscope's heading in Radians
 	 */
-	public double getHeading() {
-		return getGyroscopeRotation().getRadians();
+	public double getHeadingRadians() {
+		return getYahR2d().getRadians();
 	}
 
 	public void drive(ChassisSpeeds chassisSpeeds) {
@@ -142,11 +142,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	public void periodic() {
 		updateOdometry();
 		updateDriveStates(m_desiredStates);
-		SmartDashboard.putNumber("pigeon", getGyroscopeRotation().getDegrees());
+		SmartDashboard.putNumber("pigeon", getYahR2d().getDegrees());
 	}
 
 	private void updateOdometry() {
-		m_pose = m_odometry.update(getGyroscopeRotation(), stateFromModule(m_frontLeftModule),
+		m_pose = m_odometry.update(getYahR2d(), stateFromModule(m_frontLeftModule),
 				stateFromModule(m_frontRightModule),
 				stateFromModule(m_backLeftModule), stateFromModule(m_backRightModule));
 	}
