@@ -28,6 +28,7 @@ public class StatusLED extends SubsystemBase {
 	private TrobotAddressableLEDPattern m_greenPattern = new SolidColorPattern(Color.kGreen);
 	private TrobotAddressableLEDPattern m_yellowPattern = new SolidColorPattern(Color.kLightYellow);
 	private TrobotAddressableLEDPattern m_blinkingRed = new BlinkingPattern(Color.kRed, 0.25);
+	private TrobotAddressableLEDPattern m_blinkingGreen = new BlinkingPattern(Color.kGreen, 0.25);
 	private TrobotAddressableLEDPattern m_purplePattern = new SolidColorPattern(Color.kPurple);
 	private IntensityPattern m_blueIntensityPattern = new IntensityPattern(Color.kBlue, 0);
 	private IntensityPattern m_redIntensityPattern = new IntensityPattern(Color.kRed, 0);
@@ -50,7 +51,12 @@ public class StatusLED extends SubsystemBase {
 			if (m_RobotContainer.getshooterVision().hasTarget()) {
 				m_led.setPattern(m_yellowPattern);
 				if (m_RobotContainer.getshooterVision().isPrimeRange()) {
-					m_led.setPattern(m_greenPattern);
+					if (m_RobotContainer.getshooter().atSpeed() &&
+						Math.abs(m_RobotContainer.getshooterVision().getHorazontalAngleOfError()) < 2){
+						m_led.setPattern(m_blinkingGreen);
+					} else {
+						m_led.setPattern(m_greenPattern);
+					}
 				}
 			} else {
 				m_led.setPattern(m_blinkingRed);
@@ -72,5 +78,4 @@ public class StatusLED extends SubsystemBase {
 			m_led.setPattern(m_bluePattern);
 		}
 
-	}
-}
+	}}
