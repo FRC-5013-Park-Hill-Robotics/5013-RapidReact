@@ -3,6 +3,7 @@ package frc.robot;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -17,19 +18,18 @@ import frc.robot.Constants.DrivetrainConstants.ThetaGains;
 import frc.robot.Constants.DrivetrainConstants.TranslationGains;
 import frc.robot.commands.AutonomousFire;
 import frc.robot.commands.AutonomousTurnToTargetCommand;
-import frc.robot.commands.PathPlannerSwerveControllerCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutonomousCommandFactory {
 
-    public static PathPlannerSwerveControllerCommand createSwerveControllerCommand(PathPlannerTrajectory trajectory,
+    public static PPSwerveControllerCommand createSwerveControllerCommand(PathPlannerTrajectory trajectory,
             DrivetrainSubsystem drivetrain) {
         Constraints constraints = new TrapezoidProfile.Constraints(DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
         2*DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
         ProfiledPIDController thetaController = new ProfiledPIDController(ThetaGains.kP, ThetaGains.kI, ThetaGains.kD,
                 constraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
-        PathPlannerSwerveControllerCommand swerveControllerCommand = new PathPlannerSwerveControllerCommand(trajectory, drivetrain::getPose,
+        PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(trajectory, drivetrain::getPose,
                 drivetrain.getKinematics(),
                 new PIDController(TranslationGains.kP, TranslationGains.kI, TranslationGains.kD),
                 new PIDController(TranslationGains.kP, TranslationGains.kI, TranslationGains.kD), thetaController,
