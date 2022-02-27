@@ -48,8 +48,7 @@ public class StatusLED extends SubsystemBase {
 		double pitch = m_RobotContainer.getDrivetrainSubsystem().getGyroscopeRotationPitch().getDegrees();
 
 		if (m_RobotContainer.getshooterVision().isTargeting()) {
-			if (m_RobotContainer.getshooterVision().hasTarget()) {
-				m_led.setPattern(m_yellowPattern);
+			if (m_RobotContainer.getshooterVision().hasTarget()) {	
 				if (m_RobotContainer.getshooterVision().isPrimeRange()) {
 					if (m_RobotContainer.getshooter().atSpeed() &&
 						m_RobotContainer.getshooterVision().isOnTarget()){
@@ -57,6 +56,8 @@ public class StatusLED extends SubsystemBase {
 					} else {
 						m_led.setPattern(m_greenPattern);
 					}
+				} else {
+					m_led.setPattern(m_yellowPattern);
 				}
 			} else {
 				m_led.setPattern(m_blinkingRed);
