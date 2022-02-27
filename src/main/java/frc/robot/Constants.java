@@ -107,11 +107,11 @@ public final class Constants {
 
         // Turning the bot gains used by PIDControllers
         public static final class ThetaGains {
-            public static final double kP = .5;
+            public static final double kP = 4;
             public static final double kI = 0;
             public static final double kD = 0;
             public static final double kTurnToleranceRad = 0.025;
-            public static final double kTurnRateToleranceRadPerS = .17;
+            public static final double kTurnRateToleranceRadPerS = .25;
         }
 
         // Driving the bot gains used by PIDControllers
