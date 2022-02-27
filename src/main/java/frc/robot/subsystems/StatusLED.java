@@ -52,7 +52,7 @@ public class StatusLED extends SubsystemBase {
 				m_led.setPattern(m_yellowPattern);
 				if (m_RobotContainer.getshooterVision().isPrimeRange()) {
 					if (m_RobotContainer.getshooter().atSpeed() &&
-						Math.abs(m_RobotContainer.getshooterVision().getHorazontalAngleOfError()) < 2){
+						m_RobotContainer.getshooterVision().isOnTarget()){
 						m_led.setPattern(m_blinkingGreen);
 					} else {
 						m_led.setPattern(m_greenPattern);

@@ -21,4 +21,5 @@ public final class ShooterVisionConstants {
     public static final double RANGE_PRIME_END=-13;
     public static final double HORAZONTAL_OFFSET = 0;
     public static final double VERTICAL_OFFSET = 0;
+	public static final double TOLERANCE_DEGREES = 3;
 }
