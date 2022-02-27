@@ -31,7 +31,7 @@ public class BaseTurnToTarget extends CommandBase {
 		m_Vision = vision;
 		m_Drivetrain = driveTrain;
 		controller.setTolerance(kTurnToleranceRad, kTurnRateToleranceRadPerS);
-		controller.enableContinuousInput(0, 2*Math.PI);
+		controller.enableContinuousInput(-Math.PI, Math.PI);
 		m_Shooter = shooter;
 		m_Turret = turret;
 	}
