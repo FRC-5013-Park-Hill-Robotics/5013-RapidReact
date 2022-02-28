@@ -134,8 +134,5 @@ public final class Constants {
         public static final int ROLLER_SERVO = 0;
     }
 
-	public static final class ClimberConstants{
-        public static final int LEFT_MOTOR = 21;
-        public static final int RIGHT_MOTOR = 22;
-    }
+
 }
