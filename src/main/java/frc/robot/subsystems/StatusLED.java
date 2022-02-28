@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -62,9 +63,9 @@ public class StatusLED extends SubsystemBase {
 			} else {
 				m_led.setPattern(m_blinkingRed);
 			}
-		} else if (m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() >= 100
-				|| m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() <= 80) {
-			m_led.setPattern(m_purplePattern);
+		} else if (m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() > 5
+				|| m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() < -5) {
+					m_led.setPattern(m_purplePattern);
 		} else if (pitch >= intensityDegrees) {
 			m_redIntensityPattern.setIntensity(pitch / 90);
 			m_led.setPattern(m_redIntensityPattern);
