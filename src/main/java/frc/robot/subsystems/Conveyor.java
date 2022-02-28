@@ -25,7 +25,7 @@ public class Conveyor extends SubsystemBase {
 	private double percentOutput;
 	private long startTime;
 	private boolean override = false;
-	//private ColorSensorV3 m_color = new ColorSensorV3(Port.kMXP) ;
+	private ColorSensorV3 m_color = new ColorSensorV3(Port.kMXP) ;
 
 	// Statics ------------------------------------------------------
 	/** Precent Output **/
@@ -42,10 +42,10 @@ public class Conveyor extends SubsystemBase {
 	@Override
 	public void periodic() {
 		conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
-/*
+
 		SmartDashboard.putNumber("Red", m_color.getRed());
 		SmartDashboard.putNumber("Blue", m_color.getBlue());
-		SmartDashboard.putNumber("Greed", m_color.getGreen());*/
+		SmartDashboard.putNumber("Greed", m_color.getGreen());
 	}
 
 	// Set Output ---------------------------------------------------

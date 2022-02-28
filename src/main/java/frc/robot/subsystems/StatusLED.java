@@ -65,6 +65,7 @@ public class StatusLED extends SubsystemBase {
 			}
 		} else if (m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() > 5
 				|| m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() < -5) {
+					SmartDashboard.putString("status", "roll " + m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees());
 					m_led.setPattern(m_purplePattern);
 		} else if (pitch >= intensityDegrees) {
 			m_redIntensityPattern.setIntensity(pitch / 90);
@@ -73,6 +74,7 @@ public class StatusLED extends SubsystemBase {
 			m_blueIntensityPattern.setIntensity(pitch / -90);
 			m_led.setPattern(m_blueIntensityPattern);
 		} else if (m_RobotContainer.isDisabled()) {
+			SmartDashboard.putString("status","disabled");
 			m_led.setPattern(m_disabledPattern);
 		} else if (m_RobotContainer.isRedAlliance()) {
 			m_led.setPattern(m_redPattern);
