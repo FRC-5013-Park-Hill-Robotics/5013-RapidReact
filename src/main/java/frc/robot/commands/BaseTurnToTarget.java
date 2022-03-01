@@ -50,10 +50,10 @@ public class BaseTurnToTarget extends CommandBase {
 		if (m_Vision.hasTarget()){
 			double vertical_angle = m_Vision.getVerticalAngleOfErrorDegrees();
 			double horizontal_amgle = -m_Vision.getHorazontalAngleOfErrorDegrees() ;
-			double setpoint = Math.toRadians(horizontal_amgle)+ m_Drivetrain.getYahR2d().getRadians();
-			double output = controller.calculate(m_Drivetrain.getYahR2d().getRadians(), setpoint);
+			double setpoint = Math.toRadians(horizontal_amgle)+ m_Drivetrain.getYawR2d().getRadians();
+			double output = controller.calculate(m_Drivetrain.getYawR2d().getRadians(), setpoint);
 			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
-				 getYTranslationMetersPerSecond(), output, m_Drivetrain.getYahR2d()));
+				 getYTranslationMetersPerSecond(), output, m_Drivetrain.getYawR2d()));
 			m_Shooter.setTargetVelocity(SHOOTER_SPEED_INTERPOLATOR.getInterpolatedValue(vertical_angle));
 			m_Turret.setHeight(HOOD_INTERPOLATOR.getInterpolatedValue(vertical_angle));
 		}
