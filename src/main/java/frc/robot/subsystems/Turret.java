@@ -19,7 +19,7 @@ public class Turret extends SubsystemBase {
     
 	/** Creates a new Turret. */
 	public Turret() {
-		servo.setPosition(0);
+		servo.setHeight(140);
 	}
     //Gets the current angle of the Talon SRX.
     public double getCurrentAngle() {
