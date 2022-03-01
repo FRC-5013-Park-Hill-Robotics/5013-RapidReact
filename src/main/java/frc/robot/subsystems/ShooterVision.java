@@ -5,7 +5,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ShooterVisionConstants;
-import frc.robot.trobot5013lib.TrobotUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -36,7 +35,7 @@ public class ShooterVision extends SubsystemBase {
     this.tv = table.getEntry("tv");
     this.ledMode = table.getEntry("ledMode");
     setPipeline(ShooterVisionConstants.DRIVE_PIPELINE);
-    setLedOn(true);
+    setLedOn(false);
   }
 
   @Override
@@ -63,13 +62,14 @@ public class ShooterVision extends SubsystemBase {
     double camHeight = ShooterVisionConstants.CAMERA_HEIGHT;
     double targetHeight = ShooterVisionConstants.TARGET_HEIGHT;
     double distance =  ((targetHeight-camHeight) / Math.tan(cameraAngle+angleToTarget));
+    
     return distance;
     
   }
 
   /** Returns if limelight can see defined retroreflective target */
   public boolean hasTarget(){
-	setPipeline(ShooterVisionConstants.TARGET_PIPELINE);
+   // this.table.getEntry("ledMode").setNumber(3);
     SmartDashboard.putNumber("tv; ", tv.getDouble(0));
     if(tv.getDouble(0) != 0)
       return true;
@@ -104,12 +104,12 @@ public class ShooterVision extends SubsystemBase {
   /**Returns the angle to targed in degrees negative values to the left and positive to the right
    * used for turn to target
    */
-  public double getHorazontalAngleOfErrorDegrees(){
+  public double getHorazontalAngleOfError(){
     //+1 is a fudge factor cor camera mounting
     return getTx().getDouble(0.0) + ShooterVisionConstants.HORAZONTAL_OFFSET;
   }
 
-  public double getVerticalAngleOfErrorDegrees(){
+  public double getVerticalAngleOfError(){
     //+1 is a fudge factor cor camera mounting
     return getTy().getDouble(0.0) + ShooterVisionConstants.VERTICAL_OFFSET;
   }
@@ -126,17 +126,11 @@ public class ShooterVision extends SubsystemBase {
     return m_targeting;
   }
 
-  public void setTargeting(boolean targeting){
-	  m_targeting = targeting;
-  }
   public boolean isOutOfRange(){
     return (getTy().getDouble(0) > ShooterVisionConstants.RANGE_TOO_CLOSE || getTy().getDouble(0) < ShooterVisionConstants.RANGE_TOO_FAR);
   }
 
   public boolean isPrimeRange(){
     return (getTy().getDouble(0) > ShooterVisionConstants.RANGE_PRIME_END && getTy().getDouble(0) < ShooterVisionConstants.RANGE_PRIME_START);
-  }
-  public boolean isOnTarget(){
-	  return isPrimeRange() && TrobotUtil.withinTolerance (getHorazontalAngleOfErrorDegrees(),0,ShooterVisionConstants.TOLERANCE_DEGREES);
   }
 }

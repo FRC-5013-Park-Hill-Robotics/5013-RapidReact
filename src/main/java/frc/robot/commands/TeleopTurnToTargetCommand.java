@@ -4,24 +4,22 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterVision;
-import frc.robot.subsystems.Turret;
 
 /** Add your docs here. */
 public class TeleopTurnToTargetCommand extends BaseTurnToTarget {
 	
 	
-	public TeleopTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret) {
-		super(driveTrain, vision,shooter,turret);
+	public TeleopTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision) {
+		super(driveTrain, vision);
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		//always return false because command will end when controller button is released
-
+		//ralways return false because command will end when controller button is released
+		
 		return false ;
 	}
 }

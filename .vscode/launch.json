@@ -5,20 +5,6 @@
   "version": "0.2.0",
   "configurations": [
 	{
-		"type": "java",
-		"name": "Launch TestInterpolation",
-		"request": "launch",
-		"mainClass": "frc.robot.TestInterpolation",
-		"projectName": "5013-RapidReact"
-	},
-	{
-		"type": "java",
-		"name": "Launch Test",
-		"request": "launch",
-		"mainClass": "frc.Test",
-		"projectName": "5013-RapidReact"
-	},
-	{
 		"type": "wpilib",
 		"name": "WPILib Desktop Debug",
 		"request": "launch",
