@@ -37,12 +37,20 @@ public class AutonomousCommandFactory {
         return swerveControllerCommand;
     }
 
+	public static Command createTurnAndShoot(RobotContainer container){
+		return new SequentialCommandGroup(
+			new AutonomousTurnToTargetCommand(container.getDrivetrainSubsystem(),
+				 container.getshooterVision(),
+				 container.getshooter(),
+				  container.getturret())	,
+			new AutonomousFire(container.getshooter(), container.getconveyor())
+		);
+	}
     public static Command createAutonomous( RobotContainer container){
-		
-		return create2BallRightSide(container);
+		return createRightSide(container);
     }
 
-	public static Command create2BallRightSide(RobotContainer container){
+	public static Command createRightSide(RobotContainer container){
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		ParallelCommandGroup startup = new ParallelCommandGroup(
@@ -51,17 +59,20 @@ public class AutonomousCommandFactory {
 					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret())
 		);
 
-        // Create a voltage constraint to ensure we don't accelerate too fast
-        PathPlannerTrajectory trajectory =  PathPlanner.loadPath("Right 2 ball", DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND, DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
-		drivetrain.resetPosition(trajectory.getInitialPose(), trajectory.getInitialState().holonomicRotation); 
-        Command pathCommand = createSwerveControllerCommand(trajectory, drivetrain);
+        PathPlannerTrajectory leg1Trajectory =  PathPlanner.loadPath("Right Leg1", DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND, DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+		drivetrain.resetPosition(leg1Trajectory.getInitialPose(), leg1Trajectory.getInitialState().holonomicRotation); 
+        Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+
+		PathPlannerTrajectory leg2Trajectory =  PathPlanner.loadPath("Right Leg2", DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND, DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
 
 		return  new SequentialCommandGroup(
 					startup,
 					new AutonomousFire(container.getshooter(), container.getconveyor()),
-					pathCommand,
-					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret())	,
-					new AutonomousFire(container.getshooter(), container.getconveyor())
+					leg1,
+					createTurnAndShoot(container),
+					leg2,
+					createTurnAndShoot(container)
 		);
 	}
 }
