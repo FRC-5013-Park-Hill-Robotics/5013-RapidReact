@@ -2,6 +2,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
 public class LogitechController extends GenericHID {
+    /** Represents a digital button on an XboxController. */
     public enum Button {
         kLeftBumper(5),
         kRightBumper(6),
@@ -164,10 +165,6 @@ public class LogitechController extends GenericHID {
         return getRawAxis(Axis.kLeftTrigger.value);
     }
 
-	public boolean getLeftTriggerButton() {
-        return getLeftTriggerAxis() > .05;
-    }
-
     /**
      * Get the right trigger (RT) axis value of the controller. Note that this axis
      * is bound to the
@@ -178,9 +175,7 @@ public class LogitechController extends GenericHID {
     public double getRightTriggerAxis() {
         return getRawAxis(Axis.kRightTrigger.value);
     }
-	public boolean getRightTriggerButton() {
-        return getRightTriggerAxis() > .05;
-    }
+
     /**
      * Read the value of the left bumper (LB) button on the controller.
      *

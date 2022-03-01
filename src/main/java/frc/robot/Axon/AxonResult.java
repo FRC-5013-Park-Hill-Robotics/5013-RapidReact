@@ -77,13 +77,13 @@ public class AxonResult {
 		return result;
 	}
 
-	public double getXAngleDegrees(Box target, double cameraFieldOfViewXAngle){
+	public double getXAngle(Box target, double cameraFieldOfViewXAngle){
 		double pixelsPerDegree = getResolutionWidth()/cameraFieldOfViewXAngle;
 		int horizontalOffsetPixels = target.getHorizontalCenter() - (getResolutionWidth()/2);
 		return horizontalOffsetPixels/pixelsPerDegree;
 	}
 
-	public double getYAngleDegrees(Box target, double cameraFieldOfViewYAngle){
+	public double getYAngle(Box target, double cameraFieldOfViewYAngle){
 		double pixelsPerDegree = getResolutioHeight()/cameraFieldOfViewYAngle;
 		int verticalOffsetPixels = target.getVerticalCenter() - (getResolutioHeight()/2);
 		return verticalOffsetPixels/pixelsPerDegree;

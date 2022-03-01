@@ -15,21 +15,17 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/CargoShooter": "Subsystem",
-      "/LiveWindow/Climber": "Subsystem",
       "/LiveWindow/Conveyor": "Subsystem",
       "/LiveWindow/DrivetrainSubsystem": "Subsystem",
       "/LiveWindow/Intake": "Subsystem",
       "/LiveWindow/ShooterVision": "Subsystem",
       "/LiveWindow/StatusLED": "Subsystem",
       "/LiveWindow/Turret": "Subsystem",
-      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Ungrouped/Talon FX [15]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [17]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [18]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [20]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [21]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [22]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon SRX [16]": "Motor Controller"
     },
     "windows": {

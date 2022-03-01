@@ -11,10 +11,10 @@ public class TurnToAngleCommand extends PIDCommand {
     public TurnToAngleCommand(DrivetrainSubsystem driveTrain, double angleRadians) {
         super(
                 // The controller that the command will use
-                new PIDController(kP, kI, kD), driveTrain::getHeadingRadians, angleRadians,
+                new PIDController(kP, kI, kD), driveTrain::getHeading, angleRadians,
                 // Pipe the output to the turning controls
                 output -> driveTrain
-                        .drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, output, driveTrain.getYawR2d())));
+                        .drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, output, driveTrain.getGyroscopeRotation())));
         getController().setTolerance(kTurnToleranceRad,kTurnRateToleranceRadPerS);
     }
  @Override

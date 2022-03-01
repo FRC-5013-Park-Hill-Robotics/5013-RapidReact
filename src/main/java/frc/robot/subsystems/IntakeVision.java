@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.IntakeVisionConstants.*;
 
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Axon.AxonResult;
 import frc.robot.Axon.AxonUtil;
@@ -55,24 +56,24 @@ public class IntakeVision extends SubsystemBase {
 		return 0;
 	}
 
-	public double getXAngleOfErrorDegrees() {
-		return getXAngleOfErrorDegrees(this.getResult());
+	public double getXAngleOfError() {
+		return getXAngleOfError(this.getResult());
 	}
 
-	public double getXAngleOfErrorDegrees(AxonResult result) {
+	public double getXAngleOfError(AxonResult result) {
 		if (hasTarget()){
-			return result.getXAngleDegrees(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
+			return result.getXAngle(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
 		}
 		return 0;
 	}
 
-	public double getTargetXAngleDegrees(){
+	public double getTargetXAngle(){
 		AxonResult axonResult = getResult();
 		double result = 0;
 		if (lastResult == axonResult){
 			result =  lastTargetAngle;
 		} else {
-			result = (Math.toDegrees(m_robotContainer.getDrivetrainSubsystem().getHeadingRadians() - getXAngleOfErrorDegrees(axonResult) )) % 360;
+			result = (m_robotContainer.getDrivetrainSubsystem().getHeading() + getXAngleOfError(axonResult) ) % 360;
 			lastResult = axonResult;
 			lastTargetAngle = result; 
 		}
@@ -82,7 +83,7 @@ public class IntakeVision extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putString("Test", "TEst");
-		SmartDashboard.putNumber("Angle of Error", getXAngleOfErrorDegrees());
+		SmartDashboard.putNumber("Angle of Error", getXAngleOfError());
 		SmartDashboard.putBoolean("Has Target", hasTarget());
 	}
 }
