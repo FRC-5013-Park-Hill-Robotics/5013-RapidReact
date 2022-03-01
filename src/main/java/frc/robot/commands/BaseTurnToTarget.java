@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ShooterConstants;
 import frc.robot.subsystems.CargoShooter;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.Turret;
@@ -21,11 +22,12 @@ public class BaseTurnToTarget extends CommandBase {
 	private ShooterVision m_Vision;
 	private CargoShooter m_Shooter;
 	private Turret m_Turret;
+	private Conveyor m_Conveyor;
 	private DrivetrainSubsystem m_Drivetrain;
 	private PIDController controller = new PIDController(kP, kI, kD);
 
 	/** Creates a new AutonomousTurnToTargetCommand. */
-	public BaseTurnToTarget(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret) {
+	public BaseTurnToTarget(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret, Conveyor conveyor) {
 		super();
 		addRequirements(driveTrain);
 		m_Vision = vision;
@@ -34,6 +36,7 @@ public class BaseTurnToTarget extends CommandBase {
 		controller.enableContinuousInput(-Math.PI, Math.PI);
 		m_Shooter = shooter;
 		m_Turret = turret;
+		m_Conveyor = conveyor;
 	}
 
 	// Called when the command is initially scheduled.
@@ -51,6 +54,9 @@ public class BaseTurnToTarget extends CommandBase {
 			double vertical_angle = m_Vision.getVerticalAngleOfErrorDegrees();
 			double horizontal_amgle = -m_Vision.getHorazontalAngleOfErrorDegrees() ;
 			double setpoint = Math.toRadians(horizontal_amgle)+ m_Drivetrain.getYawR2d().getRadians();
+			if (!m_Conveyor.isAllianceBallNext()){
+				setpoint += Math.toRadians(15);
+			}
 			double output = controller.calculate(m_Drivetrain.getYawR2d().getRadians(), setpoint);
 			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
 				 getYTranslationMetersPerSecond(), output, m_Drivetrain.getYawR2d()));
