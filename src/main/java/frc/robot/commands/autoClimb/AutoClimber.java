@@ -2,49 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autoClimb;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class AutoClimber extends CommandBase {
-	/** Creates a new AutoClimber. */
-	private Climber m_climber;
-	private DrivetrainSubsystem m_DrivetrainSubsystem;
-	private int m_step;
+public class AutoClimber extends SequentialCommandGroup {
 
-	public AutoClimber(Climber climber, DrivetrainSubsystem drivetrainSubsystem) {
-		super();
+	public AutoClimber(Climber climber, DrivetrainSubsystem drivetrain) {
+		super(new LowBarRetract(climber,drivetrain), 
+			new MidBarHook(climber, drivetrain),
+			new MidBarRetract(climber, drivetrain),
+			new TraverseBarHook(climber, drivetrain),
+			new TraverseBarRetract(climber, drivetrain));
 		addRequirements(climber);
-		m_climber = climber;
-		m_DrivetrainSubsystem = drivetrainSubsystem;
 	}
 
-	// Called when the command is initially scheduled.
-	@Override
-	public void initialize() {
-		m_step = 1;
-	}
-
-	// Called every time the scheduler runs while the command is scheduled.
-	@Override
-	public void execute() {
-		//retract first arm
-		//while still retracting
-			//after pitch apex abs(pitch) < abs(previous pitch) retract second arm
-			
-
-	}
-
-	// Called once the command ends or is interrupted.
-	@Override
-	public void end(boolean interrupted) {
-	}
-
-	// Returns true when the command should end.
-	@Override
-	public boolean isFinished() {
-		return false;
-	}
 }

@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -17,13 +19,19 @@ public class Climber extends SubsystemBase {
 	private WPI_TalonFX rightMotor = new WPI_TalonFX(ClimberConstants.RIGHT_MOTOR);
 	private SlewRateLimiter leftLimiter = new SlewRateLimiter(2);
 	private SlewRateLimiter rightLimiter = new SlewRateLimiter(2);
-
+	//TODO 
+	// PID climber extension
+	// make extend use possition pid
+	// make retraction use % output and check encoder in periodic 
 	/** Creates a new Climber. */
 	public Climber() {
 		leftMotor.configFactoryDefault();
 		leftMotor.setNeutralMode(NeutralMode.Brake);
+		leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		
 		rightMotor.configFactoryDefault();
 		rightMotor.setNeutralMode(NeutralMode.Brake);
+		rightMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 	}
 
 	public void extendLeft(double speed) {
