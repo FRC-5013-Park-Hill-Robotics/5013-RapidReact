@@ -11,8 +11,10 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ConveyorConstants;
+import frc.robot.RobotContainer;
 
 public class Conveyor extends SubsystemBase {
 
@@ -21,11 +23,17 @@ public class Conveyor extends SubsystemBase {
 	// REPLACE WITH ACTUAL COLOR SENCOR
 	private DigitalInput eye = new DigitalInput(ConveyorConstants.EYE_ID);
 
+    private ColorSensorV3 colorSensor = new ColorSensorV3( Port.kMXP );
+
+    private RobotContainer robotContainer;
+
 	// Values --------------------------------------------------------
 	private double percentOutput;
 	private long startTime;
 	private boolean override = false;
-	private ColorSensorV3 m_color = new ColorSensorV3(Port.kMXP) ;
+
+
+  
 
 	// Statics ------------------------------------------------------
 	/** Precent Output **/
@@ -39,14 +47,11 @@ public class Conveyor extends SubsystemBase {
 		this.conveyorMotor.configFactoryDefault();
 	}
 
-	@Override
-	public void periodic() {
-		conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
-
-		SmartDashboard.putNumber("Red", m_color.getRed());
-		SmartDashboard.putNumber("Blue", m_color.getBlue());
-		SmartDashboard.putNumber("Greed", m_color.getGreen());
-	}
+    @Override
+    public void periodic() 
+    {
+      conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
+    }
 
 	// Set Output ---------------------------------------------------
 	private void setPercentOutput(double targetPercent, Long timeout) {
@@ -103,6 +108,19 @@ public class Conveyor extends SubsystemBase {
 		// return true;
 		return !this.eye.get();
 	}
-	///////////////////////////////////////////////////////////
+
+   /** 
+   *    Returns true if the next ball in the conveyor is one of our
+   *    alliance's balls. A ball is an alliance ball if it is the same
+   *    color as our alliance team color, either red or blue.
+   */
+  public boolean isAllianceBallNext()
+  {
+    Color currentColor = this.colorSensor.getColor();
+    boolean redTeam = this.robotContainer.isRedAlliance();
+    boolean colorRed = currentColor.red > currentColor.blue && currentColor.red > currentColor.green;
+
+    return  (redTeam && colorRed) || (!redTeam && !colorRed);
+  }
 
 }
