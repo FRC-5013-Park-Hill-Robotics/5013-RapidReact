@@ -4,14 +4,16 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterVision;
+import frc.robot.subsystems.Turret;
 
 /** Add your docs here. */
 public class AutonomousTurnToTargetCommand extends BaseTurnToTarget {
 
-	public AutonomousTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision) {
-		super(driveTrain, vision);
+	public AutonomousTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret){
+		super(driveTrain, vision, shooter,turret);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ public class TrobotAddressableLED {
 	private TrobotAddressableLEDPattern m_pattern;
 	private Timer timer = new Timer();
 	private TimerTask task;
+	private int m_animationDelay = 50;
 
 	public TrobotAddressableLED(int pwmPort, int length) {
 		super();
@@ -26,6 +27,11 @@ public class TrobotAddressableLED {
 		m_LED.setLength(length);
 		m_LED.setData(m_buffer);
 		m_LED.start();
+	}
+
+	public TrobotAddressableLED(int pwmPort, int length, int animationSpeed) {
+		this(pwmPort, length);
+		this.m_animationDelay = animationSpeed;
 	}
 
 	public AddressableLED getLED() {
@@ -59,14 +65,14 @@ public class TrobotAddressableLED {
 				};
 				timer.scheduleAtFixedRate(
 						task,
-						20, // run first occurrence immediately
-						20); // run every three seconds
+						20, // run first occurrence in 20ms
+						m_animationDelay); 
 			}
 			update();
 		}
 	}
 
-	protected void update() {
+	public void update() {
 		m_pattern.setLEDs(getBuffer());
 		getLED().setData(getBuffer());
 	}
