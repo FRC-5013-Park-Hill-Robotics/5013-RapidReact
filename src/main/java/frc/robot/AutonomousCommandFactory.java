@@ -59,7 +59,6 @@ public class AutonomousCommandFactory {
 					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret())
 		);
 
-        // Create a voltage constraint to ensure we don't accelerate too fast
         PathPlannerTrajectory leg1Trajectory =  PathPlanner.loadPath("Right Leg1", DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND, DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
 		drivetrain.resetPosition(leg1Trajectory.getInitialPose(), leg1Trajectory.getInitialState().holonomicRotation); 
         Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
