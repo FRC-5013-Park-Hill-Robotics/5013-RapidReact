@@ -27,11 +27,11 @@ public class Climber extends SubsystemBase {
 	public Climber() {
 		leftMotor.configFactoryDefault();
 		leftMotor.setNeutralMode(NeutralMode.Brake);
-		leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		//leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 		
 		rightMotor.configFactoryDefault();
 		rightMotor.setNeutralMode(NeutralMode.Brake);
-		rightMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		//rightMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 	}
 
 	public void extendLeft(double speed) {
