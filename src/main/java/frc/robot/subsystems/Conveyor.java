@@ -6,110 +6,103 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ConveyorConstants;
 
 public class Conveyor extends SubsystemBase {
 
-  // Componenets ---------------------------------------------------
-  private WPI_TalonFX conveyorMotor = new WPI_TalonFX( ConveyorConstants.CONVEYOR_ID );
-  // REPLACE WITH ACTUAL COLOR SENCOR
-  private DigitalInput eye; //= new DigitalInput( ID Number );
+	// Componenets ---------------------------------------------------
+	private WPI_TalonFX conveyorMotor = new WPI_TalonFX(ConveyorConstants.CONVEYOR_ID);
+	// REPLACE WITH ACTUAL COLOR SENCOR
+	private DigitalInput eye = new DigitalInput(ConveyorConstants.EYE_ID);
 
-  // Values --------------------------------------------------------
-  private double percentOutput;
-  private long startTime;
-  private boolean override = false;
+	// Values --------------------------------------------------------
+	private double percentOutput;
+	private long startTime;
+	private boolean override = false;
+	private ColorSensorV3 m_color = new ColorSensorV3(Port.kMXP) ;
 
+	// Statics ------------------------------------------------------
+	/** Precent Output **/
+	public static final double kSpeed = 0.6;
+	/** Precent Output **/
+	public static final double kSpeedToShoot = 0.6;
 
-  // Statics ------------------------------------------------------
-  /** Precent Output **/
-  public static final double kSpeed = 0.6;
-  /** Precent Output **/
-  public static final double kSpeedToShoot = 0.6;
+	// Constructor --------------------------------------------------
+	/** Creates a new Conveyor. */
+	public Conveyor() {
+		this.conveyorMotor.configFactoryDefault();
+	}
 
-  // Constructor --------------------------------------------------
-  /** Creates a new Conveyor. */
-  public Conveyor(  ) 
-  {
-    this.conveyorMotor.configFactoryDefault();
-  }
-  
-  @Override
-  public void periodic() 
-  {
-    conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
-  }
+	@Override
+	public void periodic() {
+		conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
 
-  // Set Output ---------------------------------------------------
-  private void setPercentOutput(double targetPercent, Long timeout)
-  {
-    this.percentOutput = targetPercent;
-    if (timeout == 0)
-    {
-      this.startTime = 0;
-    } 
-    else if (startTime == 0) 
-    { 
-      //Don't set if you are delaying already.
-      this.startTime = System.currentTimeMillis() + timeout;
-    }
-  }
+		SmartDashboard.putNumber("Red", m_color.getRed());
+		SmartDashboard.putNumber("Blue", m_color.getBlue());
+		SmartDashboard.putNumber("Greed", m_color.getGreen());
+	}
 
-  // Starts ----------------------------------------------------------
-  public void start(long timeout) 
-  {
-    this.override = false;
-    if ( !this.isMoving() )
-    {
-      setPercentOutput( kSpeed, timeout);
-    }
-  }
+	// Set Output ---------------------------------------------------
+	private void setPercentOutput(double targetPercent, Long timeout) {
+		this.percentOutput = targetPercent;
+		if (timeout == 0) {
+			this.startTime = 0;
+		} else if (startTime == 0) {
+			// Don't set if you are delaying already.
+			this.startTime = System.currentTimeMillis() + timeout;
+		}
+	}
 
-  public void start() 
-  {
-    this.override = false;
-    setPercentOutput( kSpeed, 0L);
-  }
+	// Starts ----------------------------------------------------------
+	public void start(long timeout) {
+		this.override = false;
+		if (!this.isMoving()) {
+			setPercentOutput(kSpeed, timeout);
+		}
+	}
 
-  public void sendToShooter() 
-  {
-    this.override = false;
-    setPercentOutput( kSpeedToShoot, 0L);
-  }
+	public void start() {
+		this.override = false;
+		setPercentOutput(kSpeed, 0L);
+	}
 
-  public void reverse() 
-  {
-    this.override = true;
-    setPercentOutput( -kSpeed, 0L);
-  }
+	public void sendToShooter() {
+		this.override = false;
+		setPercentOutput(kSpeedToShoot, 0L);
+	}
 
-  // Start Override ----------------------------------------
-  public void startOverride() 
-  {
-    override = true;
-    if( isBallReadyToShoot() )
-    {
-      setPercentOutput(kSpeed, 0L);
-    }
-  }
+	public void reverse() {
+		this.override = true;
+		setPercentOutput(-kSpeed, 0L);
+	}
 
-  public void stop(){
-	  setPercentOutput(0, 0L);
-  }
-  // Checks --------------------------------------------------
-  public boolean isMoving()
-  {
-    return Math.abs(percentOutput) > 0.0;
-  }
+	// Start Override ----------------------------------------
+	public void startOverride() {
+		override = true;
+		if (isBallReadyToShoot()) {
+			setPercentOutput(kSpeed, 0L);
+		}
+	}
 
-  public boolean isBallReadyToShoot()
-  {
-	  return true;
-    //return this.eye.get();
-  }
-  ///////////////////////////////////////////////////////////
-  
+	public void stop() {
+		setPercentOutput(0, 0L);
+	}
+
+	// Checks --------------------------------------------------
+	public boolean isMoving() {
+		return Math.abs(percentOutput) > 0.0;
+	}
+
+	public boolean isBallReadyToShoot() {
+		// return true;
+		return !this.eye.get();
+	}
+	///////////////////////////////////////////////////////////
+
 }

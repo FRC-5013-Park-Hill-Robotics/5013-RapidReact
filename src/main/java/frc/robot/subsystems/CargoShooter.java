@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.trobot5013lib.TrobotUtil;
+
 import static frc.robot.ShooterConstants.*;
 
 public class CargoShooter extends SubsystemBase {
@@ -51,7 +53,8 @@ public class CargoShooter extends SubsystemBase {
   }
 
   public void fire(){
-    setTargetVelocity(heightVelocity);
+   // setTargetVelocity(heightVelocity);
+   m_conveyor.start();
     firing = true;
     //String("Shooter is Firing: ", ""+firing);
   }
@@ -65,24 +68,19 @@ public class CargoShooter extends SubsystemBase {
   @Override
   public void periodic() {
     //SmartDashboard.putString("topShooterTargetVelocity",""+ getTopTargetVelocity());
-    SmartDashboard.putString("bottomShooterTargetVelocity", ""+bottomMotor.getSelectedSensorVelocity());
-    SmartDashboard.putString("topShooterVelocity",""+ topMotor.getSelectedSensorVelocity());
-    SmartDashboard.putString("shooterVelocity", ""+topMotor.getSelectedSensorVelocity());
-    if (firing){
+    SmartDashboard.putString("target Velocity", ""+getTargetVelocity());
+    SmartDashboard.putString("Actual Velocity", ""+bottomMotor.getSelectedSensorVelocity());
+   
+	if (firing){
       if (atSpeed()){
-        SmartDashboard.putString("at speed", ""+true);
         m_conveyor.start();
       } else {
-        SmartDashboard.putString("at speed", ""+false);
         m_conveyor.stop();
-     //   if (m_conveyor.isBallReadyToShoot()){
-     //     m_conveyor.reverse();
-     //   }
       }
-      topMotor.set(ControlMode.Velocity,getTargetVelocity() * TOP_PERCENT_OF_BOTTOM); 
+      topMotor.set(ControlMode.Velocity,getTopTargetVelocity()); 
       bottomMotor.set(ControlMode.Velocity,getTargetVelocity());
     } else {
-      topMotor.set(ControlMode.Velocity,getTargetVelocity() * TOP_PERCENT_OF_BOTTOM);
+      topMotor.set(ControlMode.Velocity,getTopTargetVelocity());
       bottomMotor.set(ControlMode.Velocity,getTargetVelocity() );
     }
 
@@ -100,7 +98,8 @@ public class CargoShooter extends SubsystemBase {
   public boolean atSpeed(){
     //Boolean("Is BottomMotor at speed?: ", bottomMotor.getSelectedSensorVelocity() >= getTargetVelocity() );
 
-    return topMotor.getSelectedSensorVelocity() >= getTargetVelocity() *.95&&
+    return TrobotUtil.withinTolerance(topMotor.getSelectedSensorVelocity(), getTopTargetVelocity(), .05* getTopTargetVelocity()) && 
+		TrobotUtil.withinTolerance(bottomMotor.getSelectedSensorVelocity(), getTargetVelocity(), .05* getTargetVelocity()) && 
     bottomMotor.getSelectedSensorVelocity() >= getTargetVelocity() *.95;
   }
 

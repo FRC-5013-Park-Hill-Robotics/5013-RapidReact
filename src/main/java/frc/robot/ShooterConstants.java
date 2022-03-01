@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.trobot5013lib.LinearInterpolator;
+
 /** Add your docs here. */
 public final class ShooterConstants {
 
@@ -29,6 +31,39 @@ public final class ShooterConstants {
     }
 	public static final class FendorShotConstants{
 		public static final double BOTTOM_WHEEL_SPEED = 3815;
-		public static final double  HOOD_HEIGHT = 20;
+		public static final double  HOOD_HEIGHT = 30;
+	}
+
+	public static final class TargetConstants{
+		public static final double[][] HOOD_HEIGHT_ARRAY = {
+				{-13,140},
+				{-12,140},
+				{-2,140},
+				{0,140},
+				{4.5, 140},
+				{5,140},
+				{7,140},
+				{11,140}
+			//	{-11,1,8},
+			//{140,140,40}
+			};
+		public static final double[][] SHOOTER_SPEED_ARRAY = {
+				{-13,4150},
+				{-12,4125},
+				{-5.5,4050},
+				{-2,3860},
+				{0,3750},
+				{2.5,3750},
+				{4.5,3770},
+				{5,3770},
+				{7,3760},
+				{11,3700}
+			//	{-11,1,8},
+			//	{5150,4900,4800}
+			};
+		public static final LinearInterpolator HOOD_INTERPOLATOR = new LinearInterpolator(HOOD_HEIGHT_ARRAY);
+		public static final LinearInterpolator SHOOTER_SPEED_INTERPOLATOR = new LinearInterpolator(SHOOTER_SPEED_ARRAY);
+		public static final double HOOD_TOLERANCE_MM = 2;
+		public static final double SHOOTER_SPEED_PERCENT = .05;
 	}
 }

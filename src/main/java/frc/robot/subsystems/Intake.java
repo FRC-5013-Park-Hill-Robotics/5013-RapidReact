@@ -10,9 +10,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.IntakeConstants;
 
 /** Add your docs here. */
@@ -23,56 +24,41 @@ public class Intake extends SubsystemBase {
 
 	// Dropping the intake is set up as forward and raising it as reverse, may have
 	// to change based on mechanics and wiring.
-	private Solenoid dropIntakeSolenoid;// = new Solenoid(Constants.PCM_ID,PneumaticsModuleType.REVPH,
-										// IntakeConstants.DROP_INTAKE_SOLENOID_CHANNEL);
-	private Solenoid raiseIntakeSolenoid;// = new
-											// Solenoid(Constants.PCM_ID,PneumaticsModuleType.REVPH,IntakeConstants.RAISE_INTAKE_SOLENOID_CHANNEL);
+	private DoubleSolenoid intakeSolenoid;// = new DoubleSolenoid(PneumaticsModuleType.REVPH ,IntakeConstants.DROP_INTAKE_SOLENOID_CHANNEL, IntakeConstants.RAISE_INTAKE_SOLENOID_CHANNEL);
 
 	/**
 	 * Creates a new Intake.
 	 */
-	public Intake(Conveyor conveyor) {
+	public Intake(Conveyor conveyor, RobotContainer container) {
 		super();
 		intakeMotor.configFactoryDefault();
 		intakeMotor.setInverted(false);
 		intakeMotor.setNeutralMode(NeutralMode.Brake);
+		intakeSolenoid = container.getPneumaticsHub().makeDoubleSolenoid(IntakeConstants.DROP_INTAKE_SOLENOID_CHANNEL, IntakeConstants.RAISE_INTAKE_SOLENOID_CHANNEL);
 	}
 
 	@Override
 	public void periodic() {
 
-		Faults faults = new Faults();
-		StickyFaults stickyFaults = new StickyFaults();
-		intakeMotor.getFaults(faults);
-		intakeMotor.getStickyFaults(stickyFaults);
-		if (faults.hasAnyFault()) {
-			SmartDashboard.putString("Intake Faults", faults.toString());
-		} else {
-			SmartDashboard.putString("Intake Faults", "none");
-		}
-		if (stickyFaults.hasAnyFault()) {
-			SmartDashboard.putString("Intake Sticky Faults", stickyFaults.toString());
-		} else {
-			SmartDashboard.putString("IntakeSticky Faults", "none");
-		}
-
 	}
 
 	public void dropIntake() {
-		dropIntakeSolenoid.set(true);
-		raiseIntakeSolenoid.set(false);
+		intakeSolenoid.set(DoubleSolenoid.Value.kForward);
+		//dropIntakeSolenoid.set(true);
+		//raiseIntakeSolenoid.set(false);
 		intakeMotor.set(ControlMode.PercentOutput, .45);
 	}
 
 	public void raiseIntake() {
 		intakeMotor.set(ControlMode.PercentOutput, 0);
-		dropIntakeSolenoid.set(false);
-		raiseIntakeSolenoid.set(true);
+		intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+		//dropIntakeSolenoid.set(false);
+		//raiseIntakeSolenoid.set(true);
 
 	}
 
 	public boolean isDown() {
-		return dropIntakeSolenoid.get();
+		return intakeSolenoid.get() == DoubleSolenoid.Value.kForward;
 	}
 	public void start(){
 		intakeMotor.set(ControlMode.PercentOutput, .40);
