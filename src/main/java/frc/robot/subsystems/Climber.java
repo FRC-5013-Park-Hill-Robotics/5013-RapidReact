@@ -17,21 +17,39 @@ public class Climber extends SubsystemBase {
 	private WPI_TalonFX rightMotor = new WPI_TalonFX(ClimberConstants.RIGHT_MOTOR);
 	private SlewRateLimiter leftLimiter = new SlewRateLimiter(2);
 	private SlewRateLimiter rightLimiter = new SlewRateLimiter(2);
+
 	/** Creates a new Climber. */
 	public Climber() {
-	  leftMotor.configFactoryDefault();
-	  leftMotor.setNeutralMode(NeutralMode.Brake);
-	  rightMotor.configFactoryDefault();
-	  rightMotor.setNeutralMode(NeutralMode.Brake);
+		leftMotor.configFactoryDefault();
+		leftMotor.setNeutralMode(NeutralMode.Brake);
+		rightMotor.configFactoryDefault();
+		rightMotor.setNeutralMode(NeutralMode.Brake);
 	}
-	public void extendLeft(double speed){
-	  leftMotor.set(ControlMode.PercentOutput,leftLimiter.calculate(speed));
+
+	public void extendLeft(double speed) {
+		leftMotor.set(ControlMode.PercentOutput, leftLimiter.calculate(speed));
 	}
-	public void extendRight(double speed){
-	  rightMotor.set(ControlMode.PercentOutput,rightLimiter.calculate(speed));
+
+	public void extendRight(double speed) {
+		rightMotor.set(ControlMode.PercentOutput, rightLimiter.calculate(speed));
 	}
+
+	public double getRightPosition(){
+		return rightMotor.getSelectedSensorPosition();
+	}
+
+	public void setRightPosition(double position){
+	}
+
+	public double getLeftPosition(){
+		return rightMotor.getSelectedSensorPosition();
+	}
+
+	public void setLeftPosition(double position){
+	} 
+	
 	@Override
 	public void periodic() {
-	  // This method will be called once per scheduler run
+		// This method will be called once per scheduler run
 	}
-  }
+}
