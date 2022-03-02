@@ -50,7 +50,7 @@ public class RobotContainer {
 	private Turret m_turret = new Turret();
 	private StatusLED m_StatusLED = new StatusLED(this);
 	private ShooterVision m_shooterVision = new ShooterVision();
-	private Conveyor m_conveyor = new Conveyor();
+	private Conveyor m_conveyor = new Conveyor(this);
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
 	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
 	private Intake m_intake = new Intake(m_conveyor,this);

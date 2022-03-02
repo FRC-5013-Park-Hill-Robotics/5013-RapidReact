@@ -25,7 +25,7 @@ public class Conveyor extends SubsystemBase {
 
     private ColorSensorV3 colorSensor = new ColorSensorV3( Port.kMXP );
 
-    private RobotContainer robotContainer;
+    private RobotContainer m_robotContainer;
 
 	// Values --------------------------------------------------------
 	private double percentOutput;
@@ -43,14 +43,16 @@ public class Conveyor extends SubsystemBase {
 
 	// Constructor --------------------------------------------------
 	/** Creates a new Conveyor. */
-	public Conveyor() {
+	public Conveyor(RobotContainer container) {
 		this.conveyorMotor.configFactoryDefault();
+		m_robotContainer = container;
 	}
 
     @Override
     public void periodic() 
-    {
+    {	
       conveyorMotor.set(ControlMode.PercentOutput, percentOutput);
+	  SmartDashboard.putString("Color","R:" + colorSensor.getRed() + " B:" + colorSensor.getBlue() + " G:" + colorSensor.getGreen());
     }
 
 	// Set Output ---------------------------------------------------
@@ -117,7 +119,7 @@ public class Conveyor extends SubsystemBase {
   public boolean isAllianceBallNext()
   {
     Color currentColor = this.colorSensor.getColor();
-    boolean redTeam = this.robotContainer.isRedAlliance();
+    boolean redTeam = this.m_robotContainer.isRedAlliance();
     boolean colorRed = currentColor.red > currentColor.blue && currentColor.red > currentColor.green;
 
     return  (redTeam && colorRed) || (!redTeam && !colorRed);
