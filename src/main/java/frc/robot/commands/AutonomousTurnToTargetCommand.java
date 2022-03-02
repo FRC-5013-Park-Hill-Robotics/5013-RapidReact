@@ -4,8 +4,9 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import frc.robot.subsystems.CargoShooter;
-import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.Turret;
@@ -13,8 +14,8 @@ import frc.robot.subsystems.Turret;
 /** Add your docs here. */
 public class AutonomousTurnToTargetCommand extends BaseTurnToTarget {
 
-	public AutonomousTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret, Conveyor conveyor){
-		super(driveTrain, vision, shooter,turret, conveyor);
+	public AutonomousTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret, BooleanSupplier isAllianceCargo){
+		super(driveTrain, vision, shooter,turret, isAllianceCargo);
 	}
 
 	@Override

@@ -4,25 +4,74 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.CargoShooter;
-import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.Turret;
+import frc.robot.trobot5013lib.TrobotUtil;
 
 /** Add your docs here. */
 public class TeleopTurnToTargetCommand extends BaseTurnToTarget {
-	
-	
-	public TeleopTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret, Conveyor conveyor) {
-		super(driveTrain, vision,shooter,turret, conveyor);
+	private DoubleSupplier m_xTranslation;
+	private DoubleSupplier m_yTranslation;
+	private DoubleSupplier m_throttle;
+
+	public TeleopTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter,
+			Turret turret, BooleanSupplier isAllianceCargo) {
+		super(driveTrain, vision, shooter, turret, isAllianceCargo);
+	}
+
+	public TeleopTurnToTargetCommand(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter,
+			Turret turret, BooleanSupplier isAllianceCargo, DoubleSupplier xTranslation,
+			DoubleSupplier yTranslation, DoubleSupplier throttle) {
+		super(driveTrain, vision, shooter, turret, isAllianceCargo);
+		m_xTranslation = xTranslation;
+		m_yTranslation = yTranslation;
+		m_throttle = throttle;
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		//always return false because command will end when controller button is released
+		// always return false because command will end when controller button is
+		// released
 
-		return false ;
+		return false;
+	}
+
+	@Override
+	protected double getXTranslationMetersPerSecond() {
+		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
+
+		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+		double translationY = TrobotUtil.modifyAxis(-m_yTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+		if (!(translationX == 0.0 && translationY == 0.0)) {	
+			double angle = calculateTranslationDirection(translationX, translationY);
+			translationX = Math.cos(angle) * throttle;
+		}
+		return DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX);
+	}
+
+	@Override
+	protected double getYTranslationMetersPerSecond() {
+		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
+
+		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+		double translationY = TrobotUtil.modifyAxis(-m_yTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+		if (!(translationX == 0.0 && translationY == 0.0)) {	
+			double angle = calculateTranslationDirection(translationX, translationY);
+			translationX = Math.cos(angle) * throttle;
+		}
+		return DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY);
+	}
+	
+	private double calculateTranslationDirection(double x, double y) {
+		// Calculate the angle.
+		// Swapping x/y
+		return Math.atan2(x, y) + Math.PI / 2;
 	}
 }

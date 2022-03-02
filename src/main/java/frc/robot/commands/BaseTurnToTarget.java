@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CargoShooter;
-import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.Turret;
@@ -16,16 +15,18 @@ import frc.robot.subsystems.Turret;
 import static frc.robot.Constants.DrivetrainConstants.ThetaGains.*;
 import static frc.robot.ShooterConstants.TargetConstants.*;
 
+import java.util.function.BooleanSupplier;
+
 public class BaseTurnToTarget extends CommandBase {
 	private ShooterVision m_Vision;
 	private CargoShooter m_Shooter;
 	private Turret m_Turret;
-	private Conveyor m_Conveyor;
+	private BooleanSupplier m_isAllianceCargo;
 	private DrivetrainSubsystem m_Drivetrain;
 	private PIDController controller = new PIDController(kP, kI, kD);
 
 	/** Creates a new AutonomousTurnToTargetCommand. */
-	public BaseTurnToTarget(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret, Conveyor conveyor) {
+	public BaseTurnToTarget(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret, BooleanSupplier isAllianceCargo) {
 		super();
 		addRequirements(driveTrain);
 		m_Vision = vision;
@@ -34,7 +35,7 @@ public class BaseTurnToTarget extends CommandBase {
 		controller.enableContinuousInput(-Math.PI, Math.PI);
 		m_Shooter = shooter;
 		m_Turret = turret;
-		m_Conveyor = conveyor;
+		m_isAllianceCargo = isAllianceCargo;
 	}
 
 	// Called when the command is initially scheduled.
@@ -52,7 +53,7 @@ public class BaseTurnToTarget extends CommandBase {
 			double vertical_angle = m_Vision.getVerticalAngleOfErrorDegrees();
 			double horizontal_amgle = -m_Vision.getHorazontalAngleOfErrorDegrees() ;
 			double setpoint = Math.toRadians(horizontal_amgle)+ m_Drivetrain.getYawR2d().getRadians();
-			if (!m_Conveyor.isAllianceBallNext()){
+			if (!m_isAllianceCargo.getAsBoolean()){
 				setpoint += Math.toRadians(15);
 			}
 			double output = controller.calculate(m_Drivetrain.getYawR2d().getRadians(), setpoint);
