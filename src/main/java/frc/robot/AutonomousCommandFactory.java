@@ -43,7 +43,8 @@ public class AutonomousCommandFactory {
 				 container.getshooterVision(),
 				 container.getshooter(),
 				  container.getturret(),
-				  container.getconveyor())	,
+				  container.getconveyor()::isAllianceBallNext
+				  )	,
 			new AutonomousFire(container.getshooter(), container.getconveyor())
 		);
 	}
@@ -57,7 +58,7 @@ public class AutonomousCommandFactory {
 		ParallelCommandGroup startup = new ParallelCommandGroup(
 					new InstantCommand(container.getintake()::dropIntake),
 					new InstantCommand(container.getshooter()::spinUp),
-					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret(), container.getconveyor())
+					new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(),container.getshooter(), container.getturret(), container.getconveyor()::isAllianceBallNext)
 		);
 
         PathPlannerTrajectory leg1Trajectory =  PathPlanner.loadPath("Right Leg1", DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND, DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);

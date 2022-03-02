@@ -4,13 +4,14 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeVision;
+import frc.robot.trobot5013lib.TrobotUtil;
+
 import static frc.robot.Constants.DrivetrainConstants.ThetaGains.*;
 
 import java.util.function.DoubleSupplier;
@@ -45,13 +46,25 @@ public class Fetch extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+
+		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
+
+		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+		double translationY = TrobotUtil.modifyAxis(-m_yTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+		if (!(translationX == 0.0 && translationY == 0.0)) {
+			
+			double angle = calculateTranslationDirection(translationX, translationY);
+			translationX = Math.cos(angle) * throttle;
+			translationY = Math.sin(angle) * throttle;
+		}
+
 		// Call pid controller calculate passing in the x offset from vision and 0 for
 		// the setpoint
 		double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeadingRadians(),
 				Math.toRadians(m_vision.getTargetXAngleDegrees()));
 		ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
-				DrivetrainSubsystem.percentOutputToMetersPerSecond(getXTranslation()),
-				DrivetrainSubsystem.percentOutputToMetersPerSecond(getYTranslation()), PIDOutput);
+				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
+				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), PIDOutput);
 		// use the output from calculate to make a new ChassisSpeed object to pass to
 		// the drivetrain
 		// with a yVelocity of 0, an xVelocity based on the throttle, and an angular
@@ -59,15 +72,6 @@ public class Fetch extends CommandBase {
 		// pid calculate
 		m_drivetrain.drive(chassisSpeeds);
 
-	}
-
-	private double getXTranslation() {
-		return -Math.copySign(MathUtil.applyDeadband(ControllerConstants.DEADBAND, m_throttle.getAsDouble()),
-				m_xTranslation.getAsDouble());
-	}
-
-	private double getYTranslation() {
-		return -MathUtil.applyDeadband(ControllerConstants.DEADBAND, m_yTranslation.getAsDouble());
 	}
 
 	// Called once the command ends or is interrupted.
@@ -79,5 +83,11 @@ public class Fetch extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		return false;
+	}
+
+	private double calculateTranslationDirection(double x, double y) {
+		// Calculate the angle.
+		// Swapping x/y
+		return Math.atan2(x, y) + Math.PI / 2;
 	}
 }
