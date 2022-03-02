@@ -23,12 +23,21 @@ public class IntakeVision extends SubsystemBase {
 	private RobotContainer m_robotContainer;
 	private double lastTargetAngle;
 	private AxonResult lastResult;
+	private boolean isTargeting = false;
 
 	/** Creates a new IntakeVision. */
 	public IntakeVision(RobotContainer container) {
 		super();
 		m_robotContainer = container;
 		setLabel(container.isRedAlliance()?RED_CARGO:RED_CARGO);
+	}
+
+	public boolean isTargeting() {
+		return isTargeting;
+	}
+
+	public void setTargeting(boolean isTargeting) {
+		this.isTargeting = isTargeting;
 	}
 
 	public AxonResult getResult() {

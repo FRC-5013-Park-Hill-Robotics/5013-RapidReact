@@ -35,8 +35,8 @@ public class ShooterVision extends SubsystemBase {
     this.ta = table.getEntry("ta");
     this.tv = table.getEntry("tv");
     this.ledMode = table.getEntry("ledMode");
-    setPipeline(ShooterVisionConstants.DRIVE_PIPELINE);
-    setLedOn(true);
+    setPipeline(ShooterVisionConstants.TARGET_PIPELINE);
+    setLedOn(false);
   }
 
   @Override
@@ -127,8 +127,10 @@ public class ShooterVision extends SubsystemBase {
   }
 
   public void setTargeting(boolean targeting){
+	  setLedOn(targeting);
 	  m_targeting = targeting;
   }
+
   public boolean isOutOfRange(){
     return (getTy().getDouble(0) > ShooterVisionConstants.RANGE_TOO_CLOSE || getTy().getDouble(0) < ShooterVisionConstants.RANGE_TOO_FAR);
   }
