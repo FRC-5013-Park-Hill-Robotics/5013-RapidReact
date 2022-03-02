@@ -46,7 +46,7 @@ public class Fetch extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-
+		m_vision.setTargeting(true);
 		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
 
 		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
@@ -77,6 +77,7 @@ public class Fetch extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
+		m_vision.setTargeting(false);
 	}
 
 	// Returns true when the command should end.
