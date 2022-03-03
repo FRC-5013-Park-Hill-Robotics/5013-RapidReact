@@ -17,6 +17,7 @@ import frc.robot.trobot5013lib.led.TrobotAddressableLED;
 import frc.robot.trobot5013lib.led.TrobotAddressableLEDPattern;
 import frc.robot.subsystems.ShooterVision;
 import frc.robot.trobot5013lib.led.IntensityPattern;
+import frc.robot.trobot5013lib.led.ChasePattern;
 
 public class StatusLED extends SubsystemBase {
 	private TrobotAddressableLED m_led = new TrobotAddressableLED(Constants.STATUS_LED_PWM_PORT, 60);
@@ -34,7 +35,10 @@ public class StatusLED extends SubsystemBase {
 	private IntensityPattern m_blueIntensityPattern = new IntensityPattern(Color.kBlue, 0);
 	private IntensityPattern m_redIntensityPattern = new IntensityPattern(Color.kRed, 0);
 	private int intensityDegrees = 10;
-
+    private Color[] redWhiteArray = {Color.kRed, Color.kWhite};
+    private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
+    private TrobotAddressableLEDPattern m_redChasePattern = new ChasePattern(redWhiteArray, 3);
+    private TrobotAddressableLEDPattern m_blueChasePattern = new ChasePattern(blueWhiteArray, 3);
 	/** Creates a new StatusLED. */
 	public StatusLED(RobotContainer robotContainer) {
 		super();
@@ -63,6 +67,12 @@ public class StatusLED extends SubsystemBase {
 			} else {
 				m_led.setPattern(m_blinkingRed);
 			}
+        } else if (m_RobotContainer.getIntakeVision().isTargeting()){
+            if (m_RobotContainer.isRedAlliance()) {
+                    m_led.setPattern(m_redChasePattern);
+            } else {
+                m_led.setPattern(m_blueChasePattern);
+            }
 		} else if (m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() > 5
 				|| m_RobotContainer.getDrivetrainSubsystem().getRollR2d().getDegrees() < -5) {
 					m_led.setPattern(m_purplePattern);
