@@ -97,6 +97,9 @@ public class RobotContainer {
 		new Button(m_controller::getLeftTriggerButton).whileHeld(new TeleopTurnToTargetCommand(m_drivetrainSubsystem,m_shooterVision, m_shooter,
 			 m_turret, m_conveyor::isAllianceBallNext,m_controller::getLeftY, m_controller::getLeftY, m_controller::getRightTriggerAxis));
 		new Button(m_controller::getLeftBumper).whenPressed(new Fire(m_shooter, m_conveyor)).whenReleased(m_shooter::stopFiring);
+		new Button(m_controller::getAButton).whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
+				 m_controller::getRightTriggerAxis));
+				 
 		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
 		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
 		new Button(m_controller::getDPadRight).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(100)));
