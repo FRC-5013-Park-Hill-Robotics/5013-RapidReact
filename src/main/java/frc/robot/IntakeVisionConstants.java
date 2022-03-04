@@ -7,4 +7,5 @@ public final class IntakeVisionConstants {
     public static final String RED_CARGO = "red";
 	public static final double CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES = 61.0;
 	public static final double CAMERA_FIELD_OF_VIEW_VERTICAL_DEGREES = 34.3;
+	public static final double TOLERANCE_DEGREES = 2;
 }

@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-
 import static frc.robot.IntakeVisionConstants.*;
 
 import frc.robot.RobotContainer;
@@ -18,8 +17,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class IntakeVision extends SubsystemBase {
 	// change to match camera name//
-    private NetworkTable table = NetworkTableInstance.getDefault().getTable("ML");
-    private String label;
+	private NetworkTable table = NetworkTableInstance.getDefault().getTable("ML");
+	private String label;
 	private RobotContainer m_robotContainer;
 	private double lastTargetAngle;
 	private AxonResult lastResult;
@@ -29,7 +28,7 @@ public class IntakeVision extends SubsystemBase {
 	public IntakeVision(RobotContainer container) {
 		super();
 		m_robotContainer = container;
-		setLabel(container.isRedAlliance()?RED_CARGO:RED_CARGO);
+		setLabel(container.isRedAlliance() ? RED_CARGO : RED_CARGO);
 	}
 
 	public boolean isTargeting() {
@@ -45,13 +44,13 @@ public class IntakeVision extends SubsystemBase {
 		return result;
 	}
 
-    public void setLabel(String l){
-        label=l;
-    }
-	
+	public void setLabel(String l) {
+		label = l;
+	}
+
 	public boolean hasTarget() {
 		AxonResult result = this.getResult();
-		boolean hasTarget = result!=null && this.getResult().hasDetection();
+		boolean hasTarget = result != null && this.getResult().hasDetection();
 		return hasTarget;
 	}
 
@@ -69,29 +68,36 @@ public class IntakeVision extends SubsystemBase {
 	}
 
 	public double getXAngleOfErrorDegrees(AxonResult result) {
-		if (hasTarget()){
+		if (hasTarget()) {
 			return result.getXAngleDegrees(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
 		}
 		return 0;
 	}
 
-	public double getTargetXAngleDegrees(){
+	public double getTargetXAngleDegrees() {
 		AxonResult axonResult = getResult();
-		double result = 0;
-		if (lastResult == axonResult){
-			result =  lastTargetAngle;
-		} else {
-			result = (Math.toDegrees(m_robotContainer.getDrivetrainSubsystem().getHeadingRadians() - getXAngleOfErrorDegrees(axonResult) )) % 360;
-			lastResult = axonResult;
-			lastTargetAngle = result; 
+		double heading = m_robotContainer.getDrivetrainSubsystem().getYawR2d().getDegrees();
+		double result = heading;
+		if (hasTarget()) {
+			if (lastResult == axonResult) {
+				result = lastTargetAngle;
+			} else {
+				result = (Math.toDegrees(heading - getXAngleOfErrorDegrees(axonResult))) % 360;
+				lastResult = axonResult;
+				lastTargetAngle = result;
+			}
 		}
-		return result ;
+
+		return result;
 	}
 
 	@Override
 	public void periodic() {
 		SmartDashboard.putString("Test", "TEst");
-		SmartDashboard.putNumber("Angle of Error", getXAngleOfErrorDegrees());
+
+		if (hasTarget()) {
+			SmartDashboard.putNumber("Angle of Error", getXAngleOfErrorDegrees());
+		}
 		SmartDashboard.putBoolean("Has Target", hasTarget());
 	}
 }
