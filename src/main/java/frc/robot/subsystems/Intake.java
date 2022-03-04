@@ -5,13 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.IntakeConstants;
@@ -46,7 +43,7 @@ public class Intake extends SubsystemBase {
 		intakeSolenoid.set(DoubleSolenoid.Value.kForward);
 		//dropIntakeSolenoid.set(true);
 		//raiseIntakeSolenoid.set(false);
-		intakeMotor.set(ControlMode.PercentOutput, .45);
+		intakeMotor.set(ControlMode.PercentOutput, IntakeConstants.INTAKE_SPEED);
 	}
 
 	public void raiseIntake() {
@@ -61,13 +58,13 @@ public class Intake extends SubsystemBase {
 		return intakeSolenoid.get() == DoubleSolenoid.Value.kForward;
 	}
 	public void start(){
-		intakeMotor.set(ControlMode.PercentOutput, .40);
+		intakeMotor.set(ControlMode.PercentOutput, IntakeConstants.INTAKE_SPEED);
 	}
 	public void stop(){
 		intakeMotor.set(ControlMode.PercentOutput, 0);
 	}
 	public void reverseIntake() {
-		intakeMotor.set(ControlMode.PercentOutput, -.40);
+		intakeMotor.set(ControlMode.PercentOutput, -IntakeConstants.INTAKE_SPEED);
 	}
 }
 
