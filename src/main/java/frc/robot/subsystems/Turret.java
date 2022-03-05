@@ -3,11 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.TurretConstants.*;
+
+import frc.robot.TurretConstants;
 import frc.robot.trobot5013lib.LinearServo;
 
 public class Turret extends SubsystemBase {
@@ -15,7 +18,7 @@ public class Turret extends SubsystemBase {
     private LinearServo servo = new LinearServo(SERVO_LEFT_ID,140,32);
 
 
-    double desiredAngle = 0;
+    private double desiredAngle = TurretConstants.STARTING_ANGLE;
     
 	/** Creates a new Turret. */
 	public Turret() {
@@ -57,9 +60,6 @@ public class Turret extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Height", servo.getHeight());
-		// This method will be called once per scheduler run
-        //pid controls
-        //motor.set
-        //coding stuff by baylee, a super expert programmer
+		motor.set(ControlMode.Position,desiredAngle);
 	}
 }

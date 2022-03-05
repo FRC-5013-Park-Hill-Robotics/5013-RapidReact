@@ -13,6 +13,8 @@ public class TurretConstants {
     public static final int TURRET_MAX_ANGLE = 270;
     public static final int SERVO_LEFT_ID = 0;
 	public static final double HOOD_MAX_HEIGHT = 140;
+	public static final double SHOOTING_ANGLE = 339;
+	public static final double STARTING_ANGLE = 129;
     public static final class FLY_WHEEL_GAINS{
 		public static final double kP = .5;
         public static final double kF = 1;
