@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.ColorSensorV3;
 
@@ -45,6 +46,19 @@ public class Conveyor extends SubsystemBase {
 	/** Creates a new Conveyor. */
 	public Conveyor(RobotContainer container) {
 		this.conveyorMotor.configFactoryDefault();
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_7_CommStatus, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_10_Targets, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_15_FirmwareApiStatus, 250);
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 250);
+
 		m_robotContainer = container;
 	}
 

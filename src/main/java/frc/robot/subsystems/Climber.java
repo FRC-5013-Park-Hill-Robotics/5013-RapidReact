@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -28,10 +29,13 @@ public class Climber extends SubsystemBase {
 		leftMotor.configFactoryDefault();
 		leftMotor.setNeutralMode(NeutralMode.Brake);
 		//leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
-		
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 110, 110, .5  );
+		leftMotor.configSupplyCurrentLimit(currentConfig);
 		rightMotor.configFactoryDefault();
 		rightMotor.setNeutralMode(NeutralMode.Brake);
 		//rightMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		rightMotor.configSupplyCurrentLimit(currentConfig);
+	
 	}
 
 	public void extendLeft(double speed) {

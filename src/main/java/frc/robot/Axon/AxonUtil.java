@@ -28,12 +28,6 @@ public class AxonUtil {
 			lastTimestamp = timestamp;
 			result.setDetections(parseAxonDetections(table.getEntry(DETECTIONS_KEY).getString("")));
 			result.setCoral(Boolean.valueOf(table.getEntry(CORAL_KEY).getString(Boolean.FALSE.toString())));
-			String resolution = table.getEntry(RESOLUTION_KEY).toString();
-			if (resolution != null){
-			String [] resolutionList = resolution.split(",");
-				result.setResolutionWidth(Integer.parseInt(resolutionList[0]));
-				result.setResolutioHeight(Integer.parseInt(resolutionList[1]));
-			}
 			result.setTimestamp(timestamp);
 		}
 		return result;

@@ -16,7 +16,7 @@ public final class ShooterConstants {
     
     public static final class FLY_WHEEL_GAINS{
         // (output% * 1023) / (tuner value for velocity at output%)
-		public static final double kP = .45;
+		public static final double kP = .4;
         //public static final double kF = .049;
         public static final double kF = .055;
 
@@ -26,7 +26,7 @@ public final class ShooterConstants {
         // 1. find closed loop error units by change in sensor by 100 
         // 2. multiply the units by 2.5 to cover the typical error
 
-        public static final double kD = 0.0;
+        public static final double kD = 0.2;
         // (10 x kP)
     }
 	public static final class FendorShotConstants{

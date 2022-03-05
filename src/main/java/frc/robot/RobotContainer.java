@@ -86,10 +86,7 @@ public class RobotContainer {
         new Button(m_controller::getBackButton)
                 // No requirements because we don't need to interrupt anything
                 .whenPressed(new InstantCommand(m_drivetrainSubsystem::zeroGyroscope));
-		//new Button(m_controller::getLeftBumper)
-		//	.whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
-		//		 m_controller::getRightTriggerAxis));
-	
+
 		new Button(m_controller::getBButton).whileHeld(new Fire(m_shooter, m_conveyor)).whenReleased(new InstantCommand(m_shooter::stopFiring));
 		new Button(m_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));
 		new Button(m_controller::getRightBumper).whileHeld(new InstantCommand(m_intake::dropIntake)).whenReleased(new InstantCommand(m_intake::raiseIntake));
@@ -97,8 +94,8 @@ public class RobotContainer {
 		new Button(m_controller::getLeftTriggerButton).whileHeld(new TeleopTurnToTargetCommand(m_drivetrainSubsystem,m_shooterVision, m_shooter,
 			 m_turret, m_conveyor::isAllianceBallNext,m_controller::getLeftY, m_controller::getLeftY, m_controller::getRightTriggerAxis));
 		new Button(m_controller::getLeftBumper).whenPressed(new Fire(m_shooter, m_conveyor)).whenReleased(m_shooter::stopFiring);
-		new Button(m_controller::getAButton).whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
-				 m_controller::getRightTriggerAxis));
+//	new Button(m_controller::getAButton).whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
+//				 m_controller::getRightTriggerAxis));
 				 
 		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
 		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
