@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.TurretConstants;
 import frc.robot.subsystems.Turret;
 
 
@@ -24,7 +25,7 @@ public class TurretStartingPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_turret.setDesiredAngle(129);
+      m_turret.setDesiredAngle(TurretConstants.STARTING_ANGLE);
   }
 
   // Called once the command ends or is interrupted.
