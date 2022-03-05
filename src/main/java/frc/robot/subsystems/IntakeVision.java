@@ -6,10 +6,12 @@ package frc.robot.subsystems;
 
 import static frc.robot.IntakeVisionConstants.*;
 
+import frc.robot.IntakeVisionConstants;
 import frc.robot.RobotContainer;
 import frc.robot.Axon.AxonResult;
 import frc.robot.Axon.AxonUtil;
 import frc.robot.Axon.Detection;
+import frc.robot.trobot5013lib.TrobotUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
@@ -90,7 +92,9 @@ public class IntakeVision extends SubsystemBase {
 
 		return result;
 	}
-
+	public boolean isOnTarget(){
+		return TrobotUtil.withinTolerance (getXAngleOfErrorDegrees(),0,IntakeVisionConstants.TOLERANCE_DEGREES);
+	}
 	@Override
 	public void periodic() {
 		SmartDashboard.putString("Test", "TEst");

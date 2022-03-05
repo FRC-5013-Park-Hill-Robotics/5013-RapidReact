@@ -66,10 +66,8 @@ public class Fetch extends CommandBase {
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), PIDOutput);
 		// use the output from calculate to make a new ChassisSpeed object to pass to
-		// the drivetrain
-		// with a yVelocity of 0, an xVelocity based on the throttle, and an angular
-		// velocity of the
-		// pid calculate
+		// the drivetrain with a yVelocity of 0, an xVelocity based on the throttle, and an angular
+		// velocity of the pid calculate
 		m_drivetrain.drive(chassisSpeeds);
 
 	}
