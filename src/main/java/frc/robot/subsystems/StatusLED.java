@@ -67,10 +67,8 @@ public class StatusLED extends SubsystemBase {
 			} else {
 				m_led.setPattern(m_blinkingRed);
 			}
-        } else if (m_RobotContainer.getIntakeVision().isTargeting){
-    
-        
-            if m_RobotContainer.getIntakeVision().hasTarget()){
+        } else if (m_RobotContainer.getIntakeVision().isTargeting()){
+            if (m_RobotContainer.getIntakeVision().hasTarget()){
                 if (m_RobotContainer.isRedAlliance()) {
                         m_led.setPattern(m_redChasePattern);
                 } else {
