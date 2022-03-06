@@ -30,10 +30,13 @@ public class Climber extends SubsystemBase {
 	// make retraction use % output and check encoder in periodic 
 	/** Creates a new Climber. */
 	public Climber() {
+	
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 110, 110, .5  );
+	
 		leftMotor.configFactoryDefault();
 		leftMotor.setNeutralMode(NeutralMode.Brake);
-		//leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 110, 110, .5  );
+		leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		leftMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 		leftMotor.configSupplyCurrentLimit(currentConfig);
 		leftMotor.setSelectedSensorPosition(0);
 		leftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);
@@ -42,10 +45,10 @@ public class Climber extends SubsystemBase {
 	  
 		rightMotor.configFactoryDefault();
 		rightMotor.setNeutralMode(NeutralMode.Brake);
-		//rightMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		rightMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		rightMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 		rightMotor.configSupplyCurrentLimit(currentConfig);
 		rightMotor.setSelectedSensorPosition(0);
-		
 		rightMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);
 		rightMotor.config_kP(0, ClimberConstants.kP, 30);
 		rightMotor.config_kF(0, ClimberConstants.kF, 30);

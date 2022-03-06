@@ -54,7 +54,7 @@ public class RobotContainer {
 	private ShooterVision m_shooterVision = new ShooterVision();
 	private Conveyor m_conveyor = new Conveyor(this);
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
-	private IntakeVision m_IntakeVision = new IntakeVision(this);
+	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
 	private Intake m_intake = new Intake(m_conveyor,this);
 	private Climber m_Climber = new Climber();
 	
