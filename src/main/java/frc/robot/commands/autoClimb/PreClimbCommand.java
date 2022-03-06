@@ -14,8 +14,9 @@ import frc.robot.subsystems.Turret;
 public class PreClimbCommand extends ParallelCommandGroup {
   /** Creates a new PreClimbCommand. */
   public PreClimbCommand(Climber climber, Turret turret) {
-	super(new TurretStartingPosition(turret),
-		new InstantCommand(() -> climber.setRightPosition(ClimberConstants.RIGHT_FULL_ENCODER_CLICKS)));
+	super(//new TurretStartingPosition(turret),
+		new InstantCommand(() -> climber.setRightPosition(ClimberConstants.RIGHT_ARM_LOW_BAR_HOOK))
+		,new InstantCommand(() -> climber.setLeftPosition(ClimberConstants.LEFT_ARM_START)));
     addRequirements(climber,turret);
   }
 }

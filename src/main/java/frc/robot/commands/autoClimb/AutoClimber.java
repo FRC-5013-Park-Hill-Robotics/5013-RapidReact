@@ -11,11 +11,12 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class AutoClimber extends SequentialCommandGroup {
 
 	public AutoClimber(Climber climber, DrivetrainSubsystem drivetrain) {
-		super(new LowBarRetract(climber,drivetrain), 
-			new MidBarHook(climber, drivetrain),
-			new MidBarRetract(climber, drivetrain),
-			new TraverseBarHook(climber, drivetrain),
-			new TraverseBarRetract(climber, drivetrain));
+		super(new LowBarRetract(climber,drivetrain)
+			,new MidBarHook(climber, drivetrain)
+			//,new MidBarRetract(climber, drivetrain),
+			//,new TraverseBarHook(climber, drivetrain),
+			//n,w TraverseBarRetract(climber, drivetrain)
+			);
 		addRequirements(climber);
 	}
 

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -20,6 +21,9 @@ public class Climber extends SubsystemBase {
 	private WPI_TalonFX rightMotor = new WPI_TalonFX(ClimberConstants.RIGHT_MOTOR);
 	private SlewRateLimiter leftLimiter = new SlewRateLimiter(2);
 	private SlewRateLimiter rightLimiter = new SlewRateLimiter(2);
+	private double m_rightPosition = 0;
+	private double m_leftPosition = 0;
+	private boolean closedLoop = false;
 	//TODO 
 	// PID climber extension
 	// make extend use possition pid
@@ -31,18 +35,29 @@ public class Climber extends SubsystemBase {
 		//leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 110, 110, .5  );
 		leftMotor.configSupplyCurrentLimit(currentConfig);
+		leftMotor.setSelectedSensorPosition(0);
+		leftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);
+		leftMotor.config_kP(0, ClimberConstants.kP, 30);
+		leftMotor.config_kF(0, ClimberConstants.kF, 30);
+	  
 		rightMotor.configFactoryDefault();
 		rightMotor.setNeutralMode(NeutralMode.Brake);
 		//rightMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 		rightMotor.configSupplyCurrentLimit(currentConfig);
-	
+		rightMotor.setSelectedSensorPosition(0);
+		
+		rightMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);
+		rightMotor.config_kP(0, ClimberConstants.kP, 30);
+		rightMotor.config_kF(0, ClimberConstants.kF, 30);
 	}
 
 	public void extendLeft(double speed) {
+		closedLoop = false;
 		leftMotor.set(ControlMode.PercentOutput, leftLimiter.calculate(speed));
 	}
 
 	public void extendRight(double speed) {
+		closedLoop = false;
 		rightMotor.set(ControlMode.PercentOutput, rightLimiter.calculate(speed));
 	}
 
@@ -51,6 +66,8 @@ public class Climber extends SubsystemBase {
 	}
 
 	public void setRightPosition(double position){
+		closedLoop = true;
+		m_rightPosition = position;
 	}
 
 	public double getLeftPosition(){
@@ -58,10 +75,15 @@ public class Climber extends SubsystemBase {
 	}
 
 	public void setLeftPosition(double position){
+		closedLoop = true;
+		m_leftPosition = position;
 	} 
 	
 	@Override
 	public void periodic() {
-		// This method will be called once per scheduler run
+		if (closedLoop){
+			leftMotor.set(ControlMode.Position, m_leftPosition);
+			rightMotor.set(ControlMode.Position, m_rightPosition);
+		} 
 	}
 }

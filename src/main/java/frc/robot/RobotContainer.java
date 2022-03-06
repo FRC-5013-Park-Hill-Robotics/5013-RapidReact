@@ -18,6 +18,8 @@ import frc.robot.commands.Fetch;
 import frc.robot.commands.Fire;
 import frc.robot.commands.GamepadDrive;
 import frc.robot.commands.TeleopTurnToTargetCommand;
+import frc.robot.commands.autoClimb.AutoClimber;
+import frc.robot.commands.autoClimb.PreClimbCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -52,7 +54,7 @@ public class RobotContainer {
 	private ShooterVision m_shooterVision = new ShooterVision();
 	private Conveyor m_conveyor = new Conveyor(this);
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
-	private IntakeVision m_IntakeVision;// = new IntakeVision(this);
+	private IntakeVision m_IntakeVision = new IntakeVision(this);
 	private Intake m_intake = new Intake(m_conveyor,this);
 	private Climber m_Climber = new Climber();
 	
@@ -94,14 +96,17 @@ public class RobotContainer {
 		new Button(m_controller::getLeftTriggerButton).whileHeld(new TeleopTurnToTargetCommand(m_drivetrainSubsystem,m_shooterVision, m_shooter,
 			 m_turret, m_conveyor::isAllianceBallNext,m_controller::getLeftY, m_controller::getLeftY, m_controller::getRightTriggerAxis));
 		new Button(m_controller::getLeftBumper).whenPressed(new Fire(m_shooter, m_conveyor)).whenReleased(m_shooter::stopFiring);
-//	new Button(m_controller::getAButton).whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
-//				 m_controller::getRightTriggerAxis));
+	new Button(m_controller::getAButton).whileHeld(new Fetch(m_drivetrainSubsystem, m_IntakeVision,m_controller::getLeftX,m_controller::getLeftY,
+				 m_controller::getRightTriggerAxis));
 				 
 		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
 		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
 		new Button(m_controller::getDPadRight).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(100)));
 		new Button(m_controller::getDPadLeft).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(-100)));
-		
+		//Operator Control
+				
+		new Button(m_operator_controller::getXButton).whenHeld(new AutoClimber(m_Climber, m_drivetrainSubsystem));
+		new Button(m_operator_controller::getBButton).whenHeld(new PreClimbCommand(m_Climber, m_turret));
 		//programmer controls
 		new Button(m_programmer_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire)).whenReleased(new InstantCommand(m_shooter::stopFiring));
 		new Button(m_programmer_controller::getYButton).whileHeld(new InstantCommand(m_conveyor::start));

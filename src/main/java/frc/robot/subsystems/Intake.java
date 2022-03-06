@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -31,7 +32,19 @@ public class Intake extends SubsystemBase {
 		intakeMotor.configFactoryDefault();
 		intakeMotor.setInverted(false);
 		intakeMotor.setNeutralMode(NeutralMode.Brake);
-		intakeSolenoid = container.getPneumaticsHub().makeDoubleSolenoid(IntakeConstants.DROP_INTAKE_SOLENOID_CHANNEL, IntakeConstants.RAISE_INTAKE_SOLENOID_CHANNEL);
+/*		intakeMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_7_CommStatus, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_10_Targets, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_15_FirmwareApiStatus, 250);
+		intakeMotor.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 250);
+	*/	intakeSolenoid = container.getPneumaticsHub().makeDoubleSolenoid(IntakeConstants.DROP_INTAKE_SOLENOID_CHANNEL, IntakeConstants.RAISE_INTAKE_SOLENOID_CHANNEL);
 	}
 
 	@Override

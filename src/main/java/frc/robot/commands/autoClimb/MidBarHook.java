@@ -41,8 +41,8 @@ public class MidBarHook extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		// When a smaller pitch angle is read that confirms the left arm hook is
-		// engaged, go to step three
-		return false;
+	
+		return m_Drivertrain.getPitchR2d().getDegrees() <= ClimberConstants.LEFT_ARM_HOOK_MID_DEGREES;
+
 	}
 }

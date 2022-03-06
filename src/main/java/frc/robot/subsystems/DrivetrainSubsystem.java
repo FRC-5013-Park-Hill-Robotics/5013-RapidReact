@@ -143,6 +143,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 		updateOdometry();
 		updateDriveStates(m_desiredStates);
 		SmartDashboard.putNumber("pigeon", getYawR2d().getDegrees());
+		SmartDashboard.putNumber("pitch", getPitchR2d().getDegrees());
 	}
 
 	private void updateOdometry() {
