@@ -12,7 +12,7 @@ public final class ShooterConstants {
     public static final int SHOOTER_TOP_MOTOR = 18;
     public static final int SHOOTER_BOTTOM_MOTOR = 17;
     public static final double SHOOTER_VELOCITY = 4500;
-    public static final double TOP_PERCENT_OF_BOTTOM = 1.25;
+    public static final double TOP_PERCENT_OF_BOTTOM = 1.50;
     
     public static final class FLY_WHEEL_GAINS{
         // (output% * 1023) / (tuner value for velocity at output%)
@@ -30,8 +30,8 @@ public final class ShooterConstants {
         // (10 x kP)
     }
 	public static final class FendorShotConstants{
-		public static final double BOTTOM_WHEEL_SPEED = 3815;
-		public static final double  HOOD_HEIGHT = 30;
+		public static final double BOTTOM_WHEEL_SPEED = 3550;
+		public static final double  HOOD_HEIGHT = 140;
 	}
 
 	public static final class TargetConstants{
@@ -48,19 +48,17 @@ public final class ShooterConstants {
 			//{140,140,40}
 			};
 		public static final double[][] SHOOTER_SPEED_ARRAY = {
-				{-13,4150},
-				{-12,4125},
-				{-5.5,4050},
-				{-2,3860},
-				{0,3750},
-				{2.5,3750},
-				{4.5,3770},
-				{5,3770},
-				{7,3760},
-				{11,3700}
-			//	{-11,1,8},
-			//	{5150,4900,4800}
-			};
+			{-12.7,4410},
+			{-11.7,4270},
+			{-9.5,4250},
+			{-5.9,4170},
+			{-1.5,3975},
+			{3,3880},
+			{7.1,3820},
+			{11.5,3775}
+		};
+				
+
 		public static final LinearInterpolator HOOD_INTERPOLATOR = new LinearInterpolator(HOOD_HEIGHT_ARRAY);
 		public static final LinearInterpolator SHOOTER_SPEED_INTERPOLATOR = new LinearInterpolator(SHOOTER_SPEED_ARRAY);
 		public static final double HOOD_TOLERANCE_MM = 2;
