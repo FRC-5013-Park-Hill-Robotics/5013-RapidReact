@@ -30,7 +30,7 @@ public class LowBarRetract extends CommandBase {
 	public void execute() {
 		//Retract right arm all the way, extend the left arm to a partial position. 
 		m_Climber.setRightPosition(0);
-		m_Climber.setLeftPosition(ClimberConstants.LEFT_PARTIAL_ENCODER_CLICKS);
+		m_Climber.setLeftPosition(ClimberConstants.LEFT_ARM_START);
 	}
 
 	// Called once the command ends or is interrupted.
@@ -43,6 +43,6 @@ public class LowBarRetract extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		//When the gyro clears an angle that means our left arm will not get on the wrong side of the bar, go to step two
-		return false;
+		return m_Drivertrain.getPitchR2d().getDegrees() >= ClimberConstants.LEFT_ARM_CLEAR_MID_DEGREES;
 	}
 }

@@ -45,7 +45,8 @@ public class TeleopTurnToTargetCommand extends BaseTurnToTarget {
 
 	@Override
 	protected double getXTranslationMetersPerSecond() {
-		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
+		return 0;
+	/*	double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
 
 		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
 		double translationY = TrobotUtil.modifyAxis(-m_yTranslation.getAsDouble(),ControllerConstants.DEADBAND);
@@ -53,12 +54,13 @@ public class TeleopTurnToTargetCommand extends BaseTurnToTarget {
 			double angle = calculateTranslationDirection(translationX, translationY);
 			translationX = Math.cos(angle) * throttle;
 		}
-		return DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX);
+		return DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX);*/
 	}
 
 	@Override
 	protected double getYTranslationMetersPerSecond() {
-		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
+		return 0;
+		/*double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
 
 		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
 		double translationY = TrobotUtil.modifyAxis(-m_yTranslation.getAsDouble(),ControllerConstants.DEADBAND);
@@ -66,7 +68,7 @@ public class TeleopTurnToTargetCommand extends BaseTurnToTarget {
 			double angle = calculateTranslationDirection(translationX, translationY);
 			translationX = Math.cos(angle) * throttle;
 		}
-		return DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY);
+		return DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY);*/
 	}
 	
 	private double calculateTranslationDirection(double x, double y) {

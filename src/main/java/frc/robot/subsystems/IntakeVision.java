@@ -70,10 +70,12 @@ public class IntakeVision extends SubsystemBase {
 	}
 
 	public double getXAngleOfErrorDegrees(AxonResult result) {
-		if (hasTarget()) {
+		if (result != null && this.getResult().hasDetection()){
 			return result.getXAngleDegrees(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
+		} else {
+			return 0;
 		}
-		return 0;
+		
 	}
 
 	public double getTargetXAngleDegrees() {
