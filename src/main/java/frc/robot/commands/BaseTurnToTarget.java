@@ -61,6 +61,8 @@ public class BaseTurnToTarget extends CommandBase {
 				 getYTranslationMetersPerSecond(), output, m_Drivetrain.getYawR2d()));
 			m_Shooter.setTargetVelocity(SHOOTER_SPEED_INTERPOLATOR.getInterpolatedValue(vertical_angle));
 			m_Turret.setHeight(HOOD_INTERPOLATOR.getInterpolatedValue(vertical_angle));
+		} else {
+			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,	0, 0, m_Drivetrain.getYawR2d()));
 		}
 	}
 
@@ -73,6 +75,7 @@ public class BaseTurnToTarget extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
+		m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,	0, 0, m_Drivetrain.getYawR2d()));
 		m_Vision.setTargeting(false);
 	}
 
