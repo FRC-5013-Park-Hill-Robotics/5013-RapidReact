@@ -30,8 +30,8 @@ public class MidBarRetract extends CommandBase {
 	@Override
 	public void execute() {
 		// Retract left arm all the way, extend the right arm to partial position. 
-		m_Climber.setLeftPosition(0);
-		m_Climber.setRightPosition(ClimberConstants.RIGHT_PARTIAL_ENCODER_CLICKS);
+		m_Climber.setLeftPosition(0,true);
+		m_Climber.setRightPosition(ClimberConstants.RIGHT_PARTIAL_ENCODER_CLICKS,false);
 	}
 
 	// Called once the command ends or is interrupted.

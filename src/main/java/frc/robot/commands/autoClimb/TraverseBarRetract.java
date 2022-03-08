@@ -30,7 +30,7 @@ public class TraverseBarRetract extends CommandBase {
 	@Override
 	public void execute() {
 		//Retract the right arm to partial. Done!
-		m_Climber.setRightPosition(ClimberConstants.RIGHT_PARTIAL_ENCODER_CLICKS);
+		m_Climber.setRightPosition(ClimberConstants.RIGHT_PARTIAL_ENCODER_CLICKS,true);
 	}
 
 	// Called once the command ends or is interrupted.

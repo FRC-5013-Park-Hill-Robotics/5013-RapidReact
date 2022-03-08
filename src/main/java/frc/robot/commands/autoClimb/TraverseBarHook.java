@@ -30,7 +30,7 @@ public class TraverseBarHook extends CommandBase {
 	@Override
 	public void execute() {
 		//Extend right arm all the way. 
-		m_Climber.setRightPosition(ClimberConstants.RIGHT_FULL_ENCODER_CLICKS);
+		m_Climber.setRightPosition(ClimberConstants.RIGHT_FULL_ENCODER_CLICKS,false);
 	}
 
 	// Called once the command ends or is interrupted.

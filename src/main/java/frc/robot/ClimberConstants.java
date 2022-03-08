@@ -17,7 +17,7 @@ public final class ClimberConstants{
 	public static final double LEFT_ARM_HOOK_MID_DEGREES = 29;
 	public static final double LEFT_ARM_CLEAR_MID_DEGREES = 32;
 
-	public static final double kP = 2;
-	public static final double kF = 4;
+	public static final double kP = .000008;
+	public static final double kF = 0;
 
 }

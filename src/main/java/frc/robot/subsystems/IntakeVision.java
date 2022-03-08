@@ -52,12 +52,17 @@ public class IntakeVision extends SubsystemBase {
 
 	public boolean hasTarget() {
 		AxonResult result = this.getResult();
-		boolean hasTarget = result != null && this.getResult().hasDetection();
+		boolean hasTarget = result != null && this.getResult().hasDetection() && this.getResult().getClosest(label) != null;
 		return hasTarget;
 	}
 
 	public Detection getTarget() {
 		Detection target = this.getResult().getClosest(label);
+		return target;
+	}
+
+	public Detection getTarget(AxonResult result) {
+		Detection target = result.getClosest(label);
 		return target;
 	}
 
@@ -70,8 +75,8 @@ public class IntakeVision extends SubsystemBase {
 	}
 
 	public double getXAngleOfErrorDegrees(AxonResult result) {
-		if (result != null && this.getResult().hasDetection()){
-			return result.getXAngleDegrees(getTarget().getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
+		if (result != null && result.hasDetection()){
+			return result.getXAngleDegrees(getTarget(result).getBox(), CAMERA_FIELD_OF_VIEW_HORIZONTAL_DEGREES);
 		} else {
 			return 0;
 		}

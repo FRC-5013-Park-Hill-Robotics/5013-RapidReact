@@ -6,6 +6,7 @@ package frc.robot.commands.autoClimb;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.ClimberConstants;
 import frc.robot.commands.TurretStartingPosition;
 import frc.robot.subsystems.Climber;
@@ -15,8 +16,8 @@ public class PreClimbCommand extends ParallelCommandGroup {
   /** Creates a new PreClimbCommand. */
   public PreClimbCommand(Climber climber, Turret turret) {
 	super(//new TurretStartingPosition(turret),
-		new InstantCommand(() -> climber.setRightPosition(ClimberConstants.RIGHT_ARM_LOW_BAR_HOOK))
-		,new InstantCommand(() -> climber.setLeftPosition(ClimberConstants.LEFT_ARM_START)));
+		new RunCommand(() -> climber.setRightPosition(ClimberConstants.RIGHT_ARM_LOW_BAR_HOOK,false))
+		,new RunCommand(() -> climber.setLeftPosition(ClimberConstants.LEFT_ARM_START,false)));
     addRequirements(climber,turret);
   }
 }
