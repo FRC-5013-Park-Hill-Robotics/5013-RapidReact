@@ -29,8 +29,8 @@ public class LowBarRetract extends CommandBase {
 	@Override
 	public void execute() {
 		//Retract right arm all the way, extend the left arm to a partial position. 
-		m_Climber.setRightPosition(0);
-		m_Climber.setLeftPosition(ClimberConstants.LEFT_ARM_START);
+		m_Climber.setRightPosition(0,true);
+		m_Climber.setLeftPosition(ClimberConstants.LEFT_ARM_START,false);
 	}
 
 	// Called once the command ends or is interrupted.
