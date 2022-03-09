@@ -103,5 +103,8 @@ public class BaseTurnToTarget extends CommandBase {
 		this.controller = controller;
 	}
 
+	public CargoShooter getShooter(){
+		return m_Shooter;
+	}
 
 }

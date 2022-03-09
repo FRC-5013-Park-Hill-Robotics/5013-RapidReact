@@ -99,6 +99,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	public void resetPosition(Pose2d newPosition, Rotation2d newRotation) {
 		m_odometry.resetPosition(newPosition, newRotation);
 		m_pose = m_odometry.getPoseMeters();
+	//	m_pigeon.setYaw(newRotation.getDegrees());
 	}
 
 	/*

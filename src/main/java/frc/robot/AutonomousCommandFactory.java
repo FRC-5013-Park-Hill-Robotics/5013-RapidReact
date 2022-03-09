@@ -50,7 +50,7 @@ public class AutonomousCommandFactory {
 				  container.getconveyor()::isAllianceBallNext
 				  )	,
 			new AutonomousFire(container.getshooter(), container.getconveyor())
-		);
+		).withTimeout(2);
 	}
     public static Command createAutonomous( RobotContainer container){
 		return createRightSide3(container);
@@ -60,7 +60,7 @@ public class AutonomousCommandFactory {
 		if (RIGHT_3.equals(name)){
 				return createRightSide3(container);
 		} else if (RIGHT_5.equals(name)){
-				return createRightSide3(container);
+				return createRightSide5(container);
 		} else if (LEFT_2.equals(name)){
 				return createLeftSide2(container);
 		}
@@ -85,6 +85,7 @@ public class AutonomousCommandFactory {
 					startup,
 					new AutonomousFire(container.getshooter(), container.getconveyor()),
 					leg1,
+					new InstantCommand(container.getintake()::raiseIntake),
 					createTurnAndShoot(container)
 		);
 	}
@@ -107,6 +108,7 @@ public class AutonomousCommandFactory {
 					startup,
 					new AutonomousFire(container.getshooter(), container.getconveyor()),
 					leg1,
+					new InstantCommand(container.getintake()::raiseIntake),
 					createTurnAndShoot(container)
 		);
 	}
@@ -131,8 +133,11 @@ public class AutonomousCommandFactory {
 					startup,
 					new AutonomousFire(container.getshooter(), container.getconveyor()),
 					leg1,
+					new InstantCommand(container.getintake()::raiseIntake),
 					createTurnAndShoot(container),
+					new InstantCommand(container.getintake()::dropIntake),
 					leg2,
+					new InstantCommand(container.getintake()::raiseIntake),
 					createTurnAndShoot(container)
 		);
 	}
