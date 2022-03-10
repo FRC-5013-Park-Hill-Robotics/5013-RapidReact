@@ -96,9 +96,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
 	}
 
-	public void resetPosition(Pose2d newPosition, Rotation2d newRotation) {
-		m_odometry.resetPosition(newPosition, newRotation);
-		m_pose = m_odometry.getPoseMeters();
+	public void setInitialPosition(Pose2d newPosition, Rotation2d newRotation) {
+		m_pigeon.setYaw(newRotation.getDegrees());
+		Pose2d initialPose = new Pose2d(
+			newPosition.getTranslation(),
+			newRotation  );
+		m_odometry = new SwerveDriveOdometry(m_kinematics, getYawR2d(), m_pose);
 	}
 
 	/*

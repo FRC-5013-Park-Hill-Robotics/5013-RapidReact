@@ -62,9 +62,12 @@ public class Fetch extends CommandBase {
 		// the setpoint
 		double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeadingRadians(),
 				Math.toRadians(m_vision.getTargetXAngleDegrees()));
-		ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
+
+		ChassisSpeeds chassisSpeeds =  ChassisSpeeds.fromFieldRelativeSpeeds(
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
-				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), PIDOutput);
+				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), 
+				PIDOutput,
+				m_drivetrain.getYawR2d());
 		// use the output from calculate to make a new ChassisSpeed object to pass to
 		// the drivetrain with a yVelocity of 0, an xVelocity based on the throttle, and an angular
 		// velocity of the pid calculate

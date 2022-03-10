@@ -96,7 +96,7 @@ public class IntakeVision extends SubsystemBase {
 				lastTargetAngle = result;
 			}
 		}
-
+		SmartDashboard.putNumber("Intake Vision", result);
 		return result;
 	}
 	public boolean isOnTarget(){

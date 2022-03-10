@@ -4,6 +4,7 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.CANCoderStatusFrame;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoderFactory;
 
@@ -19,13 +20,14 @@ public class CanCoderFactoryBuilder {
     public AbsoluteEncoderFactory<CanCoderAbsoluteConfiguration> build() {
         return configuration -> {
             CANCoderConfiguration config = new CANCoderConfiguration();
+			config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
             config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
             config.magnetOffsetDegrees = Math.toDegrees(configuration.getOffset());
             config.sensorDirection = direction == Direction.CLOCKWISE;
 
             CANCoder encoder = new CANCoder(configuration.getId());
             encoder.configAllSettings(config, 250);
-
+			encoder.setPositionToAbsolute();
             encoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, periodMilliseconds, 250);
 
             return new EncoderImplementation(encoder);
@@ -41,7 +43,7 @@ public class CanCoderFactoryBuilder {
 
         @Override
         public double getAbsoluteAngle() {
-            double angle = Math.toRadians(encoder.getAbsolutePosition());
+            double angle = Math.toRadians(encoder.getPosition());
             angle %= 2.0 * Math.PI;
             if (angle < 0.0) {
                 angle += 2.0 * Math.PI;
