@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -41,6 +42,17 @@ public class Climber extends SubsystemBase {
 		leftMotor.setSelectedSensorPosition(0);
 		leftMotor.config_kP(0, ClimberConstants.kP, 30);
 		leftMotor.config_kF(0, ClimberConstants.kF, 30);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 50);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 50);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_10_Targets, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_15_FirmwareApiStatus, 250);
+		leftMotor.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 250);
 	
 		rightMotor.configFactoryDefault();
 		rightMotor.setNeutralMode(NeutralMode.Brake);
@@ -51,6 +63,17 @@ public class Climber extends SubsystemBase {
 		rightMotor.setSelectedSensorPosition(0);
 		rightMotor.config_kP(0, ClimberConstants.kP, 30);
 		rightMotor.config_kF(0, ClimberConstants.kF, 30);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 50);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 50);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_10_Targets, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_15_FirmwareApiStatus, 250);
+		rightMotor.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 250);
 	}
 
 	public void extendLeft(double speed) {
