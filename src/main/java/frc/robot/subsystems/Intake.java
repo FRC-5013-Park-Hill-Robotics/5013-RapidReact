@@ -32,11 +32,9 @@ public class Intake extends SubsystemBase {
 		intakeMotor.configFactoryDefault();
 		intakeMotor.setInverted(false);
 		intakeMotor.setNeutralMode(NeutralMode.Brake);
-		intakeMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 250);
 		intakeMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 250);
 		intakeMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
 		intakeMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);
-		intakeMotor.setStatusFramePeriod(StatusFrame.Status_7_CommStatus, 250);
 		intakeMotor.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 250);
 		intakeMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 250);
 		intakeMotor.setStatusFramePeriod(StatusFrame.Status_10_Targets, 250);
