@@ -117,7 +117,7 @@ public class RobotContainer {
 		// Operator Control
 
 		new Button(m_operator_controller::getXButton).whenHeld(new AutoClimber(m_Climber, m_drivetrainSubsystem.getPitchR2d()::getDegrees));
-		new Button(m_operator_controller::getBButton).whenHeld(new PreClimbCommand(m_Climber, m_turret));
+		new Button(m_operator_controller::getBButton).whenHeld(new PreClimbCommand(this));
 		// programmer controls
 		new Button(m_programmer_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire))
 				.whenReleased(new InstantCommand(m_shooter::stopFiring));
