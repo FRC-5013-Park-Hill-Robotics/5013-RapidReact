@@ -4,21 +4,22 @@
 
 package frc.robot.commands.autoClimb;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ClimberConstants;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class TraverseBarRetract extends CommandBase {
 	private Climber m_Climber;
-	private DrivetrainSubsystem m_Drivertrain;
+	private DoubleSupplier m_pitchSupplier;
 
 	/** Creates a new TraverseBarRetract. */
-	public TraverseBarRetract(Climber climber, DrivetrainSubsystem drivetrain) {
+	public TraverseBarRetract(Climber climber, DoubleSupplier pitch) {
 		super();
 		addRequirements(climber);
 		m_Climber = climber;
-		m_Drivertrain = drivetrain;
+		m_pitchSupplier = pitch;
 	}
 
 	// Called when the command is initially scheduled.

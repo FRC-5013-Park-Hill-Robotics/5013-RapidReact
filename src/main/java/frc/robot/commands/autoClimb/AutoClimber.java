@@ -4,15 +4,16 @@
 
 package frc.robot.commands.autoClimb;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoClimber extends SequentialCommandGroup {
 
-	public AutoClimber(Climber climber, DrivetrainSubsystem drivetrain) {
-		super(new LowBarRetract(climber,drivetrain)
-			,new MidBarHook(climber, drivetrain)
+	public AutoClimber(Climber climber, DoubleSupplier pitch) {
+		super(new LowBarRetract(climber,pitch)
+			,new MidBarHook(climber, pitch)
 			//,new MidBarRetract(climber, drivetrain),
 			//,new TraverseBarHook(climber, drivetrain),
 			//n,w TraverseBarRetract(climber, drivetrain)
