@@ -4,21 +4,23 @@
 
 package frc.robot.commands.autoClimb;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ClimberConstants;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DrivetrainSubsystem;
+
 
 public class MidBarHook extends CommandBase {
 	private Climber m_Climber;
-	private DrivetrainSubsystem m_Drivertrain;
+	private DoubleSupplier m_pitchSupplier;
 
 	/** Creates a new HookMidBar. */
-	public MidBarHook(Climber climber, DrivetrainSubsystem drivetrain) {
+	public MidBarHook(Climber climber, DoubleSupplier pitch) {
 		super();
 		addRequirements(climber);
 		m_Climber = climber;
-		m_Drivertrain = drivetrain;
+		m_pitchSupplier = pitch;
 	}
 
 	// Called when the command is initially scheduled.
@@ -42,7 +44,7 @@ public class MidBarHook extends CommandBase {
 	@Override
 	public boolean isFinished() {
 	
-		return m_Drivertrain.getPitchR2d().getDegrees() <= ClimberConstants.LEFT_ARM_HOOK_MID_DEGREES;
+		return m_pitchSupplier.getAsDouble() <= ClimberConstants.LEFT_ARM_HOOK_MID_DEGREES;
 
 	}
 }

@@ -4,11 +4,9 @@
 
 package frc.robot.commands.autoClimb;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.ClimberConstants;
-import frc.robot.commands.TurretStartingPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Turret;
 

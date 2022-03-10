@@ -4,20 +4,21 @@
 
 package frc.robot.commands.autoClimb;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ClimberConstants;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class LowBarRetract extends CommandBase {
 	private Climber m_Climber;
-	private DrivetrainSubsystem m_Drivertrain;
+	private DoubleSupplier m_pitchSupplier;
 	/** Creates a new LowBarRetract. */
-	public LowBarRetract(Climber climber, DrivetrainSubsystem drivetrain) {
+	public LowBarRetract(Climber climber, DoubleSupplier pitch) {
 		super();
 		addRequirements(climber);
 		m_Climber = climber;
-		m_Drivertrain = drivetrain;
+		m_pitchSupplier = pitch;
 	}
 
 	// Called when the command is initially scheduled.
@@ -43,6 +44,6 @@ public class LowBarRetract extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		//When the gyro clears an angle that means our left arm will not get on the wrong side of the bar, go to step two
-		return m_Drivertrain.getPitchR2d().getDegrees() >= ClimberConstants.LEFT_ARM_CLEAR_MID_DEGREES;
+		return m_pitchSupplier.getAsDouble() >= ClimberConstants.LEFT_ARM_CLEAR_MID_DEGREES;
 	}
 }
