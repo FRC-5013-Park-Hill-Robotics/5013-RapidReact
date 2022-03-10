@@ -1,16 +1,23 @@
 package com.swervedrivespecialties.swervelib.ctre;
 
+import com.swervedrivespecialties.swervelib.CanPort;
+
 public class CanCoderAbsoluteConfiguration {
-    private final int id;
+    private final CanPort port;
     private final double offset;
 
-    public CanCoderAbsoluteConfiguration(int id, double offset) {
-        this.id = id;
+    public CanCoderAbsoluteConfiguration(CanPort port, double offset) {
+        this.port = port;
         this.offset = offset;
     }
 
-    public int getId() {
-        return id;
+	public CanCoderAbsoluteConfiguration(int port, double offset) {
+        this.port = new CanPort(port);
+        this.offset = offset;
+    }
+
+    public CanPort getPort() {
+        return port;
     }
 
     public double getOffset() {

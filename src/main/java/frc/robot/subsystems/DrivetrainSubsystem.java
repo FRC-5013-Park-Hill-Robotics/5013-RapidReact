@@ -34,7 +34,7 @@ import frc.robot.Constants.DrivetrainConstants.TranslationGains;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-	private final WPI_Pigeon2 m_pigeon = new WPI_Pigeon2(PIGEON_ID);
+	private final WPI_Pigeon2 m_pigeon = new WPI_Pigeon2(PIGEON_ID.id,PIGEON_ID.busName);
 	private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
 			// Front left
 			new Translation2d(DrivetrainGeometry.TRACKWIDTH_METERS / 2.0, DrivetrainGeometry.WHEELBASE_METERS / 2.0),
