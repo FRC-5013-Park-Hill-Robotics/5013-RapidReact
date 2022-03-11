@@ -46,6 +46,7 @@ public class Conveyor extends SubsystemBase {
 	/** Creates a new Conveyor. */
 	public Conveyor(RobotContainer container) {
 		this.conveyorMotor.configFactoryDefault();
+		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
 		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 250);
 		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
 		conveyorMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);

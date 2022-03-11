@@ -45,8 +45,8 @@ public class GamepadDrive extends CommandBase {
 		}
 
 		m_drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-				-DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
-				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), getRotationRadiansPerSecond(),
+				-DrivetrainSubsystem.percentOutputToMetersPerSecond(xLimiter.calculate(translationX)),
+				DrivetrainSubsystem.percentOutputToMetersPerSecond(yLimiter.calculate(translationY)), getRotationRadiansPerSecond(),
 				m_drivetrain.getYawR2d()));
 
 		/*
