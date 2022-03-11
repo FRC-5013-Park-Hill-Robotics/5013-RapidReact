@@ -25,11 +25,7 @@ public class CargoShooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public CargoShooter(Conveyor conveyor) {
-   
-   
     m_conveyor = conveyor;
-    
-    
 
 	topMotor.setInverted(false);
 	topMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 50);
@@ -116,6 +112,11 @@ public class CargoShooter extends SubsystemBase {
 
   }
 
+  public void stop(){
+	  topMotor.set(ControlMode.PercentOutput, 0);
+	  bottomMotor.set(ControlMode.PercentOutput, 0);
+  }
+  
   public void setTargetVelocity(double bottomMotorTarget){
     m_targetVelocity = bottomMotorTarget;
   }
