@@ -239,6 +239,6 @@ public class RobotContainer {
 	}
 
 	public PneumaticHub getPneumaticsHub() {
-		return m_pneumaticsHub;
+		return this.m_pneumaticsHub;
 	}
 }
