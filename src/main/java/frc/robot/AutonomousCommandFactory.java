@@ -87,6 +87,12 @@ public class AutonomousCommandFactory {
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+
+		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Right Leg2a",
+		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
+
 		Command startup = createStartupCommand(container, leg1Trajectory);
 
 		return new SequentialCommandGroup(
@@ -94,7 +100,9 @@ public class AutonomousCommandFactory {
 				new AutonomousFire(container.getshooter(), container.getconveyor()),
 				leg1,
 				new InstantCommand(container.getintake()::raiseIntake),
-				createTurnAndShoot(container));
+				createTurnAndShoot(container),
+				leg2);
+			
 	}
 
 	public static Command createLeftSide2(RobotContainer container) {
