@@ -10,7 +10,7 @@ public final class Mk4SwerveModuleHelper {
     private Mk4SwerveModuleHelper() {
     }
 
-    private static DriveControllerFactory<?, Integer> getFalcon500DriveFactory(Mk4ModuleConfiguration configuration) {
+    private static DriveControllerFactory<?, CanPort> getFalcon500DriveFactory(Mk4ModuleConfiguration configuration) {
         return new Falcon500DriveControllerFactoryBuilder()
                 .withVoltageCompensation(configuration.getNominalVoltage())
                 .withCurrentLimit(configuration.getDriveCurrentLimit())
@@ -61,9 +61,9 @@ public final class Mk4SwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort driveMotorPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return new SwerveModuleFactory<>(
@@ -95,9 +95,9 @@ public final class Mk4SwerveModuleHelper {
     public static SwerveModule createFalcon500(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort driveMotorPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500(container, new Mk4ModuleConfiguration(), gearRatio, driveMotorPort, steerMotorPort, steerEncoderPort, steerOffset);
@@ -117,9 +117,9 @@ public final class Mk4SwerveModuleHelper {
     public static SwerveModule createFalcon500(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort driveMotorPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return new SwerveModuleFactory<>(
@@ -147,9 +147,9 @@ public final class Mk4SwerveModuleHelper {
      */
     public static SwerveModule createFalcon500(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort driveMotorPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500(new Mk4ModuleConfiguration(), gearRatio, driveMotorPort, steerMotorPort, steerEncoderPort, steerOffset);
@@ -283,7 +283,7 @@ public final class Mk4SwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
+            CanPort driveMotorPort,
             int steerMotorPort,
             int steerEncoderPort,
             double steerOffset
@@ -317,7 +317,7 @@ public final class Mk4SwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
+            CanPort driveMotorPort,
             int steerMotorPort,
             int steerEncoderPort,
             double steerOffset
@@ -339,7 +339,7 @@ public final class Mk4SwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
+            CanPort driveMotorPort,
             int steerMotorPort,
             int steerEncoderPort,
             double steerOffset
@@ -369,7 +369,7 @@ public final class Mk4SwerveModuleHelper {
      */
     public static SwerveModule createFalcon500Neo(
             GearRatio gearRatio,
-            int driveMotorPort,
+            CanPort driveMotorPort,
             int steerMotorPort,
             int steerEncoderPort,
             double steerOffset
@@ -395,8 +395,8 @@ public final class Mk4SwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return new SwerveModuleFactory<>(
@@ -429,8 +429,8 @@ public final class Mk4SwerveModuleHelper {
             ShuffleboardLayout container,
             GearRatio gearRatio,
             int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return createNeoFalcon500(container, new Mk4ModuleConfiguration(), gearRatio, driveMotorPort, steerMotorPort, steerEncoderPort, steerOffset);
@@ -451,8 +451,8 @@ public final class Mk4SwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return new SwerveModuleFactory<>(
@@ -481,8 +481,8 @@ public final class Mk4SwerveModuleHelper {
     public static SwerveModule createNeoFalcon500(
             GearRatio gearRatio,
             int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            CanPort steerMotorPort,
+            CanPort steerEncoderPort,
             double steerOffset
     ) {
         return createNeoFalcon500(new Mk4ModuleConfiguration(), gearRatio, driveMotorPort, steerMotorPort, steerEncoderPort, steerOffset);

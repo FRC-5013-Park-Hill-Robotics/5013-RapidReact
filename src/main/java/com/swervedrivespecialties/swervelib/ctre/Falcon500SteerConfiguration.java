@@ -2,16 +2,18 @@ package com.swervedrivespecialties.swervelib.ctre;
 
 import java.util.Objects;
 
+import com.swervedrivespecialties.swervelib.CanPort;
+
 public class Falcon500SteerConfiguration<EncoderConfiguration> {
-    private final int motorPort;
+    private final CanPort motorPort;
     private final EncoderConfiguration encoderConfiguration;
 
-    public Falcon500SteerConfiguration(int motorPort, EncoderConfiguration encoderConfiguration) {
+    public Falcon500SteerConfiguration(CanPort motorPort, EncoderConfiguration encoderConfiguration) {
         this.motorPort = motorPort;
         this.encoderConfiguration = encoderConfiguration;
     }
 
-    public int getMotorPort() {
+    public CanPort getMotorPort() {
         return motorPort;
     }
 
@@ -24,7 +26,7 @@ public class Falcon500SteerConfiguration<EncoderConfiguration> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Falcon500SteerConfiguration<?> that = (Falcon500SteerConfiguration<?>) o;
-        return getMotorPort() == that.getMotorPort() && getEncoderConfiguration().equals(that.getEncoderConfiguration());
+        return getMotorPort().equals(that.getMotorPort()) && getEncoderConfiguration().equals(that.getEncoderConfiguration());
     }
 
     @Override

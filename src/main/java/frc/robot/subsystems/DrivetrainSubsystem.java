@@ -34,7 +34,7 @@ import frc.robot.Constants.DrivetrainConstants.TranslationGains;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-	private final WPI_Pigeon2 m_pigeon = new WPI_Pigeon2(PIGEON_ID);
+	private final WPI_Pigeon2 m_pigeon = new WPI_Pigeon2(PIGEON_ID.id,PIGEON_ID.busName);
 	private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
 			// Front left
 			new Translation2d(DrivetrainGeometry.TRACKWIDTH_METERS / 2.0, DrivetrainGeometry.WHEELBASE_METERS / 2.0),
@@ -98,7 +98,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
 	public void setInitialPosition(Pose2d newPosition, Rotation2d newRotation) {
 		m_pigeon.setYaw(newRotation.getDegrees());
-		Pose2d initialPose = new Pose2d(
+		m_pose = new Pose2d(
 			newPosition.getTranslation(),
 			newRotation  );
 		m_odometry = new SwerveDriveOdometry(m_kinematics, getYawR2d(), m_pose);
@@ -108,7 +108,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	 * Return the gyroscope's heading as a Rotation2d object
 	 */
 	public Rotation2d getYawR2d() {
-		return Rotation2d.fromDegrees(m_pigeon.getYaw());
+		return getPose().getRotation();
+		//eturn Rotation2d.fromDegrees(m_pigeon.getYaw());
 	}
 
     public Rotation2d getRollR2d() {
@@ -150,7 +151,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 	}
 
 	private void updateOdometry() {
-		m_pose = m_odometry.update(getYawR2d(), stateFromModule(m_frontLeftModule),
+		m_pose = m_odometry.update(Rotation2d.fromDegrees(m_pigeon.getYaw()), stateFromModule(m_frontLeftModule),
 				stateFromModule(m_frontRightModule),
 				stateFromModule(m_backLeftModule), stateFromModule(m_backRightModule));
 	}

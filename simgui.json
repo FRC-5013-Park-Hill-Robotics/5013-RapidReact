@@ -19,6 +19,7 @@
       "/LiveWindow/Conveyor": "Subsystem",
       "/LiveWindow/DrivetrainSubsystem": "Subsystem",
       "/LiveWindow/Intake": "Subsystem",
+      "/LiveWindow/IntakeVision": "Subsystem",
       "/LiveWindow/ShooterVision": "Subsystem",
       "/LiveWindow/StatusLED": "Subsystem",
       "/LiveWindow/Turret": "Subsystem",

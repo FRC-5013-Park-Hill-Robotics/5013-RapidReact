@@ -25,7 +25,7 @@ public class CanCoderFactoryBuilder {
             config.magnetOffsetDegrees = Math.toDegrees(configuration.getOffset());
             config.sensorDirection = direction == Direction.CLOCKWISE;
 
-            CANCoder encoder = new CANCoder(configuration.getId());
+            CANCoder encoder = new CANCoder(configuration.getPort().id, configuration.getPort().busName);
             encoder.configAllSettings(config, 250);
 			encoder.setPositionToAbsolute();
             encoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, periodMilliseconds, 250);

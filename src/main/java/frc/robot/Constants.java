@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.swervedrivespecialties.swervelib.CanPort;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
 
@@ -22,6 +23,7 @@ public final class Constants {
     public static final int FALCON_500_MAX_RPM = 6380;
     public static final int STATUS_LED_PWM_PORT = 1;
 	public static final int PNEUMATICS_HUB = 19;
+	public static final String CANIVORE_NAME = "";
 
 
     public static final class ControllerConstants {
@@ -32,7 +34,7 @@ public final class Constants {
     }
 
     public static final class DrivetrainConstants {
-        public static final int PIGEON_ID = 14;
+        public static final CanPort PIGEON_ID = new CanPort(14,CANIVORE_NAME);
         public static final GearRatio SWERVE_GEAR_RATIO = GearRatio.L2;
         /**
          * The maximum voltage that will be delivered to the drive motors.
@@ -74,33 +76,33 @@ public final class Constants {
         }
 
         public static final class FrontLeftSwerveConstants {
-            public static final int STEER_MOTOR_ID = 2;
-            public static final int DRIVE_MOTOR_ID = 3;
-            public static final int ENCODER_ID = 4;
+            public static final CanPort STEER_MOTOR_ID = new CanPort(2,CANIVORE_NAME);
+            public static final CanPort DRIVE_MOTOR_ID = new CanPort(3,CANIVORE_NAME);
+            public static final CanPort ENCODER_ID = new CanPort(4,CANIVORE_NAME);
             public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(87.2);            
 			public static final int STATES_INDEX = 0;
         }
 
         public static final class FrontRightSwerveConstants {
-            public static final int STEER_MOTOR_ID = 5;
-            public static final int DRIVE_MOTOR_ID = 6;
-            public static final int ENCODER_ID = 7;
+            public static final CanPort STEER_MOTOR_ID = new CanPort(5,CANIVORE_NAME);
+            public static final CanPort DRIVE_MOTOR_ID = new CanPort(6,CANIVORE_NAME);
+            public static final CanPort ENCODER_ID = new CanPort(7,CANIVORE_NAME);
             public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(4.8);
             public static final int STATES_INDEX = 1;
         }
 
         public static final class BackLeftSwerveConstants {
-            public static final int STEER_MOTOR_ID = 8;
-            public static final int DRIVE_MOTOR_ID = 9;
-            public static final int ENCODER_ID = 10;
+            public static final CanPort STEER_MOTOR_ID = new CanPort(8,CANIVORE_NAME);
+            public static final CanPort DRIVE_MOTOR_ID = new CanPort(9,CANIVORE_NAME);
+            public static final CanPort ENCODER_ID = new CanPort(10,CANIVORE_NAME);
             public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(83.8);
             public static final int STATES_INDEX = 2;
         }
 
         public static final class BackRightSwerveConstants {
-            public static final int STEER_MOTOR_ID = 11;
-            public static final int DRIVE_MOTOR_ID = 12;
-            public static final int ENCODER_ID = 13;
+            public static final CanPort STEER_MOTOR_ID = new CanPort(11,CANIVORE_NAME);
+            public static final CanPort DRIVE_MOTOR_ID = new CanPort(12,CANIVORE_NAME);
+            public static final CanPort ENCODER_ID = new CanPort(13,CANIVORE_NAME);
             public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(189.9);
             public static final int STATES_INDEX = 3;
         }
@@ -116,7 +118,7 @@ public final class Constants {
 
         // Driving the bot gains used by PIDControllers
         public static final class TranslationGains {
-            public static final double kP = 2.2956;
+            public static final double kP = 0.3;
             public static final double kI = 0;
             public static final double kD = 0;
             public static final double kA = 0.12872;
