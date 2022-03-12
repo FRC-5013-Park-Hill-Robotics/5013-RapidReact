@@ -1,5 +1,6 @@
 package com.swervedrivespecialties.swervelib.ctre;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
@@ -7,6 +8,8 @@ import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoderFactory;
+
+import edu.wpi.first.wpilibj.Timer;
 
 public class CanCoderFactoryBuilder {
     private Direction direction = Direction.COUNTER_CLOCKWISE;
@@ -43,7 +46,16 @@ public class CanCoderFactoryBuilder {
 
         @Override
         public double getAbsoluteAngle() {
-            double angle = Math.toRadians(encoder.getPosition());
+			double time = Timer.getFPGATimestamp();
+			boolean success = false;
+			boolean timeout = false;
+			double angle = 0;
+			do {
+				angle = Math.toRadians(encoder.getPosition());
+				success = encoder.getLastError() == ErrorCode.OK;
+				timeout = Timer.getFPGATimestamp() - time > 2;
+			} while (!success && !timeout);
+           
             angle %= 2.0 * Math.PI;
             if (angle < 0.0) {
                 angle += 2.0 * Math.PI;
