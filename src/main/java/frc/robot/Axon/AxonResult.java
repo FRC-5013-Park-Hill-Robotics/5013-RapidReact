@@ -4,8 +4,11 @@
 
 package frc.robot.Axon;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Add your docs here. */
 public class AxonResult {
@@ -59,10 +62,17 @@ public class AxonResult {
 
 	public List<Detection> getDetectionsByLabel(String label){
 		List<Detection> result = null;
+		List<Detection> detections = getDetections();
 		if (label == null){
-			result = getDetections();
+			result = detections;
 		} else if (getDetections() != null){
-			getDetections().stream().filter(detection -> detection.getLabel().equals(label));
+			result = new ArrayList<>();
+			for (Detection detection : detections) {
+				if (detection.getLabel().equals(label)){
+					result.add(detection);
+				}
+			}
+		
 		}
 		return result;
 	}
@@ -70,6 +80,7 @@ public class AxonResult {
 	public Detection getClosest(String label){
 		Detection result = null;
 		List<Detection> detections = getDetectionsByLabel(label);
+		SmartDashboard.putNumber("AxonDetections", detections.size());
 		if (detections != null && !detections.isEmpty()){
 			detections.sort(null);
 			result = detections.get(0);
@@ -79,7 +90,9 @@ public class AxonResult {
 
 	public double getXAngleDegrees(Box target, double cameraFieldOfViewXAngle){
 		double pixelsPerDegree = getResolutionWidth()/cameraFieldOfViewXAngle;
+		SmartDashboard.putNumber("pixelsPerDegree", pixelsPerDegree);
 		int horizontalOffsetPixels = target.getHorizontalCenter() - (getResolutionWidth()/2);
+		SmartDashboard.putNumber("horizontalOffsetPixels", horizontalOffsetPixels);
 		return horizontalOffsetPixels/pixelsPerDegree;
 	}
 

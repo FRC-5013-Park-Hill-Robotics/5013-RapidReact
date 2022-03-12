@@ -20,6 +20,7 @@ public class AxonUtil {
 	public static AxonResult getAxonResult(NetworkTable table){
 		AxonResult result;
 		double timestamp = Double.valueOf(table.getEntry(TIMESTAMP_KEY).getNumber(0).doubleValue());
+		String resolution = table.getEntry(RESOLUTION_KEY).getString("640, 480");
 		if (timestamp == lastTimestamp){
 			result = lastResult;
 		} else {
@@ -29,6 +30,14 @@ public class AxonUtil {
 			result.setDetections(parseAxonDetections(table.getEntry(DETECTIONS_KEY).getString("")));
 			result.setCoral(Boolean.valueOf(table.getEntry(CORAL_KEY).getString(Boolean.FALSE.toString())));
 			result.setTimestamp(timestamp);
+			try {
+				String[] resolutions = resolution.split(", ");
+				result.setResolutionWidth(Integer.parseInt(resolutions[0]));
+				result.setResolutioHeight(Integer.parseInt(resolutions[1]));
+			} catch (Exception e){
+				result.setResolutionWidth(640);
+				result.setResolutioHeight(480);
+			}
 		}
 		return result;
 	}

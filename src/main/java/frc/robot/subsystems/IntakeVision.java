@@ -30,7 +30,7 @@ public class IntakeVision extends SubsystemBase {
 	public IntakeVision(RobotContainer container) {
 		super();
 		m_robotContainer = container;
-		setLabel(container.isRedAlliance() ? RED_CARGO : RED_CARGO);
+		setLabel(container.isRedAlliance() ? RED_CARGO : BLUE_CARGO);
 	}
 
 	public boolean isTargeting() {
@@ -52,6 +52,8 @@ public class IntakeVision extends SubsystemBase {
 
 	public boolean hasTarget() {
 		AxonResult result = this.getResult();
+		SmartDashboard.putBoolean("AxonResult", result != null);
+		SmartDashboard.putBoolean("AxonDetection",result != null && this.getResult().hasDetection());
 		boolean hasTarget = result != null && this.getResult().hasDetection() && this.getResult().getClosest(label) != null;
 		return hasTarget;
 	}
@@ -96,7 +98,8 @@ public class IntakeVision extends SubsystemBase {
 				lastTargetAngle = result;
 			}
 		}
-		SmartDashboard.putNumber("Intake Vision", result);
+		SmartDashboard.putNumber("Intake Vision Target" , result);
+		
 		return result;
 	}
 	public boolean isOnTarget(){
