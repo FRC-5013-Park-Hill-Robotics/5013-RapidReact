@@ -26,6 +26,17 @@ public class AutonomousCommandFactory {
 	public static String LEFT_2 = "Left 2";
 	public static final String[] AUTOS = { RIGHT_3, RIGHT_5, LEFT_2 };
 
+	public static Command createStartupCommand(RobotContainer container, PathPlannerTrajectory trajectory) {
+		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
+		return new ParallelCommandGroup(
+				new InstantCommand(() -> drivetrain.setInitialPosition(trajectory.getInitialPose(),
+					trajectory.getInitialState().holonomicRotation)),
+				new InstantCommand(container.getintake()::dropIntake),
+				new InstantCommand(container.getshooter()::spinUp),
+				new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(), container.getshooter(),
+						container.getturret(), container.getconveyor()::isAllianceBallNext)).withTimeout(2);
+	}
+	
 	public static PPSwerveControllerCommand createSwerveControllerCommand(PathPlannerTrajectory trajectory,
 			DrivetrainSubsystem drivetrain) {
 		Constraints constraints = new TrapezoidProfile.Constraints(
@@ -71,18 +82,12 @@ public class AutonomousCommandFactory {
 	public static Command createRightSide3(RobotContainer container) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
-		ParallelCommandGroup startup = new ParallelCommandGroup(
-				new InstantCommand(container.getintake()::dropIntake),
-				new InstantCommand(container.getshooter()::spinUp),
-				new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(), container.getshooter(),
-						container.getturret(), container.getconveyor()::isAllianceBallNext));
-
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Right Leg1",
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
-		drivetrain.setInitialPosition(leg1Trajectory.getInitialPose(),
-				leg1Trajectory.getInitialState().holonomicRotation);
+
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+		Command startup = createStartupCommand(container, leg1Trajectory);
 
 		return new SequentialCommandGroup(
 				startup,
@@ -95,18 +100,12 @@ public class AutonomousCommandFactory {
 	public static Command createLeftSide2(RobotContainer container) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
-		ParallelCommandGroup startup = new ParallelCommandGroup(
-				new InstantCommand(container.getintake()::dropIntake),
-				new InstantCommand(container.getshooter()::spinUp),
-				new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(), container.getshooter(),
-						container.getturret(), container.getconveyor()::isAllianceBallNext));
-
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Left",
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
-		drivetrain.setInitialPosition(leg1Trajectory.getInitialPose(),
-				leg1Trajectory.getInitialState().holonomicRotation);
+
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+		Command startup = createStartupCommand(container, leg1Trajectory);
 
 		return new SequentialCommandGroup(
 				startup,
@@ -114,17 +113,6 @@ public class AutonomousCommandFactory {
 				leg1,
 				new InstantCommand(container.getintake()::raiseIntake),
 				createTurnAndShoot(container));
-	}
-
-	public static Command createStartup(RobotContainer container, PathPlannerTrajectory trajectory) {
-		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
-		return new ParallelCommandGroup(
-				new InstantCommand(() -> drivetrain.setInitialPosition(trajectory.getInitialPose(),
-					trajectory.getInitialState().holonomicRotation)),
-				new InstantCommand(container.getintake()::dropIntake),
-				new InstantCommand(container.getshooter()::spinUp),
-				new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(), container.getshooter(),
-						container.getturret(), container.getconveyor()::isAllianceBallNext)).withTimeout(2);
 	}
 
 	public static Command createRightSide5(RobotContainer container) {
@@ -135,13 +123,7 @@ public class AutonomousCommandFactory {
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 
-		ParallelCommandGroup startup = new ParallelCommandGroup(
-				new InstantCommand(() -> drivetrain.setInitialPosition(leg1Trajectory.getInitialPose(),
-						leg1Trajectory.getInitialState().holonomicRotation)),
-				new InstantCommand(container.getintake()::dropIntake),
-				new InstantCommand(container.getshooter()::spinUp),
-				new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(), container.getshooter(),
-						container.getturret(), container.getconveyor()::isAllianceBallNext));
+		Command startup = createStartupCommand(container, leg1Trajectory);
 
 		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Right Leg2",
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
