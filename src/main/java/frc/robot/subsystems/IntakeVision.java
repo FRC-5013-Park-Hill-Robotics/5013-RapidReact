@@ -93,7 +93,7 @@ public class IntakeVision extends SubsystemBase {
 			if (lastResult == axonResult) {
 				result = lastTargetAngle;
 			} else {
-				result = (Math.toDegrees(heading - getXAngleOfErrorDegrees(axonResult))) % 360;
+				result = (Math.toDegrees(heading + getXAngleOfErrorDegrees(axonResult))) % 360;
 				lastResult = axonResult;
 				lastTargetAngle = result;
 			}

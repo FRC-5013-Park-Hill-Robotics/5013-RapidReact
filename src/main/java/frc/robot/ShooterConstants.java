@@ -30,7 +30,7 @@ public final class ShooterConstants {
         // (10 x kP)
     }
 	public static final class FendorShotConstants{
-		public static final double BOTTOM_WHEEL_SPEED = 3550;
+		public static final double BOTTOM_WHEEL_SPEED = 3450;
 		public static final double  HOOD_HEIGHT = 140;
 	}
 
