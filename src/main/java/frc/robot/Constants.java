@@ -103,7 +103,7 @@ public final class Constants {
             public static final CanPort STEER_MOTOR_ID = new CanPort(11,CANIVORE_NAME);
             public static final CanPort DRIVE_MOTOR_ID = new CanPort(12,CANIVORE_NAME);
             public static final CanPort ENCODER_ID = new CanPort(13,CANIVORE_NAME);
-            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(189.9);
+            public static final double ENCODER_OFFSET_RADIANS =  -Math.toRadians(312.5);
             public static final int STATES_INDEX = 3;
         }
 
@@ -118,7 +118,8 @@ public final class Constants {
 
         // Driving the bot gains used by PIDControllers
         public static final class TranslationGains {
-            public static final double kP = 0.3;
+           // public static final double kP = 2.2956;
+		   public static final double kP = 2.8;
             public static final double kI = 0;
             public static final double kD = 0;
             public static final double kA = 0.12872;

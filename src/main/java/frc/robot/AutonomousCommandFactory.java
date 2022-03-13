@@ -18,6 +18,7 @@ import frc.robot.Constants.DrivetrainConstants.ThetaGains;
 import frc.robot.Constants.DrivetrainConstants.TranslationGains;
 import frc.robot.commands.AutonomousFire;
 import frc.robot.commands.AutonomousTurnToTargetCommand;
+import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutonomousCommandFactory {
@@ -88,6 +89,11 @@ public class AutonomousCommandFactory {
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 
+		PathPlannerTrajectory leg1bTrajectory = PathPlanner.loadPath("Right Leg1b",
+		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+		Command leg1b = createSwerveControllerCommand(leg1bTrajectory, drivetrain);
+
 		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Right Leg2a",
 		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
 		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
@@ -98,8 +104,13 @@ public class AutonomousCommandFactory {
 		return new SequentialCommandGroup(
 				startup,
 				new AutonomousFire(container.getshooter(), container.getconveyor()),
-				leg1,
-				new InstantCommand(container.getintake()::raiseIntake),
+				new ParallelCommandGroup(new ConveyorDefaultCommand(container.getconveyor(),container.getintake()),
+					new SequentialCommandGroup(
+						leg1,
+						new WaitCommand(0.5),
+						leg1b,
+						new WaitCommand(0.5))),
+				//new InstantCommand(container.getintake()::raiseIntake),
 				createTurnAndShoot(container),
 				leg2);
 			
@@ -117,9 +128,7 @@ public class AutonomousCommandFactory {
 
 		return new SequentialCommandGroup(
 				startup,
-				new AutonomousFire(container.getshooter(), container.getconveyor()),
 				leg1,
-				new InstantCommand(container.getintake()::raiseIntake),
 				createTurnAndShoot(container));
 	}
 

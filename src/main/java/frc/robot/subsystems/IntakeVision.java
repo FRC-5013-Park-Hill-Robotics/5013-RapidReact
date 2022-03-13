@@ -52,8 +52,6 @@ public class IntakeVision extends SubsystemBase {
 
 	public boolean hasTarget() {
 		AxonResult result = this.getResult();
-		SmartDashboard.putBoolean("AxonResult", result != null);
-		SmartDashboard.putBoolean("AxonDetection",result != null && this.getResult().hasDetection());
 		boolean hasTarget = result != null && this.getResult().hasDetection() && this.getResult().getClosest(label) != null;
 		return hasTarget;
 	}
@@ -89,17 +87,18 @@ public class IntakeVision extends SubsystemBase {
 		AxonResult axonResult = getResult();
 		double heading = m_robotContainer.getDrivetrainSubsystem().getYawR2d().getDegrees();
 		double result = heading;
+		double error = 0;
 		if (hasTarget()) {
 			if (lastResult == axonResult) {
 				result = lastTargetAngle;
 			} else {
-				result = (Math.toDegrees(heading + getXAngleOfErrorDegrees(axonResult))) % 360;
+				error =  getXAngleOfErrorDegrees(axonResult);
+				result = (heading - getXAngleOfErrorDegrees(axonResult)) % 360;
 				lastResult = axonResult;
 				lastTargetAngle = result;
 			}
 		}
-		SmartDashboard.putNumber("Intake Vision Target" , result);
-		
+
 		return result;
 	}
 	public boolean isOnTarget(){
@@ -107,11 +106,6 @@ public class IntakeVision extends SubsystemBase {
 	}
 	@Override
 	public void periodic() {
-		SmartDashboard.putString("Test", "TEst");
 
-		if (hasTarget()) {
-			SmartDashboard.putNumber("Angle of Error", getXAngleOfErrorDegrees());
-		}
-		SmartDashboard.putBoolean("Has Target", hasTarget());
 	}
 }
