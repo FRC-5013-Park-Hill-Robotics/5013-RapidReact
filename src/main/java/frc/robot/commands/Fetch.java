@@ -49,25 +49,24 @@ public class Fetch extends CommandBase {
 		m_vision.setTargeting(true);
 		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
 
-		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+	double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
 		double translationY = TrobotUtil.modifyAxis(-m_yTranslation.getAsDouble(),ControllerConstants.DEADBAND);
-		if (!(translationX == 0.0 && translationY == 0.0)) {
+/*		if (!(translationX == 0.0 && translationY == 0.0)) {
 			
 			double angle = calculateTranslationDirection(translationX, translationY);
 			translationX = Math.cos(angle) * throttle;
 			translationY = Math.sin(angle) * throttle;
 		}
-
+*/
 		// Call pid controller calculate passing in the x offset from vision and 0 for
 		// the setpoint
 		double PIDOutput = m_thetaController.calculate(m_drivetrain.getHeadingRadians(),
 				Math.toRadians(m_vision.getTargetXAngleDegrees()));
 
-		ChassisSpeeds chassisSpeeds =  ChassisSpeeds.fromFieldRelativeSpeeds(
+		ChassisSpeeds chassisSpeeds =  new ChassisSpeeds(
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationX),
 				DrivetrainSubsystem.percentOutputToMetersPerSecond(translationY), 
-				PIDOutput,
-				m_drivetrain.getYawR2d());
+				PIDOutput);
 		// use the output from calculate to make a new ChassisSpeed object to pass to
 		// the drivetrain with a yVelocity of 0, an xVelocity based on the throttle, and an angular
 		// velocity of the pid calculate
