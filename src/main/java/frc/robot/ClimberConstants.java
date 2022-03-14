@@ -12,8 +12,8 @@ public final class ClimberConstants{
 	public static final double LEFT_FULL_ENCODER_CLICKS = 0;
 	public static final double RIGHT_PARTIAL_ENCODER_CLICKS = 0;
 	public static final double RIGHT_FULL_ENCODER_CLICKS = 0;
-	public static final double RIGHT_ARM_LOW_BAR_HOOK = -157506;
-	public static final double LEFT_ARM_START = -113831;
+	public static final double RIGHT_ARM_LOW_BAR_HOOK = -207284;
+	public static final double LEFT_ARM_START = -100796;
 	public static final double LEFT_ARM_HOOK_MID_DEGREES = 29;
 	public static final double LEFT_ARM_CLEAR_MID_DEGREES = 32;
 

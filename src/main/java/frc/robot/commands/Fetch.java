@@ -49,7 +49,7 @@ public class Fetch extends CommandBase {
 		m_vision.setTargeting(true);
 		double throttle = TrobotUtil.modifyAxis(m_throttle.getAsDouble(),ControllerConstants.DEADBAND);
 
-	double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
+		double translationX =TrobotUtil. modifyAxis(-m_xTranslation.getAsDouble(),ControllerConstants.DEADBAND);
 		double translationY = TrobotUtil.modifyAxis(-m_yTranslation.getAsDouble(),ControllerConstants.DEADBAND);
 /*		if (!(translationX == 0.0 && translationY == 0.0)) {
 			

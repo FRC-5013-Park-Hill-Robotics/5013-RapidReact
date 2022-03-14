@@ -15,8 +15,9 @@ public class PreClimbCommand extends ParallelCommandGroup {
   public PreClimbCommand(RobotContainer container) {
 	super(//new TurretStartingPosition(turret),
 		new RunCommand(() -> container.getClimber().setRightPosition(ClimberConstants.RIGHT_ARM_LOW_BAR_HOOK,false))
-		,new RunCommand(() -> container.getClimber().setLeftPosition(ClimberConstants.LEFT_ARM_START,false))
+		, new RunCommand(() -> container.getClimber().setLeftPosition(ClimberConstants.LEFT_ARM_START,false))
 		, new InstantCommand(container.getshooter()::stop)
+		, new InstantCommand(() -> container.getshooterVision().setLedOn(false))
 		, new InstantCommand(container.getPneumaticsHub()::clearStickyFaults));
     addRequirements(container.getClimber(),container.getshooter());
   }
