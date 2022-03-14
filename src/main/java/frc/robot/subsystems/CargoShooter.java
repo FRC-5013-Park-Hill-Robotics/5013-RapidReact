@@ -9,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ShooterConstants;
+import frc.robot.ShooterVisionConstants;
 import frc.robot.trobot5013lib.TrobotUtil;
 
 import static frc.robot.ShooterConstants.*;
@@ -75,7 +77,7 @@ public class CargoShooter extends SubsystemBase {
   }
 
   public void spinUp(){
-    setTargetVelocity(heightVelocity);
+    setTargetVelocity(ShooterConstants.FendorShotConstants.BOTTOM_WHEEL_SPEED);
   }
 
   public void fire(){
