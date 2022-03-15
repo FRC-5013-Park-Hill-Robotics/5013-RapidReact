@@ -32,6 +32,7 @@ public class AutonomousFire extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		System.out.println("Shooting");
 		if (!m_Conveyor.isBallReadyToShoot()) {
 			m_timer.start();
 		} else {

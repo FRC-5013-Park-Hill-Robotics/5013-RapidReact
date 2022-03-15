@@ -22,10 +22,10 @@ import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutonomousCommandFactory {
-	public static String RIGHT_3 = "Right Side 3";
-	public static String RIGHT_5 = "Right Side 5";
+	public static String FAR_RIGHT = "Far Right";
+	public static String NEAR_RIGHT = "Near Right";
 	public static String LEFT_2 = "Left 2";
-	public static final String[] AUTOS = { RIGHT_3, RIGHT_5, LEFT_2 };
+	public static final String[] AUTOS = { FAR_RIGHT, NEAR_RIGHT, LEFT_2 };
 
 	public static Command createStartupCommand(RobotContainer container, PathPlannerTrajectory trajectory) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
@@ -33,9 +33,8 @@ public class AutonomousCommandFactory {
 				new InstantCommand(() -> drivetrain.setInitialPosition(trajectory.getInitialPose(),
 					trajectory.getInitialState().holonomicRotation)),
 				new InstantCommand(container.getintake()::dropIntake),
-				new InstantCommand(container.getshooter()::spinUp),
-				new AutonomousTurnToTargetCommand(drivetrain, container.getshooterVision(), container.getshooter(),
-						container.getturret(), container.getconveyor()::isAllianceBallNext)).withTimeout(2);
+				new InstantCommand(container.getshooter()::spinUp)
+			);
 	}
 	
 	public static PPSwerveControllerCommand createSwerveControllerCommand(PathPlannerTrajectory trajectory,
@@ -61,59 +60,54 @@ public class AutonomousCommandFactory {
 						container.getshooterVision(),
 						container.getshooter(),
 						container.getturret(),
-						container.getconveyor()::isAllianceBallNext),
-				new AutonomousFire(container.getshooter(), container.getconveyor())).withTimeout(2);
+						container.getconveyor()::isAllianceBallNext).withTimeout(2),
+				new AutonomousFire(container.getshooter(), container.getconveyor()));
 	}
 
 	public static Command createAutonomous(RobotContainer container) {
-		return createRightSide3(container);
+		return createFarRight(container);
 	}
 
 	public static Command createAutonomous(RobotContainer container, String name) {
-		if (RIGHT_3.equals(name)) {
-			return createRightSide3(container);
-		} else if (RIGHT_5.equals(name)) {
-			return createRightSide5(container);
+		if (FAR_RIGHT.equals(name)) {
+			return createFarRight(container);
+		} else if (NEAR_RIGHT.equals(name)) {
+			return createNearRight(container);
 		} else if (LEFT_2.equals(name)) {
 			return createLeftSide2(container);
 		}
-		return createRightSide3(container);
+		return createFarRight(container);
 	}
 
-	public static Command createRightSide3(RobotContainer container) {
+	public static Command createFarRight(RobotContainer container) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
-		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Right Leg1",
+		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Far Right",
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
-
-		PathPlannerTrajectory leg1bTrajectory = PathPlanner.loadPath("Right Leg1b",
-		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
-		Command leg1b = createSwerveControllerCommand(leg1bTrajectory, drivetrain);
-
-		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Right Leg2a",
-		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-		DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
-		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
-
 		Command startup = createStartupCommand(container, leg1Trajectory);
 
 		return new SequentialCommandGroup(
 				startup,
-				new AutonomousFire(container.getshooter(), container.getconveyor()),
-				new ParallelCommandGroup(new ConveyorDefaultCommand(container.getconveyor(),container.getintake()),
-					new SequentialCommandGroup(
-						leg1,
-						new WaitCommand(0.5),
-						leg1b,
-						new WaitCommand(0.5))),
-				//new InstantCommand(container.getintake()::raiseIntake),
-				createTurnAndShoot(container),
-				leg2);
-			
+				leg1,
+				createTurnAndShoot(container));
+	}
+	public static Command createNearRight(RobotContainer container) {
+		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
+
+		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Near Right",
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+
+		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+		Command startup = createStartupCommand(container, leg1Trajectory);
+
+		return new SequentialCommandGroup(
+				startup,
+				leg1,
+				createTurnAndShoot(container));
 	}
 
 	public static Command createLeftSide2(RobotContainer container) {
