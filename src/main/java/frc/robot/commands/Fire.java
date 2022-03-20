@@ -25,7 +25,12 @@ public class Fire extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-	m_Shooter.fire();
+	  if (m_Shooter.atSpeed()){
+		  m_Shooter.fire();
+	  } else {
+		  m_Shooter.stopFiring();
+	  }
+	
   }
 
   // Called once the command ends or is interrupted.

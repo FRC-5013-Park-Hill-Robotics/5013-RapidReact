@@ -95,7 +95,7 @@ public final class Constants {
             public static final CanPort STEER_MOTOR_ID = new CanPort(8,CANIVORE_NAME);
             public static final CanPort DRIVE_MOTOR_ID = new CanPort(9,CANIVORE_NAME);
             public static final CanPort ENCODER_ID = new CanPort(10,CANIVORE_NAME);
-            public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(83.8);
+            public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(0);
             public static final int STATES_INDEX = 2;
         }
 

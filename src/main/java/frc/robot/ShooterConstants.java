@@ -11,7 +11,7 @@ public final class ShooterConstants {
 
     public static final int SHOOTER_TOP_MOTOR = 18;
     public static final int SHOOTER_BOTTOM_MOTOR = 17;
-    public static final double SHOOTER_VELOCITY = 4500;
+    public static final double SHOOTER_VELOCITY = 4650;
     public static final double TOP_PERCENT_OF_BOTTOM = 1.50;
     
     public static final class FLY_WHEEL_GAINS{
@@ -30,9 +30,11 @@ public final class ShooterConstants {
         // (10 x kP)
     }
 	public static final class FendorShotConstants{
-		public static final double BOTTOM_WHEEL_SPEED = 3450;
+		public static final double BOTTOM_WHEEL_SPEED = 1840;
 		public static final double  HOOD_HEIGHT = 140;
 	}
+
+	public static final double INITIAL_SPEED = 4200;
 
 	public static final class TargetConstants{
 		public static final double[][] HOOD_HEIGHT_ARRAY = {
@@ -48,14 +50,23 @@ public final class ShooterConstants {
 			//{140,140,40}
 			};
 		public static final double[][] SHOOTER_SPEED_ARRAY = {
-			{-12.7,4410},
+		/*	{-12.7,4410},
 			{-11.7,4270},
 			{-9.5,4250},
 			{-5.9,4170},
 			{-1.5,3975},
 			{3,3880},
 			{7.1,3820},
-			{11.5,3775}
+			{11.5,3775}*/
+			{5.7, 3850},
+			{5.2, 4100},
+			{4.0, 4000},
+			{-0.5,4200},
+			{-2.3,4340},
+			{-5,4550},
+			{-10.5,4600},
+			{-14,5000}
+
 		};
 				
 

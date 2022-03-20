@@ -19,6 +19,7 @@ import frc.robot.Constants.DrivetrainConstants.TranslationGains;
 import frc.robot.commands.AutonomousFire;
 import frc.robot.commands.AutonomousTurnToTargetCommand;
 import frc.robot.commands.ConveyorDefaultCommand;
+import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutonomousCommandFactory {
@@ -88,10 +89,12 @@ public class AutonomousCommandFactory {
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
+		Command turn = new TurnToAngleCommand(drivetrain, Math.toRadians(154));
 
 		return new SequentialCommandGroup(
 				startup,
 				leg1,
+				turn,
 				createTurnAndShoot(container));
 	}
 	public static Command createNearRight(RobotContainer container) {
@@ -103,10 +106,12 @@ public class AutonomousCommandFactory {
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
+		Command turn = new TurnToAngleCommand(drivetrain,Math.toRadians(113));
 
 		return new SequentialCommandGroup(
 				startup,
 				leg1,
+				turn,
 				createTurnAndShoot(container));
 	}
 
@@ -119,10 +124,11 @@ public class AutonomousCommandFactory {
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
-
+		Command turn = new TurnToAngleCommand(drivetrain,Math.toRadians(46.5));
 		return new SequentialCommandGroup(
 				startup,
 				leg1,
+				turn,
 				createTurnAndShoot(container));
 	}
 
