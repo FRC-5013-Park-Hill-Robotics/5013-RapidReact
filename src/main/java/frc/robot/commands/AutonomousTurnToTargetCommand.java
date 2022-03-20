@@ -20,6 +20,6 @@ public class AutonomousTurnToTargetCommand extends BaseTurnToTarget {
 
 	@Override
 	public boolean isFinished() {
-		return getVision().hasTarget() && getVision().isOnTarget() && getShooter().atSpeed();
+		return madeFirstPass && getVision().hasTarget() && getVision().isOnTarget() && getShooter().atSpeed();
 	}
 }
