@@ -77,7 +77,7 @@ public class CargoShooter extends SubsystemBase {
   }
 
   public void spinUp(){
-    setTargetVelocity(ShooterConstants.FendorShotConstants.BOTTOM_WHEEL_SPEED);
+    setTargetVelocity(ShooterConstants.INITIAL_SPEED);
   }
 
   public void fire(){
