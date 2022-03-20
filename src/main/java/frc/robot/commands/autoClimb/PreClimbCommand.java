@@ -18,7 +18,7 @@ public class PreClimbCommand extends ParallelCommandGroup {
 		, new RunCommand(() -> container.getClimber().setLeftPosition(ClimberConstants.LEFT_ARM_START,false))
 		, new InstantCommand(container.getshooter()::stop)
 		, new InstantCommand(() -> container.getshooterVision().setLedOn(false))
-		, new InstantCommand(container.getPneumaticsHub()::clearStickyFaults));
+		, new InstantCommand(container.getPneumaticsHub()::disableCompressor));
     addRequirements(container.getClimber(),container.getshooter());
   }
 

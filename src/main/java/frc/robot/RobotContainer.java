@@ -116,8 +116,13 @@ public class RobotContainer {
 		new Button(m_controller::getDPadLeft).whenPressed(new InstantCommand(() -> m_shooter.changeSpeed(-100)));
 		// Operator Control
 
-		new Button(m_operator_controller::getXButton).whenHeld(new AutoClimber(m_Climber, m_drivetrainSubsystem.getPitchR2d()::getDegrees));
-		new Button(m_operator_controller::getBButton).whenPressed(new PreClimbCommand(this));
+		/*new Button(m_operator_controller::getLeftBumper)
+				.whenPressed(new InstantCommand(() -> m_conveyor.reverse(), m_conveyor));
+		new Button(m_operator_controller::getRightBumper)
+				.whenPressed(new InstantCommand(() -> m_conveyor.start(), m_conveyor));
+		*/
+		//new Button(m_operator_controller::getXButton).whenHeld(new AutoClimber(m_Climber, m_drivetrainSubsystem.getPitchR2d()::getDegrees));
+		//new Button(m_operator_controller::getBButton).whenPressed(new PreClimbCommand(this));
 		// programmer controls
 		new Button(m_programmer_controller::getBButton).whileHeld(new InstantCommand(m_shooter::fire))
 				.whenReleased(new InstantCommand(m_shooter::stopFiring));

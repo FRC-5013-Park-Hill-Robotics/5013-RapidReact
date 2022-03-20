@@ -15,6 +15,7 @@ import frc.robot.subsystems.Turret;
 import static frc.robot.Constants.DrivetrainConstants.ThetaGains.*;
 import static frc.robot.ShooterConstants.TargetConstants.*;
 
+import java.security.ProtectionDomain;
 import java.util.function.BooleanSupplier;
 
 public class BaseTurnToTarget extends CommandBase {
@@ -24,6 +25,8 @@ public class BaseTurnToTarget extends CommandBase {
 	private BooleanSupplier m_isAllianceCargo;
 	private DrivetrainSubsystem m_Drivetrain;
 	private PIDController controller = new PIDController(kP, kI, kD);
+	protected boolean madeFirstPass = false;
+	
 
 	/** Creates a new AutonomousTurnToTargetCommand. */
 	public BaseTurnToTarget(DrivetrainSubsystem driveTrain, ShooterVision vision, CargoShooter shooter, Turret turret, BooleanSupplier isAllianceCargo) {
@@ -64,6 +67,7 @@ public class BaseTurnToTarget extends CommandBase {
 		} else {
 			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,	0, 0, m_Drivetrain.getYawR2d()));
 		}
+		madeFirstPass = true;
 	}
 
 	protected double getXTranslationMetersPerSecond(){
