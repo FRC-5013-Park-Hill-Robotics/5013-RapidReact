@@ -41,4 +41,9 @@ public class CanPort {
 	public int hashCode() {
 		return Objects.hash(this.busName,this.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Canbus:" + busName + ", CAN ID:" + id;
+	}
 }

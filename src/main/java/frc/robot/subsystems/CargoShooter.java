@@ -82,7 +82,7 @@ public class CargoShooter extends SubsystemBase {
 
   public void fire(){
    // setTargetVelocity(heightVelocity);
-   m_conveyor.start();
+  // m_conveyor.start();
     firing = true;
     //String("Shooter is Firing: ", ""+firing);
   }
@@ -90,7 +90,7 @@ public class CargoShooter extends SubsystemBase {
   public void stopFiring(){
     firing = false;
    // setTargetVelocity(SHOOTER_NO_VELOCITY);
-    m_conveyor.stop();
+   // m_conveyor.stop();
   }
 
   @Override
