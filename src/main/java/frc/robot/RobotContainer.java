@@ -25,7 +25,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeVision;
+
 import frc.robot.subsystems.CargoShooter;
 import frc.robot.subsystems.ShooterVision;
 import frc.robot.subsystems.StatusLED;
@@ -57,7 +57,7 @@ public class RobotContainer {
 	private ShooterVision m_shooterVision = new ShooterVision();
 	private Conveyor m_conveyor = new Conveyor(this);
 	private CargoShooter m_shooter = new CargoShooter(m_conveyor);
-	private IntakeVision m_IntakeVision = new IntakeVision(this);
+	
 	private Intake m_intake = new Intake(m_conveyor, this);
 	private Climber m_Climber = new Climber();
 
@@ -106,9 +106,6 @@ public class RobotContainer {
 						m_controller::getRightTriggerAxis));
 		new Button(m_controller::getLeftBumper).whenPressed(new Fire(m_shooter, m_conveyor))
 				.whenReleased(m_shooter::stopFiring);
-		new Button(m_controller::getAButton).whileHeld(
-				new Fetch(m_drivetrainSubsystem, m_IntakeVision, m_controller::getLeftX, m_controller::getLeftY,
-						m_controller::getRightTriggerAxis));
 
 		new Button(m_controller::getDPadUp).whenPressed(new InstantCommand(() -> m_turret.up(10)));
 		new Button(m_controller::getDPadDown).whenPressed(new InstantCommand(() -> m_turret.down(10)));
@@ -217,14 +214,6 @@ public class RobotContainer {
 
 	public void setconveyor(Conveyor m_conveyor) {
 		this.m_conveyor = m_conveyor;
-	}
-
-	public IntakeVision getIntakeVision() {
-		return m_IntakeVision;
-	}
-
-	public void setIntakeVision(IntakeVision m_IntakeVision) {
-		this.m_IntakeVision = m_IntakeVision;
 	}
 
 	public Intake getintake() {
