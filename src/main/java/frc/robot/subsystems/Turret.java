@@ -3,8 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,7 +14,7 @@ import frc.robot.TurretConstants;
 import frc.robot.trobot5013lib.LinearServo;
 
 public class Turret extends SubsystemBase {
-    private WPI_TalonSRX motor = new WPI_TalonSRX(TURRET_MOTOR);
+    //private WPI_TalonSRX motor = new WPI_TalonSRX(TURRET_MOTOR);
     private LinearServo servo = new LinearServo(SERVO_LEFT_ID,140,32);
 
 
@@ -25,18 +25,18 @@ public class Turret extends SubsystemBase {
 		servo.setHeight(HOOD_MAX_HEIGHT);
 	}
     //Gets the current angle of the Talon SRX.
-    public double getCurrentAngle() {
-        return motor.getSelectedSensorPosition();
+    //public double getCurrentAngle() {
+        //return motor.getSelectedSensorPosition();
         
-    }
+    //}
     //Sets the desired angle of the turret
-    public void setDesiredAngle(double desiredAngle) {
-        this.desiredAngle = desiredAngle;
-        desiredAngle = getCurrentAngle();
+    //public void setDesiredAngle(double desiredAngle) {
+        //this.desiredAngle = desiredAngle;
+        //desiredAngle = getCurrentAngle();
         
-    }
+    //}
     public void setOpenLoop(double speed) {
-        motor.set(speed);
+        //motor.set(speed);
     }
     
 
@@ -60,6 +60,6 @@ public class Turret extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Height", servo.getHeight());
-		motor.set(ControlMode.Position,desiredAngle);
+		//motor.set(ControlMode.Position,desiredAngle);
 	}
 }
