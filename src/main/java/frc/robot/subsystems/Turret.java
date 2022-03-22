@@ -30,11 +30,11 @@ public class Turret extends SubsystemBase {
         
     //}
     //Sets the desired angle of the turret
-    //public void setDesiredAngle(double desiredAngle) {
+    public void setDesiredAngle(double desiredAngle) {
         //this.desiredAngle = desiredAngle;
         //desiredAngle = getCurrentAngle();
         
-    //}
+    }
     public void setOpenLoop(double speed) {
         //motor.set(speed);
     }
