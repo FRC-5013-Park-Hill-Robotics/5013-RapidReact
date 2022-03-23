@@ -59,7 +59,7 @@ public class Turret extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Height", servo.getHeight());
+		//SmartDashboard.putNumber("Height", servo.getHeight());
 		//motor.set(ControlMode.Position,desiredAngle);
 	}
 }
