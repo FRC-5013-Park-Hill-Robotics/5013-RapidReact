@@ -127,8 +127,9 @@ public class ShooterVision extends SubsystemBase {
   }
 
   public void setTargeting(boolean targeting){
-	 // setLedOn(targeting);
+	  setLedOn(targeting);
 	  m_targeting = targeting;
+
   }
 
   public boolean isOutOfRange(){
