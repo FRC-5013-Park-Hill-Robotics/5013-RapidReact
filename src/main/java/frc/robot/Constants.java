@@ -23,7 +23,7 @@ public final class Constants {
     public static final int FALCON_500_MAX_RPM = 6380;
     public static final int STATUS_LED_PWM_PORT = 1;
 	public static final int PNEUMATICS_HUB = 19;
-	public static final String CANIVORE_NAME = "";
+	public static final String CANIVORE_NAME = "Canivore";
 
 
     public static final class ControllerConstants {
@@ -95,7 +95,7 @@ public final class Constants {
             public static final CanPort STEER_MOTOR_ID = new CanPort(8,CANIVORE_NAME);
             public static final CanPort DRIVE_MOTOR_ID = new CanPort(9,CANIVORE_NAME);
             public static final CanPort ENCODER_ID = new CanPort(10,CANIVORE_NAME);
-            public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(0);
+            public static final double ENCODER_OFFSET_RADIANS = -Math.toRadians(87.7);
             public static final int STATES_INDEX = 2;
         }
 
