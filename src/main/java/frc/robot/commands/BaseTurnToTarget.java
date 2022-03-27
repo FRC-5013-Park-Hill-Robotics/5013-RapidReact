@@ -52,18 +52,21 @@ public class BaseTurnToTarget extends CommandBase {
 	@Override
 	public void execute() {
 		m_Vision.setTargeting(true);
-		if (m_Vision.hasTarget() && !m_Vision.isOnTarget()){
+		if (m_Vision.hasTarget()){
 			double vertical_angle = m_Vision.getVerticalAngleOfErrorDegrees();
 			double horizontal_amgle = -m_Vision.getHorazontalAngleOfErrorDegrees() ;
 			double setpoint = Math.toRadians(horizontal_amgle)+ m_Drivetrain.getYawR2d().getRadians();
-			if (!m_isAllianceCargo.getAsBoolean()){
-				setpoint += Math.toRadians(15);
-			}
-			double output = controller.calculate(m_Drivetrain.getYawR2d().getRadians(), setpoint);
-			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
-				 getYTranslationMetersPerSecond(), output, m_Drivetrain.getYawR2d()));
 			m_Shooter.setTargetVelocity(SHOOTER_SPEED_INTERPOLATOR.getInterpolatedValue(vertical_angle));
-			m_Turret.setHeight(HOOD_INTERPOLATOR.getInterpolatedValue(vertical_angle));
+			if (!m_Vision.isOnTarget() ){
+				if (!m_isAllianceCargo.getAsBoolean()){
+					setpoint += Math.toRadians(15);
+				}
+				double output = controller.calculate(m_Drivetrain.getYawR2d().getRadians(), setpoint);
+				m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(getXTranslationMetersPerSecond(),
+					getYTranslationMetersPerSecond(), output, m_Drivetrain.getYawR2d()));
+			} else {
+				m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,	0, 0, m_Drivetrain.getYawR2d()));
+			}
 		} else {
 			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,	0, 0, m_Drivetrain.getYawR2d()));
 		}
