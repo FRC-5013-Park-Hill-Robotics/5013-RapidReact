@@ -26,7 +26,8 @@ public class AutonomousCommandFactory {
 	public static String FAR_RIGHT = "Far Right";
 	public static String NEAR_RIGHT = "Near Right";
 	public static String LEFT_2 = "Left 2";
-	public static final String[] AUTOS = { FAR_RIGHT, NEAR_RIGHT, LEFT_2 };
+	public static String RIGHT_3 = "Far Right 3";
+	public static final String[] AUTOS = { FAR_RIGHT,RIGHT_3, NEAR_RIGHT, LEFT_2 };
 
 	public static Command createStartupCommand(RobotContainer container, PathPlannerTrajectory trajectory) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
@@ -76,6 +77,8 @@ public class AutonomousCommandFactory {
 			return createNearRight(container);
 		} else if (LEFT_2.equals(name)) {
 			return createLeftSide2(container);
+		} else if (RIGHT_3.equals(name)) {
+			return createRightSide3(container);
 		}
 		return createFarRight(container);
 	}
@@ -96,6 +99,34 @@ public class AutonomousCommandFactory {
 				leg1,
 				turn,
 				createTurnAndShoot(container));
+	}
+	public static Command createRightSide3(RobotContainer container) {
+		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
+
+		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Far Right",
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+		Command startup = createStartupCommand(container, leg1Trajectory);
+		Command turn = new TurnToAngleCommand(drivetrain, Math.toRadians(154));
+
+		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Far Right Leg 2",
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
+		Command startupLeg2 = createStartupCommand(container, leg2Trajectory);
+		Command turn2 = new TurnToAngleCommand(drivetrain, Math.toRadians(135.83));
+
+		return new SequentialCommandGroup(
+				startup,
+				leg1,
+				turn,
+				createTurnAndShoot(container),
+				startupLeg2,
+				leg2,
+				turn2,
+				createTurnAndShoot(container)
+				);
 	}
 	public static Command createNearRight(RobotContainer container) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();

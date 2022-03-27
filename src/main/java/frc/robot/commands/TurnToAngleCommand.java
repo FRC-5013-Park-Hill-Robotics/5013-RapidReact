@@ -16,6 +16,7 @@ public class TurnToAngleCommand extends PIDCommand {
                 output -> driveTrain
                         .drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, output, driveTrain.getYawR2d())));
         getController().setTolerance(kTurnToleranceRad,kTurnRateToleranceRadPerS);
+		getController().enableContinuousInput(0, 2 * Math.PI);
     }
  @Override
  public boolean isFinished(){

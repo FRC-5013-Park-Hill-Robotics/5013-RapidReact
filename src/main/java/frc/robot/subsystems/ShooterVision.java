@@ -36,7 +36,7 @@ public class ShooterVision extends SubsystemBase {
     this.tv = table.getEntry("tv");
     this.ledMode = table.getEntry("ledMode");
     setPipeline(ShooterVisionConstants.TARGET_PIPELINE);
-    setLedOn(false);
+    setLedOn(true);
   }
 
   @Override
@@ -127,7 +127,7 @@ public class ShooterVision extends SubsystemBase {
   }
 
   public void setTargeting(boolean targeting){
-	  setLedOn(targeting);
+	  //setLedOn(targeting);
 	  m_targeting = targeting;
 
   }
