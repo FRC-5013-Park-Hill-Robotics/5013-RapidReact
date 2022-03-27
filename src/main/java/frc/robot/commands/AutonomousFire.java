@@ -49,6 +49,6 @@ public class AutonomousFire extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_timer.hasElapsed(0.5);
+		return m_timer.hasElapsed(0.75);
 	}
 }

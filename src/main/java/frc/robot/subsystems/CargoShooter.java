@@ -29,32 +29,12 @@ public class CargoShooter extends SubsystemBase {
   public CargoShooter(Conveyor conveyor) {
     m_conveyor = conveyor;
 
+	topMotor.configFactoryDefault();
 	topMotor.setInverted(false);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 50);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 50);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_10_Targets, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_15_FirmwareApiStatus, 250);
-	topMotor.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 250);
 	setPID(topMotor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
 
-	bottomMotor.setInverted(!topMotor.getInverted());
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 50);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 50);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_6_Misc, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_10_Targets, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_15_FirmwareApiStatus, 250);
-	bottomMotor.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 250);
+	bottomMotor.configFactoryDefault();
+	bottomMotor.setInverted(!topMotor.getInverted());	
 	setPID(bottomMotor,FLY_WHEEL_GAINS.kP, 0, 0, FLY_WHEEL_GAINS.kF);
 	
   }
