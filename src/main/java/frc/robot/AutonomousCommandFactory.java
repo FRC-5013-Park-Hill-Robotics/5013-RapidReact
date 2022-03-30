@@ -27,7 +27,8 @@ public class AutonomousCommandFactory {
 	public static String NEAR_RIGHT = "Near Right";
 	public static String LEFT_2 = "Left 2";
 	public static String RIGHT_3 = "Far Right 3";
-	public static final String[] AUTOS = { FAR_RIGHT,RIGHT_3, NEAR_RIGHT, LEFT_2 };
+	public static String STRAIGHT = "Straight line";
+	public static final String[] AUTOS = { FAR_RIGHT,RIGHT_3, NEAR_RIGHT, LEFT_2,STRAIGHT };
 
 	public static Command createStartupCommand(RobotContainer container, PathPlannerTrajectory trajectory) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
@@ -62,7 +63,7 @@ public class AutonomousCommandFactory {
 						container.getshooterVision(),
 						container.getshooter(),
 						container.getturret(),
-						container.getconveyor()::isAllianceBallNext).withTimeout(2),
+						container.getconveyor()::isAllianceBallNext).withTimeout(2.5),
 				new AutonomousFire(container.getshooter(), container.getconveyor()));
 	}
 
@@ -78,7 +79,9 @@ public class AutonomousCommandFactory {
 		} else if (LEFT_2.equals(name)) {
 			return createLeftSide2(container);
 		} else if (RIGHT_3.equals(name)) {
-			return createRightSide3(container);
+			 return createRightSide3(container);
+		} else if (STRAIGHT.equals(name)){
+			return straight(container);
 		}
 		return createFarRight(container);
 	}
@@ -99,6 +102,22 @@ public class AutonomousCommandFactory {
 				leg1,
 				turn,
 				createTurnAndShoot(container));
+	}
+
+	public static Command straight(RobotContainer container) {
+		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
+
+		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Straight line",
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+
+		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+		Command startup = createStartupCommand(container, leg1Trajectory);
+		
+
+		return new SequentialCommandGroup(
+				startup,
+				leg1);
 	}
 	public static Command createRightSide3(RobotContainer container) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
@@ -124,6 +143,7 @@ public class AutonomousCommandFactory {
 				createTurnAndShoot(container),
 				startupLeg2,
 				leg2,
+				new InstantCommand(container.getintake()::raiseIntake),
 				turn2,
 				createTurnAndShoot(container)
 				);

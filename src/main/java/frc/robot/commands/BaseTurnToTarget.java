@@ -68,6 +68,7 @@ public class BaseTurnToTarget extends CommandBase {
 				m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,	0, 0, m_Drivetrain.getYawR2d()));
 			}
 		} else {
+			System.out.println("NO TARGET");
 			m_Drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,	0, 0, m_Drivetrain.getYawR2d()));
 		}
 		madeFirstPass = true;
