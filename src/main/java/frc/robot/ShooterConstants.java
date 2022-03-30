@@ -34,7 +34,7 @@ public final class ShooterConstants {
 		public static final double  HOOD_HEIGHT = 140;
 	}
 
-	public static final double INITIAL_SPEED = 4200;
+	public static final double INITIAL_SPEED = 3120;
 
 	public static final class TargetConstants{
 		public static final double[][] HOOD_HEIGHT_ARRAY = {

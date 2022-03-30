@@ -158,6 +158,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 		m_pose = m_odometry.update(Rotation2d.fromDegrees(m_pigeon.getYaw()), stateFromModule(m_frontLeftModule),
 				stateFromModule(m_frontRightModule),
 				stateFromModule(m_backLeftModule), stateFromModule(m_backRightModule));
+		SmartDashboard.putNumber("Pose x", m_pose.getX());
+		SmartDashboard.putNumber("Pose y", m_pose.getX());
 	}
 
 	private SwerveModuleState stateFromModule(SwerveModule swerveModule) {

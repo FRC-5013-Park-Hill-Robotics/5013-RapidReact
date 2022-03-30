@@ -18,6 +18,7 @@ import frc.robot.commands.FenderShot;
 import frc.robot.commands.Fire;
 import frc.robot.commands.GamepadDrive;
 import frc.robot.commands.TeleopTurnToTargetCommand;
+import frc.robot.commands.autoClimb.PreClimbCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DrivetrainSubsystem;
