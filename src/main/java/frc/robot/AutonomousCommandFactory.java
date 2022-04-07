@@ -143,7 +143,7 @@ public class AutonomousCommandFactory {
 				createTurnAndShoot(container),
 				startupLeg2,
 				leg2,
-				new InstantCommand(container.getintake()::raiseIntake),
+				//new InstantCommand(container.getintake()::raiseIntake),
 				turn2,
 				createTurnAndShoot(container)
 				);
