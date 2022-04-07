@@ -131,11 +131,13 @@ public class Conveyor extends SubsystemBase {
    */
   public boolean isAllianceBallNext()
   {
+	  return true;
+	  /*
     Color currentColor = this.colorSensor.getColor();
     boolean redTeam = this.m_robotContainer.isRedAlliance();
     boolean colorRed = currentColor.red > currentColor.blue && currentColor.red > currentColor.green;
 
-    return  (redTeam && colorRed) || (!redTeam && !colorRed);
+    return  (redTeam && colorRed) || (!redTeam && !colorRed);*/
   }
 
 }
