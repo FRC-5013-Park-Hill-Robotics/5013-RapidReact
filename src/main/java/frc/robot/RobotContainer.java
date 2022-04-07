@@ -8,9 +8,11 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.ConveyorDefaultCommand;
@@ -49,7 +51,7 @@ public class RobotContainer {
 	//		ControllerConstants.PROGRAMMER_CONTROLLER_PORT);
 
 	private PowerDistribution m_PowerDistribution = new PowerDistribution(PCM_ID, ModuleType.kRev);
-	private PneumaticHub m_pneumaticsHub = new PneumaticHub(PNEUMATICS_HUB);
+	private PneumaticsControlModule m_pneumaticsHub = new PneumaticsControlModule(PNEUMATICS_HUB);
 	private Turret m_turret = new Turret();
 	//private StatusLED m_StatusLED = new StatusLED(this);
 	private ShooterVision m_shooterVision = new ShooterVision();
@@ -77,7 +79,7 @@ public class RobotContainer {
 	
 		SmartDashboard.putStringArray("Auto List",AutonomousCommandFactory.AUTOS );
 
-
+		LiveWindow.disableAllTelemetry();
     }
 
 	/**
@@ -230,7 +232,7 @@ public class RobotContainer {
 		this.m_Climber = m_Climber;
 	}
 
-	public PneumaticHub getPneumaticsHub() {
+	public PneumaticsControlModule getPneumaticsHub() {
 		return this.m_pneumaticsHub;
 	}
 }
