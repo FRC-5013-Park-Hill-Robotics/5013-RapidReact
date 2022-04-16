@@ -16,11 +16,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 import frc.robot.Constants.DrivetrainConstants.ThetaGains;
 import frc.robot.Constants.DrivetrainConstants.TranslationGains;
+import frc.robot.ShooterConstants.FendorShotConstants;
 import frc.robot.commands.AutonomousFire;
+import frc.robot.commands.FenderShot;
 import frc.robot.commands.AutonomousTurnToTargetCommand;
 import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.trobot5013lib.command.TrajectoryLogging;
 
 public class AutonomousCommandFactory {
 	public static String FAR_RIGHT = "Far Right";
@@ -28,7 +31,8 @@ public class AutonomousCommandFactory {
 	public static String LEFT_2 = "Left 2";
 	public static String RIGHT_3 = "Far Right 3";
 	public static String STRAIGHT = "Straight line";
-	public static final String[] AUTOS = { FAR_RIGHT,RIGHT_3, NEAR_RIGHT, LEFT_2,STRAIGHT };
+	public static String STRAIGHT_4 = "straight line 4";
+	public static final String[] AUTOS = { FAR_RIGHT,RIGHT_3, NEAR_RIGHT, LEFT_2,STRAIGHT, STRAIGHT_4 };
 
 	public static Command createStartupCommand(RobotContainer container, PathPlannerTrajectory trajectory) {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
@@ -82,7 +86,10 @@ public class AutonomousCommandFactory {
 			 return createRightSide3(container);
 		} else if (STRAIGHT.equals(name)){
 			return straight(container);
+		} else if (STRAIGHT_4.equals(name)) {
+			return straightline4(container);
 		}
+		
 		return createFarRight(container);
 	}
 
@@ -111,7 +118,22 @@ public class AutonomousCommandFactory {
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
 				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
 
-		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
+		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain).raceWith(new TrajectoryLogging(leg1Trajectory, drivetrain::getPose));
+		Command startup = createStartupCommand(container, leg1Trajectory);
+		
+
+		return new SequentialCommandGroup(
+				startup,
+				leg1);
+	}
+	public static Command straightline4(RobotContainer container) {
+		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
+
+		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("straight line 4",
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+
+		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain).raceWith(new TrajectoryLogging(leg1Trajectory, drivetrain::getPose));
 		Command startup = createStartupCommand(container, leg1Trajectory);
 		
 
@@ -176,11 +198,26 @@ public class AutonomousCommandFactory {
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
 		Command turn = new TurnToAngleCommand(drivetrain,Math.toRadians(46.5));
+
+		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Left Leg 2",
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
+				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
+		Command startupLeg2 = createStartupCommand(container, leg2Trajectory);
+		Command turn2 = new TurnToAngleCommand(drivetrain, Math.toRadians(270.00));;
+
 		return new SequentialCommandGroup(
 				startup,
 				leg1,
 				turn,
-				createTurnAndShoot(container));
+				createTurnAndShoot(container),
+				startupLeg2,
+				leg2,
+				turn2,
+				new FenderShot(container.getshooter(),container.getturret()),
+				new InstantCommand(container.getintake()::raiseIntake));
+		
+	
 	}
 
 	public static Command createRightSide5(RobotContainer container) {

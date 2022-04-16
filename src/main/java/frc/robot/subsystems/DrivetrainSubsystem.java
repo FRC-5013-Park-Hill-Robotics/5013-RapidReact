@@ -159,7 +159,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 				stateFromModule(m_frontRightModule),
 				stateFromModule(m_backLeftModule), stateFromModule(m_backRightModule));
 		SmartDashboard.putNumber("Pose x", m_pose.getX());
-		SmartDashboard.putNumber("Pose y", m_pose.getX());
+		SmartDashboard.putNumber("Pose y", m_pose.getY());
 	}
 
 	private SwerveModuleState stateFromModule(SwerveModule swerveModule) {
