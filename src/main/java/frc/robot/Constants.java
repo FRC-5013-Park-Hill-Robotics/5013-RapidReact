@@ -45,6 +45,7 @@ public final class Constants {
         public static final double MAX_VOLTAGE = 12.0;
 
         public static final class DrivetrainGeometry {
+
             /**
              * The left-to-right distance between the drivetrain wheels Should be measured
              * from center to center.
@@ -65,7 +66,8 @@ public final class Constants {
             public static final double MAX_VELOCITY_METERS_PER_SECOND = FALCON_500_MAX_RPM / 60.0
                     * SdsModuleConfigurations.MK4_L2.getDriveReduction()
                     * SdsModuleConfigurations.MK4_L2.getWheelDiameter()
-                    * Math.PI;
+                    * Math.PI
+					* .69;
             /**
              * The maximum angular velocity of the robot in radians per second.
              * <p>

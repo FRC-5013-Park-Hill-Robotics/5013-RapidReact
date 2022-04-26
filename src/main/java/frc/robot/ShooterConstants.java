@@ -34,7 +34,7 @@ public final class ShooterConstants {
 		public static final double  HOOD_HEIGHT = 140;
 	}
 
-	public static final double INITIAL_SPEED = 3120;
+	public static final double INITIAL_SPEED = 3500;
 
 	public static final class TargetConstants{
 		public static final double[][] HOOD_HEIGHT_ARRAY = {
@@ -68,13 +68,19 @@ public final class ShooterConstants {
 		//	{-11.9,}*/
 			{9.6,3000},
 			{4,3080},
+			{3,3090},
 			{-0.3,3120},
+			{-0.6,3200},
 			{-3,3220},
-			{-6.3,3300},
+			{-4.6,3350},
+			{-6.3,3500},
 			{-8.6,3560},
-			{-9,3440},
-			{-13,3540}
-
+			{-9,3590},
+			
+			{-13,3650},
+			{-14.7,3740},
+			{-17,3840},
+			{-19.1,3940}
 		};
 				
 
