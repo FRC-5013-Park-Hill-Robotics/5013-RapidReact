@@ -65,8 +65,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
 		Mk4ModuleConfiguration config = new Mk4ModuleConfiguration();
-		config.setDriveCurrentLimit(40);
-		config.setDriveCurrentLimit(25);
+		config.setDriveCurrentLimit(60);
+		config.setSteerCurrentLimit(40);
 		// Creating the SwerveModules using SDS factory method.
 		m_frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
 				tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),

@@ -211,10 +211,10 @@ public class AutonomousCommandFactory {
 				leg1,
 				turn,
 				createTurnAndShoot(container),
-				startupLeg2,
-				leg2,
-				turn2,
-				new FenderShot(container.getshooter(),container.getturret()),
+				//startupLeg2,
+				//leg2,
+				//turn2,
+				//new FenderShot(container.getshooter(),container.getturret()),
 				new InstantCommand(container.getintake()::raiseIntake));
 		
 	
