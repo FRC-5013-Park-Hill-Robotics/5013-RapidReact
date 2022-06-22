@@ -66,8 +66,8 @@ public final class Constants {
             public static final double MAX_VELOCITY_METERS_PER_SECOND = FALCON_500_MAX_RPM / 60.0
                     * SdsModuleConfigurations.MK4_L2.getDriveReduction()
                     * SdsModuleConfigurations.MK4_L2.getWheelDiameter()
-                    * Math.PI
-					* .69;
+                    * Math.PI;
+					//* .69;
             /**
              * The maximum angular velocity of the robot in radians per second.
              * <p>
@@ -121,12 +121,12 @@ public final class Constants {
         // Driving the bot gains used by PIDControllers
         public static final class TranslationGains {
            // public static final double kP = 2.2956;
-		   public static final double kP = 9;
+		   public static final double kP = 0.15;
             public static final double kI = 0;
             public static final double kD = 0;
-            public static final double kA = 0.12872;
-            public static final double kV = 2.3014;
-            public static final double kS = 0.55493;
+            public static final double kA = 0.16089;
+            public static final double kV = 2.2528;
+            public static final double kS = 0.60483;
         }
         //
 

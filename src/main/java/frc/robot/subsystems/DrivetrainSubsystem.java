@@ -140,16 +140,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
 		} else {
 			m_desiredStates = m_kinematics.toSwerveModuleStates(chassisSpeeds);
 		}
+		setDesiredStates(m_desiredStates);
 	}
 
 	public void setDesiredStates(SwerveModuleState[] newStates) {
 		m_desiredStates = newStates;
+		updateOdometry();
+		updateDriveStates(m_desiredStates);
 	}
 
 	@Override
 	public void periodic() {
 		updateOdometry();
-		updateDriveStates(m_desiredStates);
 		SmartDashboard.putNumber("Gyro", getYawR2d().getDegrees());
 		SmartDashboard.putNumber("pitch", getPitchR2d().getDegrees());
 	}
