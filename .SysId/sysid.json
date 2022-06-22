@@ -1,13 +1,13 @@
 {
   "SysId": {
     "Analysis Type": "Drivetrain",
-    "Analyzer": {
+    "NetworkTables Settings": {
+      "serverTeam": "5013"
+    },
+    "Program Log": {
       "window": {
         "visible": false
       }
-    },
-    "NetworkTables Settings": {
-      "serverTeam": "5013"
     },
     "mode": "Client",
     "serverTeam": "5013"

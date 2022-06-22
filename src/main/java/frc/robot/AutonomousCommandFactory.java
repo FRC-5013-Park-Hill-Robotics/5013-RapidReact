@@ -26,6 +26,8 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.trobot5013lib.command.TrajectoryLogging;
 
 public class AutonomousCommandFactory {
+	public static double MAX_AUTO_VELOCITY_METERS_PER_SECOND = DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND/2;
+	public static double MAX_AUTO_ANGULAR_RADIANS_PER_SECOND = DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND/2;
 	public static String FAR_RIGHT = "Far Right";
 	public static String NEAR_RIGHT = "Near Right";
 	public static String LEFT_2 = "Left 2";
@@ -47,8 +49,8 @@ public class AutonomousCommandFactory {
 	public static PPSwerveControllerCommand createSwerveControllerCommand(PathPlannerTrajectory trajectory,
 			DrivetrainSubsystem drivetrain) {
 		Constraints constraints = new TrapezoidProfile.Constraints(
-				DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
-				2 * DrivetrainGeometry.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+				MAX_AUTO_ANGULAR_RADIANS_PER_SECOND,
+				2 * MAX_AUTO_ANGULAR_RADIANS_PER_SECOND);
 		ProfiledPIDController thetaController = new ProfiledPIDController(ThetaGains.kP, ThetaGains.kI, ThetaGains.kD,
 				constraints);
 		thetaController.enableContinuousInput(-Math.PI, Math.PI);
@@ -115,8 +117,8 @@ public class AutonomousCommandFactory {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Straight line",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain).raceWith(new TrajectoryLogging(leg1Trajectory, drivetrain::getPose));
 		Command startup = createStartupCommand(container, leg1Trajectory);
@@ -130,8 +132,8 @@ public class AutonomousCommandFactory {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("straight line 4",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain).raceWith(new TrajectoryLogging(leg1Trajectory, drivetrain::getPose));
 		Command startup = createStartupCommand(container, leg1Trajectory);
