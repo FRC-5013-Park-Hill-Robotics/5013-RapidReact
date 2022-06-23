@@ -16,11 +16,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DrivetrainConstants.DrivetrainGeometry;
 import frc.robot.Constants.DrivetrainConstants.ThetaGains;
 import frc.robot.Constants.DrivetrainConstants.TranslationGains;
-import frc.robot.ShooterConstants.FendorShotConstants;
 import frc.robot.commands.AutonomousFire;
-import frc.robot.commands.FenderShot;
 import frc.robot.commands.AutonomousTurnToTargetCommand;
-import frc.robot.commands.ConveyorDefaultCommand;
 import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.trobot5013lib.command.TrajectoryLogging;
@@ -99,8 +96,8 @@ public class AutonomousCommandFactory {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Far Right",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
@@ -147,15 +144,15 @@ public class AutonomousCommandFactory {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Far Right",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
 		Command turn = new TurnToAngleCommand(drivetrain, Math.toRadians(154));
 
 		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Far Right Leg 2",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
 		Command startupLeg2 = createStartupCommand(container, leg2Trajectory);
 		Command turn2 = new TurnToAngleCommand(drivetrain, Math.toRadians(135.83));
@@ -176,8 +173,8 @@ public class AutonomousCommandFactory {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Near Right",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
@@ -194,16 +191,16 @@ public class AutonomousCommandFactory {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Left",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 		Command startup = createStartupCommand(container, leg1Trajectory);
 		Command turn = new TurnToAngleCommand(drivetrain,Math.toRadians(46.5));
 
 		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Left Leg 2",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
 		Command startupLeg2 = createStartupCommand(container, leg2Trajectory);
 		Command turn2 = new TurnToAngleCommand(drivetrain, Math.toRadians(270.00));;
@@ -226,20 +223,20 @@ public class AutonomousCommandFactory {
 		DrivetrainSubsystem drivetrain = container.getDrivetrainSubsystem();
 
 		PathPlannerTrajectory leg1Trajectory = PathPlanner.loadPath("Right Leg1",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 		Command leg1 = createSwerveControllerCommand(leg1Trajectory, drivetrain);
 
 		Command startup = createStartupCommand(container, leg1Trajectory);
 
 		PathPlannerTrajectory leg2Trajectory = PathPlanner.loadPath("Right Leg2",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 		Command leg2 = createSwerveControllerCommand(leg2Trajectory, drivetrain);
 
 		PathPlannerTrajectory leg3Trajectory = PathPlanner.loadPath("Right Leg3",
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND,
-				DrivetrainGeometry.MAX_VELOCITY_METERS_PER_SECOND / .33);
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND,
+				MAX_AUTO_VELOCITY_METERS_PER_SECOND / .33);
 		Command leg3 = createSwerveControllerCommand(leg3Trajectory, drivetrain);
 		return new SequentialCommandGroup(
 				startup,
